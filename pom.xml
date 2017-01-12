@@ -14,15 +14,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <!--<repositories>-->
-    <!--<repository>-->
-    <!--<id>osssonatype</id>-->
-    <!--<name>OSS Sonatype</name>-->
-    <!--<url>https://repo1.maven.org/maven2/</url>-->
-    <!--<layout>default</layout>-->
-    <!--</repository>-->
-    <!--</repositories>-->
-
     <dependencies>
 
         <!--PDFBox library is an open source Java tool for working with PDF documents-->
