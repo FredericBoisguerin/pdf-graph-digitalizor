@@ -6,10 +6,10 @@ This mini-application is provided to extract the points of a graph present in a 
 
 ![alt tag](https://github.com/FredericBoisguerin/pdf-graph-digitalizor/blob/master/screenshot.png)
 
-### Note: PDF reframing
-In this first version, the application only manages PDF with one graph, as shown in the directory samples.
+### Note: PDF crop
+In this first version, the application only manages PDF with one graph, as shown in the samples.
 
-If you need to "reframe" your graphs, you can use **[gpdfx](https://github.com/lehner/gpdfx)** (UNIX environment required).
+If you need to crop your graph, you can use **[gpdfx](https://github.com/lehner/gpdfx)** (UNIX environment required).
 
 _Note 1: don't forget to add the executable **clipdfx** to your PATH variable environment._
 
@@ -29,5 +29,5 @@ _Note 2: You may need to install some dependencies before launching gpdfx :_
 8. After processing, your spreadsheet editor will automatically open with the output file (the first sheet of the file is empty, the second contains the results).
 
 ## Excel template edition
-You can edit the Excel template in the following resources directory
+You can edit the Excel template in the following resources directory:
 > `com/fredericboisguerin/graph/report`
