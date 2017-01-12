@@ -1,0 +1,1 @@
+java -cp graph-digitalizor-1.0-SNAPSHOT.jar com.fredericboisguerin.pdf.ui.UIController
