@@ -4,7 +4,7 @@ A digitalizor for vectorial graphs included in a PDF file.
 ## Resume
 This mini-application is provided to extract the points of a graph present in a PDF file.
 
-![alt tag](https://github.com/FredericBoisguerin/pdf-graph-ditigalizor/blob/master/screenshot.png)
+![alt tag](https://github.com/FredericBoisguerin/pdf-graph-digitalizor/blob/master/screenshot.png)
 
 ### Note: PDF reframing
 In this first version, the application only manages PDF with one graph, as shown in the directory samples.
