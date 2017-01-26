@@ -4,7 +4,7 @@ A digitalizor for vectorial graphs included in a PDF file.
 ## Resume
 This mini-application is provided to extract the points of a graph present in a PDF file.
 
-![alt tag](https://github.com/FredericBoisguerin/pdf-graph-digitalizor/blob/master/screenshot.png)
+![alt tag](https://github.com/FredericBoisguerin/pdf-graph-digitalizor/blob/master/main/screenshot.png)
 
 ### Note: PDF crop
 In this first version, the application only manages PDF with one graph, as shown in the samples.
@@ -19,7 +19,7 @@ _Note 2: You may need to install some dependencies before launching gpdfx :_
 ## Getting started
 
 1. Clone this project.
-2. Download some samples [here](https://github.com/FredericBoisguerin/pdf-graph-ditigalizor/tree/master/samples).
+2. Download some samples [here](https://github.com/FredericBoisguerin/pdf-graph-ditigalizor/tree/master/main/samples).
 3. Launch the main method of the class
 `com.fredericboisguerin.pdf.ui.UIController`.
 4. Select a PDF file.
