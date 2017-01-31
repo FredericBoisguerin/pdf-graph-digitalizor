@@ -49,6 +49,6 @@ public class Coord {
 
     @Override
     public String toString() {
-        return "Coord{" + coord + '}';
+        return String.format("%.2f",coord);
     }
 }

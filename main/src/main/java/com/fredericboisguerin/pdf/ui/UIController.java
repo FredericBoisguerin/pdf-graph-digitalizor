@@ -64,7 +64,7 @@ public class UIController {
             }
             graphEditorForm.setElements(xyPointSeries);
 
-            String message = String.format("XYGraph imported with %d curves", graph.size());
+            String message = String.format("XYGraph imported !\n%s", graph);
             NotificationUtils.showInfo(mainUI, message);
         } catch (Exception e) {
             e.printStackTrace();

@@ -24,5 +24,13 @@ public abstract class Axis {
         return max.diff(min);
     }
 
+    @Override
+    public String toString() {
+        return "Axis{" +
+                "min=" + min +
+                ", max=" + max +
+                '}';
+    }
+
     public abstract void accept(AxisVisitor visitor);
 }

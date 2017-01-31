@@ -9,6 +9,7 @@ import org.apache.pdfbox.rendering.PDFRenderer;
 import org.apache.pdfbox.rendering.PageDrawer;
 import org.apache.pdfbox.rendering.PageDrawerParameters;
 
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -61,6 +62,10 @@ class PDFDrawingActionsParser implements DrawingActionsParser {
             DrawingPoint destination = new DrawingPoint(x, y);
             MoveTo moveTo = new MoveTo(destination);
             actionList.add(moveTo);
+
+            String log = String.format("moveTo(x=%s,y=%s)", formatCoord(x), formatCoord(y));
+            System.out.println();
+            System.out.println(log);
         }
 
         @Override
@@ -70,12 +75,23 @@ class PDFDrawingActionsParser implements DrawingActionsParser {
             DrawingPoint destination = new DrawingPoint(x, y);
             LineTo lineTo = new LineTo(destination);
             actionList.add(lineTo);
+
+            String log = String.format("lineTo(x=%s,y=%s)", formatCoord(x), formatCoord(y));
+            System.out.println(log);
         }
 
         @Override
         public void curveTo(float x1, float y1, float x2, float y2, float x3, float y3) {
             super.curveTo(x1, y1, x2, y2, x3, y3);
-            System.out.println("curveTo"); // TODO
+
+            String format = "curveto(x1=%s,y1=%s,x2=%s,y2=%s,x3=%s,y3=%s)";
+            String log = String.format(format, formatCoord(x1), formatCoord(y1), formatCoord(x2), formatCoord(y2), formatCoord(x3), formatCoord(y3));
+            System.out.println(log);
         }
+    }
+
+    private static String formatCoord(double coord) {
+        String preFormat = String.format("%.2f", coord);
+        return String.format("%6s", preFormat);
     }
 }

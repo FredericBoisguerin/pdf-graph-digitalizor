@@ -16,8 +16,9 @@ public class XYGraph implements Iterable<XYPointSeries> {
         this.yAxis = yAxis;
     }
 
-    public int size() {
-        return xyPointSeries.size();
+    @Override
+    public String toString() {
+        return String.format("%d curves\nX axis: %s\nY axis: %s", xyPointSeries.size(), xAxis, yAxis);
     }
 
     @Override
