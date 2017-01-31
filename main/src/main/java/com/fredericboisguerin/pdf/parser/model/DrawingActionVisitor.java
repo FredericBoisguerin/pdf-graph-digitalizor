@@ -7,4 +7,6 @@ public interface DrawingActionVisitor {
     void visit(LineTo lineTo);
 
     void visit(MoveTo moveTo);
+
+    void visit(CurveTo curveTo);
 }

@@ -22,7 +22,12 @@ public class DrawingPoint implements Comparable<DrawingPoint> {
 
     @Override
     public String toString() {
-        return String.format("[ %5.2f ; %5.2f]", x, y);
+        return String.format("[ %s ; %s]", formatCoord(x), formatCoord(y));
+    }
+
+    private static String formatCoord(double coord) {
+        String preFormat = String.format("%.2f", coord);
+        return String.format("%6s", preFormat);
     }
 
     @Override
