@@ -1,1 +1,1 @@
-java -cp graph-digitalizor-1.0-SNAPSHOT.jar com.fredericboisguerin.pdf.ui.UIController
+java -cp graph-digitalizor.jar com.fredericboisguerin.pdf.ui.UIController
