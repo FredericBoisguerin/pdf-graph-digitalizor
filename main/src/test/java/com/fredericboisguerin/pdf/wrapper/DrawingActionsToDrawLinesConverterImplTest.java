@@ -71,6 +71,40 @@ public class DrawingActionsToDrawLinesConverterImplTest {
     }
 
     @Test
+    public void should_not_create_new_line_nor_new_point_when_moveTo_last_point() throws Exception {
+        List<DrawingAction> drawingActionList = new ArrayList<>();
+        drawingActionList.add(new MoveTo(new DrawingPoint(xA, yA)));
+        drawingActionList.add(new LineTo(new DrawingPoint(xB, yB)));
+        drawingActionList.add(new MoveTo(new DrawingPoint(xB, yB)));
+        drawingActionList.add(new LineTo(new DrawingPoint(xC, yC)));
+
+        DrawLines convert = converter.convert(drawingActionList);
+
+        DrawLines series = convert.getSeries();
+        Iterator<DrawLine> drawLineIterator = series.iterator();
+
+        assertTrue(drawLineIterator.hasNext());
+        DrawLine AC = drawLineIterator.next();
+        assertFalse(drawLineIterator.hasNext());
+
+        Iterator<DrawingPoint> acIterator = AC.iterator();
+        assertTrue(acIterator.hasNext());
+        DrawingPoint A = acIterator.next();
+        assertTrue(acIterator.hasNext());
+        DrawingPoint B = acIterator.next();
+        assertTrue(acIterator.hasNext());
+        DrawingPoint C = acIterator.next();
+        assertFalse(acIterator.hasNext());
+
+        assertEquals(xA, A.getX(), DELTA);
+        assertEquals(yA, A.getY(), DELTA);
+        assertEquals(xB, B.getX(), DELTA);
+        assertEquals(yB, B.getY(), DELTA);
+        assertEquals(xC, C.getX(), DELTA);
+        assertEquals(yC, C.getY(), DELTA);
+    }
+
+    @Test
     public void should_have_two_series_with_two_points_after_two_moveTo_lineTo() throws Exception {
         List<DrawingAction> drawingActionList = new ArrayList<>();
         drawingActionList.add(new MoveTo(new DrawingPoint(xA, yA)));
