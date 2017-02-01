@@ -25,4 +25,11 @@ public class LinearRegression {
         float expected = drawingPoint.getX() * slope + offset;
         return Float.compare(actual, expected) == 0;
     }
+
+    @Override
+    public String toString() {
+        String slopeStr = String.format("%.2f", slope);
+        String offsetStr = String.format("%.2f", offset);
+        return String.format("y = %s * x + %s", slopeStr, offsetStr);
+    }
 }
