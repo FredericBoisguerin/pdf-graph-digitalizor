@@ -54,6 +54,7 @@ public class DrawingActionsToDrawLinesConverterImpl implements DrawingActionsToD
     private static List<DrawingPoint> getDrawingPointsForBezierCurve(DrawingPoint currentDrawingPoint, DrawingPoint p1, DrawingPoint p2, DrawingPoint p3) {
         BezierCurveDiscretizerFactory bezierCurveDiscretizerFactory = new BezierCurveDiscretizerFactory();
         BezierCurveDiscretizer build = bezierCurveDiscretizerFactory.build();
-        return build.getDrawingPointsForBezierCurve(currentDrawingPoint, p1, p2, p3);
+        BezierCurve bezierCurve = new BezierCurve(currentDrawingPoint, p1, p2, p3);
+        return build.getDrawingPointsForBezierCurve(bezierCurve);
     }
 }
