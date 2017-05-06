@@ -9,19 +9,14 @@ import com.fredericboisguerin.pdf.parser.model.DrawingPoint;
 import com.fredericboisguerin.pdf.wrapper.bezier.BezierCurve;
 import com.fredericboisguerin.pdf.wrapper.bezier.BezierCurveDiscretizer;
 import com.fredericboisguerin.pdf.wrapper.bezier.BezierCurveDiscretizerFixedStep;
+import com.fredericboisguerin.pdf.wrapper.bezier.samples.BezierCurveSimpleConcaveBottom;
+import com.fredericboisguerin.pdf.wrapper.bezier.samples.BezierCurveSimpleConcaveBottomReverse;
 import org.junit.Before;
 import org.junit.Test;
 
-public class BezierCurveDiscretizerFixedStepTest {
+public class BezierCurveDiscretizerFixedStepTest extends AbstractBezierCurveDiscretizerTest {
 
-    public static final int NB_POINTS_IN_T_RANGE = 11;
-    private final DrawingPoint p0 = new DrawingPoint(0, 0);
-    private final DrawingPoint p1 = new DrawingPoint(1, 1);
-    private final DrawingPoint p2 = new DrawingPoint(2, 1);
-    private final DrawingPoint p3 = new DrawingPoint(3, 0);
-
-    private final BezierCurve bezierCurve = new BezierCurve(p0, p1, p2, p3);
-    private final BezierCurve bezierCurveReverse = new BezierCurve(p3, p2, p1, p0);
+    private static final int NB_POINTS_IN_T_RANGE = 11;
 
     private BezierCurveDiscretizer bezierCurveDiscretizer;
 
@@ -31,18 +26,27 @@ public class BezierCurveDiscretizerFixedStepTest {
     }
 
     @Test
-    public void normal_order() {
+    public void should_contain_N_points_when_concave_bottom() {
+        BezierCurveSimpleConcaveBottom concaveBottom = new BezierCurveSimpleConcaveBottom();
+
         List<DrawingPoint> drawingPointsForBezierCurve = bezierCurveDiscretizer.getDrawingPointsForBezierCurve(
-                bezierCurve);
+                concaveBottom);
 
         assertThat(drawingPointsForBezierCurve.size(), is(NB_POINTS_IN_T_RANGE));
     }
 
     @Test
-    public void reverse_order() {
+    public void should_contain_N_points_when_concave_bottom_reverse() {
+        BezierCurveSimpleConcaveBottomReverse concaveBottomReverse = new BezierCurveSimpleConcaveBottomReverse();
+
         List<DrawingPoint> drawingPointsForBezierCurve = bezierCurveDiscretizer.getDrawingPointsForBezierCurve(
-                bezierCurveReverse);
+                concaveBottomReverse);
 
         assertThat(drawingPointsForBezierCurve.size(), is(NB_POINTS_IN_T_RANGE));
+    }
+
+    @Override
+    protected BezierCurveDiscretizer getAbstractBezierDiscretizer() {
+        return bezierCurveDiscretizer;
     }
 }
