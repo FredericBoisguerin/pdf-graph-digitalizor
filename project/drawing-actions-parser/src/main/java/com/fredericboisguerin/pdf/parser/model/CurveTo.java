@@ -1,8 +1,5 @@
 package com.fredericboisguerin.pdf.parser.model;
 
-/**
- * Created by fred on 31/01/17.
- */
 public class CurveTo implements DrawingAction {
 
     private final DrawingPoint p1;

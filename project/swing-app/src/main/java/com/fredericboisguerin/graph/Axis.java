@@ -1,8 +1,5 @@
 package com.fredericboisguerin.graph;
 
-/**
- * Created by fred on 10/01/17.
- */
 public abstract class Axis {
     private final Coord min;
     private final Coord max;

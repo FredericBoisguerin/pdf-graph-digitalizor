@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Created by fred on 12/01/17.
- */
 public class ReportSeries {
 
     private final String name;

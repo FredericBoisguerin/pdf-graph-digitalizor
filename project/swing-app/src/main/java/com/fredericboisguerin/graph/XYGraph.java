@@ -2,9 +2,6 @@ package com.fredericboisguerin.graph;
 
 import java.util.*;
 
-/**
- * Created by fred on 10/01/17.
- */
 public class XYGraph implements Iterable<XYPointSeries> {
 
     protected final List<XYPointSeries> xyPointSeries = new ArrayList<>();

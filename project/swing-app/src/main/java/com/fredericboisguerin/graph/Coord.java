@@ -1,8 +1,5 @@
 package com.fredericboisguerin.graph;
 
-/**
- * Created by fred on 10/01/17.
- */
 public class Coord {
     private final float coord;
 

@@ -22,9 +22,6 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
-/**
- * Created by fred on 11/01/17.
- */
 public class UIController {
 
     public static final ReportGenerator REPORT_GENERATOR = new ReportGeneratorImpl();

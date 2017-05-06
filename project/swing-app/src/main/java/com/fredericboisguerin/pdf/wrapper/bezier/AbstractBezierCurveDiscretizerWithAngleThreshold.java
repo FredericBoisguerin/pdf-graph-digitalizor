@@ -5,9 +5,6 @@ import java.util.List;
 
 import com.fredericboisguerin.pdf.parser.model.DrawingPoint;
 
-/**
- * Created by fred on 31/01/17.
- */
 abstract class AbstractBezierCurveDiscretizerWithAngleThreshold implements BezierCurveDiscretizer {
 
     private final int angleThreshold;

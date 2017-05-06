@@ -7,9 +7,6 @@ import java.util.List;
 
 import javax.swing.*;
 
-/**
- * Created by fred on 11/01/17.
- */
 public class ToggleList<T> {
     private final DefaultListModel<T> sourceListModel;
     private final DefaultListModel<T> destListModel;

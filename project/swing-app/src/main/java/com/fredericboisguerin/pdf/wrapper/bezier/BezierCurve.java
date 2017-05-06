@@ -4,9 +4,6 @@ import com.fredericboisguerin.pdf.parser.model.DrawingPoint;
 
 import java.util.function.Function;
 
-/**
- * Created by fred on 01/02/17.
- */
 public class BezierCurve {
     private final DrawingPoint p0;
     private final DrawingPoint p1;

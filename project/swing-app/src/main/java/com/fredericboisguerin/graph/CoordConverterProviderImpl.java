@@ -3,9 +3,6 @@ package com.fredericboisguerin.graph;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-/**
- * Created by fred on 11/01/17.
- */
 public class CoordConverterProviderImpl implements CoordConverterProvider {
     @Override
     public Function<Coord, Coord> getConverter(Axis from, Axis to) {

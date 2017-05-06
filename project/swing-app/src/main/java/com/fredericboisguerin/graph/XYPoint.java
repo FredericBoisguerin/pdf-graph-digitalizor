@@ -1,8 +1,5 @@
 package com.fredericboisguerin.graph;
 
-/**
- * Created by fred on 10/01/17.
- */
 public class XYPoint {
     private final Coord x;
     private final Coord y;

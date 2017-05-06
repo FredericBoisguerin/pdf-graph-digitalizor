@@ -4,9 +4,6 @@ import org.hamcrest.CustomMatcher;
 
 import java.util.List;
 
-/**
- * Created by fred on 31/01/17.
- */
 class ListContainsElementMatcher<T> extends CustomMatcher<List<T>> {
 
     private T element;

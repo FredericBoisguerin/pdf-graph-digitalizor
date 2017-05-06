@@ -4,9 +4,6 @@ import java.awt.*;
 
 import javax.swing.*;
 
-/**
- * Created by fred on 11/01/17.
- */
 public class MainUI extends JFrame {
 
     private final GraphEditor graphEditorForm = new GraphEditor();

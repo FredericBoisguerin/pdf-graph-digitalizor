@@ -1,8 +1,5 @@
 package com.fredericboisguerin.graph.report;
 
-/**
- * Created by fred on 12/01/17.
- */
 public class ReportPoint {
 
     private final float x;

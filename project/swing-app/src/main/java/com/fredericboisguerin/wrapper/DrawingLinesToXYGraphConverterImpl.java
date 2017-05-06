@@ -9,9 +9,6 @@ import java.util.Comparator;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-/**
- * Created by fred on 10/01/17.
- */
 public class DrawingLinesToXYGraphConverterImpl implements DrawingLinesToXYGraphConverter {
 
     @Override

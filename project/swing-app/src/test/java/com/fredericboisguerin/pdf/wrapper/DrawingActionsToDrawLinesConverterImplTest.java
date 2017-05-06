@@ -13,9 +13,6 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by fred on 11/01/17.
- */
 public class DrawingActionsToDrawLinesConverterImplTest {
 
     private static final double DELTA = 1e-12;

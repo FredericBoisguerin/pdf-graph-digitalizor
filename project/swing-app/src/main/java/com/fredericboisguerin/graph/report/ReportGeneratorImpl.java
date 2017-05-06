@@ -20,9 +20,6 @@ import java.util.stream.Collectors;
 
 import static jxl.biff.FormatRecord.logger;
 
-/**
- * Created by fred on 12/01/17.
- */
 public class ReportGeneratorImpl implements ReportGenerator {
 
     private static final String DYNAMIC_COLUMNS_DEMO_XML_CONFIG = "template_descriptor.xml";

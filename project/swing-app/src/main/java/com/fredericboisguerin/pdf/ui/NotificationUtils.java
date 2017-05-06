@@ -3,9 +3,6 @@ package com.fredericboisguerin.pdf.ui;
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * Created by fred on 11/01/17.
- */
 public class NotificationUtils {
 
     public static void showInfo(Component parentComponent, String message) {

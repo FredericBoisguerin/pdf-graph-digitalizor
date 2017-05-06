@@ -7,9 +7,6 @@ import java.util.function.Function;
 import org.junit.Before;
 import org.junit.Test;
 
-/**
- * Created by fred on 11/01/17.
- */
 public class CoordConverterProviderImplTest {
 
     private CoordConverterProvider coordConverterProvider;

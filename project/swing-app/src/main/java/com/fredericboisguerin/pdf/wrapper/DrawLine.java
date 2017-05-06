@@ -5,9 +5,6 @@ import com.fredericboisguerin.pdf.parser.model.DrawingPoint;
 import java.util.*;
 import java.util.function.Function;
 
-/**
- * Created by fred on 10/01/17.
- */
 public class DrawLine implements Iterable<DrawingPoint> {
 
     public static final int MINIMUM_NUMBER_OF_POINTS_TO_BE_SERIES = 2;

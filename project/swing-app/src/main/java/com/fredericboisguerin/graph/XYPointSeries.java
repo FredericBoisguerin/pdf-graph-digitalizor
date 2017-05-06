@@ -5,9 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Function;
 
-/**
- * Created by fred on 10/01/17.
- */
 public class XYPointSeries implements Iterable<XYPoint>, Comparable<XYPointSeries> {
 
     private final List<XYPoint> xyPoints = new ArrayList<>();

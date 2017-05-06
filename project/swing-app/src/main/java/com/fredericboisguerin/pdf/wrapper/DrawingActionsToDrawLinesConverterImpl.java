@@ -7,9 +7,6 @@ import com.fredericboisguerin.pdf.wrapper.bezier.BezierCurveDiscretizerFactory;
 
 import java.util.List;
 
-/**
- * Created by fred on 10/01/17.
- */
 public class DrawingActionsToDrawLinesConverterImpl implements DrawingActionsToDrawLinesConverter {
 
     @Override

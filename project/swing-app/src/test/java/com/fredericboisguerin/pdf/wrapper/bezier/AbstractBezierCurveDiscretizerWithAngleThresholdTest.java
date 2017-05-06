@@ -13,9 +13,6 @@ import org.junit.Test;
 
 import com.fredericboisguerin.utils.MyCustomMatchers;
 
-/**
- * Created by fred on 31/01/17.
- */
 public abstract class AbstractBezierCurveDiscretizerWithAngleThresholdTest {
 
     protected abstract DrawingPoint getP0();

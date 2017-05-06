@@ -6,9 +6,6 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-/**
- * Created by fred on 11/01/17.
- */
 public class EditableXYGraph extends XYGraph {
     public EditableXYGraph(Axis xAxis, Axis yAxis) {
         super(xAxis, yAxis);
