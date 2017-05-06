@@ -27,9 +27,9 @@ public class DrawingActionsToDrawLinesConverterImpl implements DrawingActionsToD
         public void visit(MoveTo moveTo) {
             DrawingPoint destination = moveTo.getDestination();
             if (!destination.equals(currentDrawingPoint)) {
-                currentDrawLine = new DrawLine();
+                currentDrawLine = new DrawLine(destination);
                 drawLines.add(currentDrawLine);
-                addPathPoint(destination);
+                currentDrawingPoint = destination;
             }
         }
 

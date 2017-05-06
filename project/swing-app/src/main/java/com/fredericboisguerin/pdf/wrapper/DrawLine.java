@@ -11,6 +11,10 @@ public class DrawLine implements Iterable<DrawingPoint> {
     public static final float RATIO_TOLERANCE = 1e-4f;
     private final List<DrawingPoint> drawingPoints = new ArrayList<>();
 
+    public DrawLine(DrawingPoint destination) {
+        add(destination);
+    }
+
     public void add(DrawingPoint drawingPoint) {
         drawingPoints.add(drawingPoint);
         Collections.sort(drawingPoints);
@@ -41,7 +45,8 @@ public class DrawLine implements Iterable<DrawingPoint> {
     }
 
     private Comparator<DrawingPoint> drawingPointComparator(Function<DrawingPoint, Float> drawingPointMappingFunction) {
-        return (o1, o2) -> Float.compare(drawingPointMappingFunction.apply(o1), drawingPointMappingFunction.apply(o2));
+        return (o1, o2) -> Float.compare(drawingPointMappingFunction.apply(o1), drawingPointMappingFunction
+                .apply(o2));
     }
 
     private boolean isValid() {
@@ -49,9 +54,9 @@ public class DrawLine implements Iterable<DrawingPoint> {
     }
 
     public boolean isCoordTheSameForAll(Function<DrawingPoint, Float> coordGetter) {
-        Optional<Float> optionalCoord = getOptionalFirstDrawingPoint().map(coordGetter);
-        return optionalCoord.map(coord -> areAllCoordsEqualTo(coord, coordGetter))
-                            .orElse(false);
+        DrawingPoint firstPoint = drawingPoints.get(0);
+        float coord = coordGetter.apply(firstPoint);
+        return areAllCoordsEqualTo(coord, coordGetter);
     }
 
     private boolean areAllCoordsEqualTo(float coord, Function<DrawingPoint, Float> coordGetter) {
@@ -67,11 +72,6 @@ public class DrawLine implements Iterable<DrawingPoint> {
         float minAbs = Math.min(c1, c2);
         float ratio = dist / minAbs;
         return Float.compare(ratio, RATIO_TOLERANCE) < 0;
-    }
-
-    private Optional<DrawingPoint> getOptionalFirstDrawingPoint() {
-        return drawingPoints.stream()
-                            .findFirst();
     }
 
     @Override
