@@ -45,8 +45,7 @@ public class DrawLine implements Iterable<DrawingPoint> {
     }
 
     private Comparator<DrawingPoint> drawingPointComparator(Function<DrawingPoint, Float> drawingPointMappingFunction) {
-        return (o1, o2) -> Float.compare(drawingPointMappingFunction.apply(o1), drawingPointMappingFunction
-                .apply(o2));
+        return Comparator.comparing(drawingPointMappingFunction, Float::compareTo);
     }
 
     private boolean isValid() {
@@ -61,10 +60,8 @@ public class DrawLine implements Iterable<DrawingPoint> {
 
     private boolean areAllCoordsEqualTo(float coord, Function<DrawingPoint, Float> coordGetter) {
         return drawingPoints.stream()
-                            .allMatch(point -> {
-                                Float other = coordGetter.apply(point);
-                                return areCoordEqual(coord, other);
-                            });
+                            .map(coordGetter)
+                            .allMatch(other -> areCoordEqual(coord, other));
     }
 
     private static boolean areCoordEqual(float c1, float c2) {
