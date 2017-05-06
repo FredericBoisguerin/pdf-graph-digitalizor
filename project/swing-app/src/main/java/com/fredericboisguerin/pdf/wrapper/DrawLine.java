@@ -74,10 +74,6 @@ public class DrawLine implements Iterable<DrawingPoint> {
                             .findFirst();
     }
 
-    public DrawingPoint getFirstDrawingPoint() throws NullPointerException {
-        return getOptionalFirstDrawingPoint().get();
-    }
-
     @Override
     public Iterator<DrawingPoint> iterator() {
         return drawingPoints.iterator();

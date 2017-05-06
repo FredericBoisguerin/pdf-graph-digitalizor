@@ -1,11 +1,8 @@
 package com.fredericboisguerin.pdf.ui;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.*;
 import java.util.Enumeration;
 import java.util.List;
-
-import javax.swing.*;
 
 public class ToggleList<T> {
     private final DefaultListModel<T> sourceListModel;
@@ -23,20 +20,12 @@ public class ToggleList<T> {
         destListModel = new DefaultListModel<>();
         destList.setModel(destListModel);
 
-        addButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ToggleList.this.exchangeElements(sourceList.getSelectedValuesList(),
-                        sourceListModel, destListModel);
-            }
-        });
-        removeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ToggleList.this.exchangeElements(destList.getSelectedValuesList(), destListModel,
-                        sourceListModel);
-            }
-        });
+        addButton.addActionListener(e -> ToggleList.this.exchangeElements(sourceList
+                        .getSelectedValuesList(),
+                sourceListModel, destListModel));
+        removeButton.addActionListener(e -> ToggleList.this.exchangeElements(destList
+                        .getSelectedValuesList(), destListModel,
+                sourceListModel));
     }
 
     private void exchangeElements(List<T> elements, DefaultListModel<T> sourceListModel,

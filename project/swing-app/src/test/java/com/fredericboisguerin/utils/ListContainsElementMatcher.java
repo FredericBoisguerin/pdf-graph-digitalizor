@@ -6,7 +6,7 @@ import java.util.List;
 
 class ListContainsElementMatcher<T> extends CustomMatcher<List<T>> {
 
-    private T element;
+    private final T element;
 
     public ListContainsElementMatcher(T element) {
         super("contains " + element);

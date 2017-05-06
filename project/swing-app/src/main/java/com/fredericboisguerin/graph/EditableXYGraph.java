@@ -1,6 +1,5 @@
 package com.fredericboisguerin.graph;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
@@ -27,7 +26,7 @@ public class EditableXYGraph extends XYGraph {
         List<XYPointSeries> collect = xyPointSeries.stream()
                                                    .map(series -> series.convert(xConverter, yConverter))
                                                    .collect(Collectors.toList());
-        collect.forEach(xyGraph.xyPointSeries::add);
+        xyGraph.xyPointSeries.addAll(collect);
         return xyGraph;
     }
 }

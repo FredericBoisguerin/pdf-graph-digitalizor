@@ -34,11 +34,6 @@ public class PDFDrawingActionsParser {
             this.actionList = new ArrayList<>();
             return new MyPageDrawer(parameters, actionList);
         }
-
-        @Override
-        public BufferedImage renderImage(int pageIndex) throws IOException {
-            return super.renderImage(pageIndex);
-        }
     }
 
     private static class MyPageDrawer extends PageDrawer {

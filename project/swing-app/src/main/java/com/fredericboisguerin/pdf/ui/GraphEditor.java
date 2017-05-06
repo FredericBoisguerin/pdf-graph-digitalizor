@@ -20,12 +20,7 @@ public class GraphEditor {
     private final List<GoButtonListener> goButtonListeners = new ArrayList<>();
 
     public GraphEditor() {
-        goButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                GraphEditor.this.fireGoButtonClicked();
-            }
-        });
+        goButton.addActionListener(e -> GraphEditor.this.fireGoButtonClicked());
     }
 
     private void fireGoButtonClicked() {

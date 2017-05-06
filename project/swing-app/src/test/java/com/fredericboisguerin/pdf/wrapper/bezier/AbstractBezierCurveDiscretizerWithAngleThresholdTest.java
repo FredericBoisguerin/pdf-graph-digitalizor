@@ -1,17 +1,12 @@
 package com.fredericboisguerin.pdf.wrapper.bezier;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import com.fredericboisguerin.pdf.parser.model.DrawingPoint;
+import com.fredericboisguerin.utils.MyCustomMatchers;
+import org.junit.Test;
 
 import java.util.List;
 
-import com.fredericboisguerin.pdf.parser.model.DrawingPoint;
-import com.fredericboisguerin.pdf.wrapper.bezier.BezierCurve;
-import com.fredericboisguerin.pdf.wrapper.bezier.BezierCurveDiscretizer;
-import com.fredericboisguerin.pdf.wrapper.bezier.BezierCurveDiscretizerWithAngleThresholdV1;
-import org.junit.Test;
-
-import com.fredericboisguerin.utils.MyCustomMatchers;
+import static org.junit.Assert.assertThat;
 
 public abstract class AbstractBezierCurveDiscretizerWithAngleThresholdTest {
 
