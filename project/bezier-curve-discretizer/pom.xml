@@ -1,29 +1,22 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <parent>
-        <artifactId>graph-digitalizor</artifactId>
         <groupId>com.fredericboisguerin.pdf</groupId>
+        <artifactId>graph-digitalizor</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
+    <groupId>com.fredericboisguerin.pdf</groupId>
 
-    <artifactId>drawing-actions-parser</artifactId>
+    <artifactId>bezier-curve-discretizer</artifactId>
     <packaging>jar</packaging>
 
-    <name>drawing-actions-parser</name>
+    <name>bezier-curve-discretizer</name>
     <url>http://maven.apache.org</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
-    <dependencies>
-        <!--PDFBox library is an open source Java tool for working with PDF documents-->
-        <dependency>
-            <groupId>org.apache.pdfbox</groupId>
-            <artifactId>pdfbox</artifactId>
-            <version>2.0.3</version>
-        </dependency>
-    </dependencies>
 </project>

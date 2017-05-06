@@ -1,4 +1,4 @@
-package com.fredericboisguerin.pdf.wrapper.bezier.samples;
+package com.fredericboisguerin.pdf.bezier.samples;
 
 public class BezierCurveSimpleConcaveBottomReverse extends BezierCurveSimpleConcaveBottom {
 

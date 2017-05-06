@@ -1,4 +1,4 @@
-package com.fredericboisguerin.pdf.wrapper.bezier;
+package com.fredericboisguerin.pdf.bezier;
 
 public class BezierCurveDiscretizerWithAngleThresholdV2Test extends AbstractBezierCurveDiscretizerTest {
 

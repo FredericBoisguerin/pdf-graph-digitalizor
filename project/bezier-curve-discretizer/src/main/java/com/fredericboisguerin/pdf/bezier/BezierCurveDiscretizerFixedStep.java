@@ -1,9 +1,7 @@
-package com.fredericboisguerin.pdf.wrapper.bezier;
+package com.fredericboisguerin.pdf.bezier;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.fredericboisguerin.pdf.parser.model.DrawingPoint;
 
 class BezierCurveDiscretizerFixedStep implements BezierCurveDiscretizer {
     private final int nbPointsInTRange;
@@ -13,11 +11,11 @@ class BezierCurveDiscretizerFixedStep implements BezierCurveDiscretizer {
     }
 
     @Override
-    public List<DrawingPoint> getDrawingPointsForBezierCurve(BezierCurve bezierCurve) {
-        List<DrawingPoint> result = new ArrayList<>();
+    public List<BezierCurvePoint> getDrawingPointsForBezierCurve(BezierCurve bezierCurve) {
+        List<BezierCurvePoint> result = new ArrayList<>();
         for (int i = 0; i < nbPointsInTRange; i++) {
             float t = 1f * i / (nbPointsInTRange - 1);
-            DrawingPoint drawingPointForT = bezierCurve.getDrawingPointForT(t);
+            BezierCurvePoint drawingPointForT = bezierCurve.getDrawingPointForT(t);
             result.add(drawingPointForT);
         }
         return result;

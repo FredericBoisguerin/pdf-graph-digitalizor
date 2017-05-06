@@ -1,15 +1,13 @@
-package com.fredericboisguerin.pdf.wrapper.bezier;
+package com.fredericboisguerin.pdf.bezier;
 
-import com.fredericboisguerin.pdf.parser.model.DrawingPoint;
-import com.fredericboisguerin.pdf.wrapper.bezier.samples.BezierCurveConcaveTop;
-import com.fredericboisguerin.pdf.wrapper.bezier.samples.BezierCurveSimpleConcaveBottom;
-import com.fredericboisguerin.pdf.wrapper.bezier.samples.BezierCurveSimpleInflexionUp;
-import com.fredericboisguerin.utils.MyCustomMatchers;
+import com.fredericboisguerin.pdf.bezier.samples.BezierCurveConcaveTop;
+import com.fredericboisguerin.pdf.bezier.samples.BezierCurveSimpleConcaveBottom;
+import com.fredericboisguerin.pdf.bezier.samples.BezierCurveSimpleInflexionUp;
 import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public abstract class AbstractBezierCurveDiscretizerTest {
 
@@ -59,24 +57,24 @@ public abstract class AbstractBezierCurveDiscretizerTest {
         assertThatDrawingPointsContain(getP3());
     }
 
-    private void assertThatDrawingPointsContain(DrawingPoint p3) {
-        List<DrawingPoint> drawingPoints = getDrawingPointsForBezierCurveDiscretizer();
+    private void assertThatDrawingPointsContain(BezierCurvePoint point) {
+        List<BezierCurvePoint> drawingPoints = getDrawingPointsForBezierCurveDiscretizer();
 
-        assertThat(drawingPoints, MyCustomMatchers.contains(p3));
+        assertTrue(drawingPoints.contains(point));
     }
 
-    private List<DrawingPoint> getDrawingPointsForBezierCurveDiscretizer() {
+    private List<BezierCurvePoint> getDrawingPointsForBezierCurveDiscretizer() {
         BezierCurveDiscretizer curveDiscretizer = getAbstractBezierDiscretizer();
         return curveDiscretizer.getDrawingPointsForBezierCurve(bezierCurve);
     }
 
     protected abstract BezierCurveDiscretizer getAbstractBezierDiscretizer();
 
-    private DrawingPoint getP0() {
+    private BezierCurvePoint getP0() {
         return bezierCurve.getP0();
     }
 
-    private DrawingPoint getP3() {
+    private BezierCurvePoint getP3() {
         return bezierCurve.getP3();
     }
 }

@@ -1,9 +1,7 @@
-package com.fredericboisguerin.pdf.wrapper.bezier;
+package com.fredericboisguerin.pdf.bezier;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.fredericboisguerin.pdf.parser.model.DrawingPoint;
 
 abstract class AbstractBezierCurveDiscretizerWithAngleThreshold implements BezierCurveDiscretizer {
 
@@ -14,13 +12,13 @@ abstract class AbstractBezierCurveDiscretizerWithAngleThreshold implements Bezie
     }
 
     @Override
-    public List<DrawingPoint> getDrawingPointsForBezierCurve(BezierCurve bezierCurve) {
-        List<DrawingPoint> drawingPoints = new ArrayList<>();
+    public List<BezierCurvePoint> getDrawingPointsForBezierCurve(BezierCurve bezierCurve) {
+        List<BezierCurvePoint> drawingPoints = new ArrayList<>();
         drawingPoints.add(bezierCurve.getP0());
         float t = 0;
-        while (!drawingPoints.contains(bezierCurve.getP3())) {
-            float nextT = getNextT(bezierCurve, t);
-            DrawingPoint drawingPointForT = bezierCurve.getDrawingPointForT(nextT);
+        float nextT;
+        while (!drawingPoints.contains(bezierCurve.getP3()) && ((nextT = getNextT(bezierCurve, t)) > t)) {
+            BezierCurvePoint drawingPointForT = bezierCurve.getDrawingPointForT(nextT);
             drawingPoints.add(drawingPointForT);
             t = nextT;
         }
@@ -38,10 +36,10 @@ abstract class AbstractBezierCurveDiscretizerWithAngleThreshold implements Bezie
     }
 
     protected static double angleBetween(float t, float nextT, BezierCurve bezierCurve) {
-        DrawingPoint startPoint = bezierCurve.getDrawingPointForT(t);
+        BezierCurvePoint startPoint = bezierCurve.getDrawingPointForT(t);
         float middle = t + (nextT - t) / 2;
-        DrawingPoint middlePoint = bezierCurve.getDrawingPointForT(middle);
-        DrawingPoint endPoint = bezierCurve.getDrawingPointForT(nextT);
+        BezierCurvePoint middlePoint = bezierCurve.getDrawingPointForT(middle);
+        BezierCurvePoint endPoint = bezierCurve.getDrawingPointForT(nextT);
         return getAngle(startPoint, middlePoint, endPoint);
     }
 
@@ -54,8 +52,8 @@ abstract class AbstractBezierCurveDiscretizerWithAngleThreshold implements Bezie
      * @return the angle (CA, CB)
      * @see <a href="https://en.wikipedia.org/wiki/Law_of_cosines">Law of cosines</a>
      */
-    private static double getAngle(DrawingPoint drawingPointA, DrawingPoint drawingPointC,
-                                   DrawingPoint drawingPointB) {
+    private static double getAngle(BezierCurvePoint drawingPointA, BezierCurvePoint drawingPointC,
+                                   BezierCurvePoint drawingPointB) {
         double a2 = squareDistanceBetween(drawingPointC, drawingPointB);
         double b2 = squareDistanceBetween(drawingPointA, drawingPointC);
         double c2 = squareDistanceBetween(drawingPointA, drawingPointB);
@@ -72,7 +70,7 @@ abstract class AbstractBezierCurveDiscretizerWithAngleThreshold implements Bezie
      * @param b Point B
      * @return |AB|²
      */
-    private static double squareDistanceBetween(DrawingPoint a, DrawingPoint b) {
+    private static double squareDistanceBetween(BezierCurvePoint a, BezierCurvePoint b) {
         float deltaX = a.getX() - b.getX();
         float deltaY = a.getY() - b.getY();
         return Math.pow(deltaX, 2) + Math.pow(deltaY, 2);
