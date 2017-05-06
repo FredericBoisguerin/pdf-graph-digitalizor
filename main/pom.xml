@@ -5,7 +5,12 @@
 
     <groupId>com.fredericboisguerin.pdf</groupId>
     <artifactId>graph-digitalizor</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>drawing-actions-parser</module>
+        <module>swing-app</module>
+    </modules>
 
     <name>graph-digitalizor</name>
     <url>http://maven.apache.org</url>
@@ -13,42 +18,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
-    <dependencies>
-
-        <!--PDFBox library is an open source Java tool for working with PDF documents-->
-        <dependency>
-            <groupId>org.apache.pdfbox</groupId>
-            <artifactId>pdfbox</artifactId>
-            <version>2.0.3</version>
-        </dependency>
-        <dependency>
-            <groupId>com.intellij</groupId>
-            <artifactId>forms_rt</artifactId>
-            <version>7.0.3</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jxls</groupId>
-            <artifactId>jxls</artifactId>
-            <version>[2.0.0,)</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jxls</groupId>
-            <artifactId>jxls-poi</artifactId>
-            <version>[1.0.0,)</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jxls</groupId>
-            <artifactId>jxls-jexcel</artifactId>
-            <version>[1.0.0,)</version>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.11</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
 
     <build>
         <plugins>
@@ -60,78 +29,6 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <mainClass>com.fredericboisguerin.pdf.ui.UIController</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.7</version>
-                <dependencies>
-                    <dependency> <!-- A hack for this problem: http://stackoverflow.com/questions/2022622/java-home-gets-mangled-by-maven -->
-                        <groupId>com.sun</groupId>
-                        <artifactId>tools</artifactId>
-                        <version>1.7.0</version>
-                        <scope>system</scope>
-                        <systemPath>${java.home}/../lib/tools.jar</systemPath>
-                    </dependency>
-                </dependencies>
-                <executions>
-                    <execution>
-                        <phase>compile</phase>
-                        <configuration>
-                            <tasks>
-                                <property name="IDEA.home"
-                                          value="C:/Program Files (x86)/JetBrains/IntelliJ IDEA 2016.3"/> <!-- My IDEA home. -->
-                                <path id="j2cp">
-                                    <pathelement location="${IDEA.home}/lib/asm.jar"/>
-                                    <pathelement location="${IDEA.home}/lib/asm-all.jar"/>
-                                    <pathelement location="${IDEA.home}/lib/javac2.jar"/>
-                                    <pathelement location="${IDEA.home}/lib/jdom.jar"/>
-                                    <pathelement location="${IDEA.home}/lib/jgoodies-forms.jar"/>
-                                </path>
-                                <path id="j2sp">
-                                    <pathelement
-                                            location="${project.basedir}\src\main\java"/> <!-- Maybe finer paths could be defined. -->
-                                </path>
-                                <taskdef name="javac2" classpathref="j2cp"
-                                         classname="com.intellij.ant.Javac2"/>
-                                <javac2 destdir="${project.basedir}\target\classes"> <!-- Maybe finer paths could be defined. -->
-                                    <src refid="j2sp"/>
-                                </javac2>
-                            </tasks>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
-
 </project>

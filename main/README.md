@@ -19,7 +19,7 @@ _Note 2: You may need to install some dependencies before launching gpdfx :_
 ## Getting started
 
 1. Clone this project.
-2. Download some samples [here](https://github.com/FredericBoisguerin/pdf-graph-ditigalizor/tree/master/main/samples).
+2. Download some samples [here](https://github.com/FredericBoisguerin/pdf-graph-digitalizor/tree/master/samples).
 3. Launch the main method of the class
 `com.fredericboisguerin.pdf.ui.UIController`.
 4. Select a PDF file.
