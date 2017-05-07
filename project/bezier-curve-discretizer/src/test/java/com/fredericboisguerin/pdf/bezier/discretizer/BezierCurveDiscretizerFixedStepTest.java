@@ -1,17 +1,15 @@
-package com.fredericboisguerin.pdf.bezier;
+package com.fredericboisguerin.pdf.bezier.discretizer;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
-import java.util.List;
-
-import com.fredericboisguerin.pdf.bezier.BezierCurve;
-import com.fredericboisguerin.pdf.bezier.BezierCurveDiscretizer;
-import com.fredericboisguerin.pdf.bezier.BezierCurveDiscretizerFixedStep;
+import com.fredericboisguerin.pdf.bezier.model.BezierCurvePoint;
 import com.fredericboisguerin.pdf.bezier.samples.BezierCurveSimpleConcaveBottom;
 import com.fredericboisguerin.pdf.bezier.samples.BezierCurveSimpleConcaveBottomReverse;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.List;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 public class BezierCurveDiscretizerFixedStepTest extends AbstractBezierCurveDiscretizerTest {
 

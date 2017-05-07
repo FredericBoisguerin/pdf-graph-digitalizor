@@ -1,5 +1,7 @@
-package com.fredericboisguerin.pdf.bezier;
+package com.fredericboisguerin.pdf.bezier.discretizer;
 
+import com.fredericboisguerin.pdf.bezier.model.BezierCurve;
+import com.fredericboisguerin.pdf.bezier.model.BezierCurvePoint;
 import com.fredericboisguerin.pdf.bezier.samples.BezierCurveConcaveTop;
 import com.fredericboisguerin.pdf.bezier.samples.BezierCurveSimpleConcaveBottom;
 import com.fredericboisguerin.pdf.bezier.samples.BezierCurveSimpleInflexionUp;

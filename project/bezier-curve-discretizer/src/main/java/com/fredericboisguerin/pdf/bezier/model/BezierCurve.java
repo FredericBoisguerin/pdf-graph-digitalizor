@@ -1,4 +1,4 @@
-package com.fredericboisguerin.pdf.bezier;
+package com.fredericboisguerin.pdf.bezier.model;
 
 import java.util.function.Function;
 

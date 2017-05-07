@@ -1,7 +1,7 @@
 package com.fredericboisguerin.pdf.bezier.samples;
 
-import com.fredericboisguerin.pdf.bezier.BezierCurve;
-import com.fredericboisguerin.pdf.bezier.BezierCurvePoint;
+import com.fredericboisguerin.pdf.bezier.model.BezierCurve;
+import com.fredericboisguerin.pdf.bezier.model.BezierCurvePoint;
 
 public class BezierCurveConcaveTop extends BezierCurve {
 

@@ -1,12 +1,15 @@
 package com.fredericboisguerin.pdf.wrapper;
 
+import com.fredericboisguerin.pdf.bezier.discretizer.BezierCurveDiscretizer;
+import com.fredericboisguerin.pdf.bezier.discretizer.BezierCurveDiscretizerFactory;
+import com.fredericboisguerin.pdf.bezier.model.BezierCurve;
+import com.fredericboisguerin.pdf.bezier.model.BezierCurvePoint;
 import com.fredericboisguerin.pdf.parser.model.*;
-import com.fredericboisguerin.pdf.bezier.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.fredericboisguerin.pdf.bezier.BezierCurveDiscretizerMode.FIXED_STEP_10_RANGES;
+import static com.fredericboisguerin.pdf.bezier.discretizer.BezierCurveDiscretizerMode.FIXED_STEP_10_RANGES;
 
 public class DrawingActionsToDrawLinesConverterImpl implements DrawingActionsToDrawLinesConverter {
 

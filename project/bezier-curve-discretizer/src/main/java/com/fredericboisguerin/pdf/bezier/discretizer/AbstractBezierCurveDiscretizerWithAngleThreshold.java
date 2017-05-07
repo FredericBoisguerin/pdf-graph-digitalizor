@@ -1,4 +1,7 @@
-package com.fredericboisguerin.pdf.bezier;
+package com.fredericboisguerin.pdf.bezier.discretizer;
+
+import com.fredericboisguerin.pdf.bezier.model.BezierCurve;
+import com.fredericboisguerin.pdf.bezier.model.BezierCurvePoint;
 
 import java.util.ArrayList;
 import java.util.List;
