@@ -49,7 +49,7 @@ public class PDFDrawingActionsParser {
         public void moveTo(float x, float y) {
             super.moveTo(x, y);
 
-            DrawingPoint destination = new DrawingPoint(x, y);
+            DrawingPoint destination = buildDrawingPoint(x, y);
             MoveTo moveTo = new MoveTo(destination);
             actionList.add(moveTo);
         }
@@ -58,7 +58,7 @@ public class PDFDrawingActionsParser {
         public void lineTo(float x, float y) {
             super.lineTo(x, y);
 
-            DrawingPoint destination = new DrawingPoint(x, y);
+            DrawingPoint destination = buildDrawingPoint(x, y);
             LineTo lineTo = new LineTo(destination);
             actionList.add(lineTo);
         }
@@ -67,8 +67,12 @@ public class PDFDrawingActionsParser {
         public void curveTo(float x1, float y1, float x2, float y2, float x3, float y3) {
             super.curveTo(x1, y1, x2, y2, x3, y3);
 
-            CurveTo curveTo = new CurveTo(new DrawingPoint(x1, y1), new DrawingPoint(x2, y2), new DrawingPoint(x3, y3));
+            CurveTo curveTo = new CurveTo(buildDrawingPoint(x1, y1), buildDrawingPoint(x2, y2), buildDrawingPoint(x3, y3));
             actionList.add(curveTo);
+        }
+
+        private DrawingPoint buildDrawingPoint(float x, float y) {
+            return new DrawingPoint(x, y);
         }
     }
 }

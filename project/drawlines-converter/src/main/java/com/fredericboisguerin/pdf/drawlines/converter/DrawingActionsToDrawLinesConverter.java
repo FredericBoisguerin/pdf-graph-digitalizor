@@ -1,9 +1,11 @@
-package com.fredericboisguerin.pdf.wrapper;
+package com.fredericboisguerin.pdf.drawlines.converter;
 
 import com.fredericboisguerin.pdf.bezier.discretizer.BezierCurveDiscretizer;
 import com.fredericboisguerin.pdf.bezier.discretizer.BezierCurveDiscretizerFactory;
 import com.fredericboisguerin.pdf.bezier.model.BezierCurve;
 import com.fredericboisguerin.pdf.bezier.model.BezierCurvePoint;
+import com.fredericboisguerin.pdf.drawlines.model.DrawLine;
+import com.fredericboisguerin.pdf.drawlines.model.DrawLines;
 import com.fredericboisguerin.pdf.parser.model.*;
 
 import java.util.List;
@@ -11,9 +13,8 @@ import java.util.stream.Collectors;
 
 import static com.fredericboisguerin.pdf.bezier.discretizer.BezierCurveDiscretizerMode.FIXED_STEP_10_RANGES;
 
-public class DrawingActionsToDrawLinesConverterImpl implements DrawingActionsToDrawLinesConverter {
+public class DrawingActionsToDrawLinesConverter {
 
-    @Override
     public DrawLines convert(List<DrawingAction> drawingActions) {
         InnerDrawingActionsConverter innerDrawingActionsConverter = new InnerDrawingActionsConverter();
         drawingActions.forEach(drawingAction -> drawingAction.accept(innerDrawingActionsConverter));
@@ -58,21 +59,21 @@ public class DrawingActionsToDrawLinesConverterImpl implements DrawingActionsToD
     }
 
     private static List<DrawingPoint> getDrawingPointsForBezierCurve(DrawingPoint currentDrawingPoint, DrawingPoint p1, DrawingPoint p2, DrawingPoint p3) {
-        BezierCurveDiscretizerFactory bezierCurveDiscretizerFactory = new BezierCurveDiscretizerFactory();
-        BezierCurveDiscretizer build = bezierCurveDiscretizerFactory.build(FIXED_STEP_10_RANGES);
-        BezierCurve bezierCurve = new BezierCurve(convert(currentDrawingPoint), convert(p1), convert(p2), convert(p3));
-        return build.getDrawingPointsForBezierCurve(bezierCurve)
-                    .stream()
-                    .map(DrawingActionsToDrawLinesConverterImpl::convertInverse)
-                    .collect(Collectors.toList());
+        BezierCurveDiscretizerFactory discretizerFactory = new BezierCurveDiscretizerFactory();
+        BezierCurveDiscretizer discretizer = discretizerFactory.build(FIXED_STEP_10_RANGES);
+        BezierCurve bezierCurve = new BezierCurve(toBezierCurvePoint(currentDrawingPoint), toBezierCurvePoint(p1), toBezierCurvePoint(p2), toBezierCurvePoint(p3));
+        return discretizer.getDrawingPointsForBezierCurve(bezierCurve)
+                          .stream()
+                          .map(DrawingActionsToDrawLinesConverter::toDrawingPoint)
+                          .collect(Collectors.toList());
     }
 
-    private static DrawingPoint convertInverse(BezierCurvePoint bezierCurvePoint) {
+    private static DrawingPoint toDrawingPoint(BezierCurvePoint bezierCurvePoint) {
         return new DrawingPoint(bezierCurvePoint.getX(), bezierCurvePoint
                 .getY());
     }
 
-    private static BezierCurvePoint convert(DrawingPoint currentDrawingPoint) {
+    private static BezierCurvePoint toBezierCurvePoint(DrawingPoint currentDrawingPoint) {
         return new BezierCurvePoint(currentDrawingPoint.getX(), currentDrawingPoint
                 .getY());
     }

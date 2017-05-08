@@ -7,9 +7,8 @@ import com.fredericboisguerin.pdf.DrawingActionLogger;
 import com.fredericboisguerin.pdf.parser.PDFDrawingActionsParser;
 import com.fredericboisguerin.pdf.parser.model.DrawingAction;
 import com.fredericboisguerin.pdf.parser.model.DrawingActionVisitor;
-import com.fredericboisguerin.pdf.wrapper.DrawLines;
-import com.fredericboisguerin.pdf.wrapper.DrawingActionsToDrawLinesConverter;
-import com.fredericboisguerin.pdf.wrapper.DrawingActionsToDrawLinesConverterImpl;
+import com.fredericboisguerin.pdf.drawlines.model.DrawLines;
+import com.fredericboisguerin.pdf.drawlines.converter.DrawingActionsToDrawLinesConverter;
 import com.fredericboisguerin.wrapper.DrawingLinesToXYGraphConverter;
 import com.fredericboisguerin.wrapper.DrawingLinesToXYGraphConverterImpl;
 
@@ -42,7 +41,7 @@ public class UIController {
             List<DrawingAction> drawingActions = parser.parseDrawingActions(selectedFile);
             DrawingActionVisitor logger = new DrawingActionLogger();
             drawingActions.forEach(drawingAction -> drawingAction.accept(logger));
-            DrawingActionsToDrawLinesConverter linesConverter = new DrawingActionsToDrawLinesConverterImpl();
+            DrawingActionsToDrawLinesConverter linesConverter = new DrawingActionsToDrawLinesConverter();
             DrawLines drawLines = linesConverter.convert(drawingActions);
             DrawingLinesToXYGraphConverter graphConverter = new DrawingLinesToXYGraphConverterImpl();
             EditableXYGraph graph = graphConverter.convert(drawLines);

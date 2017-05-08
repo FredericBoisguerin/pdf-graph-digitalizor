@@ -8,12 +8,11 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.fredericboisguerin.pdf</groupId>
 
-    <artifactId>bezier-curve-discretizer</artifactId>
+    <artifactId>bezier-curve-sampler</artifactId>
     <packaging>jar</packaging>
 
-    <name>bezier-curve-discretizer</name>
+    <name>Bezier curve sampler</name>
     <url>http://maven.apache.org</url>
 
     <properties>

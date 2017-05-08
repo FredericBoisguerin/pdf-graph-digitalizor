@@ -10,10 +10,11 @@
     <modules>
         <module>drawing-actions-parser</module>
         <module>swing-app</module>
-        <module>bezier-curve-discretizer</module>
+        <module>bezier-curve-sampler</module>
+        <module>drawlines-converter</module>
     </modules>
 
-    <name>graph-digitalizor</name>
+    <name>Parent project</name>
     <url>http://maven.apache.org</url>
 
     <properties>

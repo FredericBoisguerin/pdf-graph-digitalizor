@@ -1,5 +1,7 @@
-package com.fredericboisguerin.pdf.wrapper;
+package com.fredericboisguerin.pdf.drawlines.converter;
 
+import com.fredericboisguerin.pdf.drawlines.model.DrawLine;
+import com.fredericboisguerin.pdf.drawlines.model.DrawLines;
 import com.fredericboisguerin.pdf.parser.model.DrawingAction;
 import com.fredericboisguerin.pdf.parser.model.DrawingPoint;
 import com.fredericboisguerin.pdf.parser.model.LineTo;
@@ -13,7 +15,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class DrawingActionsToDrawLinesConverterImplTest {
+public class DrawingActionsToDrawLinesConverterTest {
 
     private static final double DELTA = 1e-12;
 
@@ -30,15 +32,15 @@ public class DrawingActionsToDrawLinesConverterImplTest {
 
     @Before
     public void setUp() throws Exception {
-        converter = new DrawingActionsToDrawLinesConverterImpl();
+        converter = new DrawingActionsToDrawLinesConverter();
     }
 
     @Test
     public void should_have_one_series_with_three_points_after_1_moveTo_and_2_lineTo() throws Exception {
         List<DrawingAction> drawingActionList = new ArrayList<>();
-        drawingActionList.add(new MoveTo(new DrawingPoint(xA, yA)));
-        drawingActionList.add(new LineTo(new DrawingPoint(xB, yB)));
-        drawingActionList.add(new LineTo(new DrawingPoint(xC, yC)));
+        drawingActionList.add(new MoveTo(buildDrawingPoint(xA, yA)));
+        drawingActionList.add(new LineTo(buildDrawingPoint(xB, yB)));
+        drawingActionList.add(new LineTo(buildDrawingPoint(xC, yC)));
 
         DrawLines series = converter.convert(drawingActionList);
         Iterator<DrawLine> drawLineIterator = series.stream().iterator();
@@ -67,10 +69,10 @@ public class DrawingActionsToDrawLinesConverterImplTest {
     @Test
     public void should_not_create_new_line_nor_new_point_when_moveTo_last_point() throws Exception {
         List<DrawingAction> drawingActionList = new ArrayList<>();
-        drawingActionList.add(new MoveTo(new DrawingPoint(xA, yA)));
-        drawingActionList.add(new LineTo(new DrawingPoint(xB, yB)));
-        drawingActionList.add(new MoveTo(new DrawingPoint(xB, yB)));
-        drawingActionList.add(new LineTo(new DrawingPoint(xC, yC)));
+        drawingActionList.add(new MoveTo(buildDrawingPoint(xA, yA)));
+        drawingActionList.add(new LineTo(buildDrawingPoint(xB, yB)));
+        drawingActionList.add(new MoveTo(buildDrawingPoint(xB, yB)));
+        drawingActionList.add(new LineTo(buildDrawingPoint(xC, yC)));
 
         DrawLines series = converter.convert(drawingActionList);
         Iterator<DrawLine> drawLineIterator = series.stream().iterator();
@@ -99,10 +101,10 @@ public class DrawingActionsToDrawLinesConverterImplTest {
     @Test
     public void should_have_two_series_with_two_points_after_two_moveTo_lineTo() throws Exception {
         List<DrawingAction> drawingActionList = new ArrayList<>();
-        drawingActionList.add(new MoveTo(new DrawingPoint(xA, yA)));
-        drawingActionList.add(new LineTo(new DrawingPoint(xB, yB)));
-        drawingActionList.add(new MoveTo(new DrawingPoint(xC, yC)));
-        drawingActionList.add(new LineTo(new DrawingPoint(xD, yD)));
+        drawingActionList.add(new MoveTo(buildDrawingPoint(xA, yA)));
+        drawingActionList.add(new LineTo(buildDrawingPoint(xB, yB)));
+        drawingActionList.add(new MoveTo(buildDrawingPoint(xC, yC)));
+        drawingActionList.add(new LineTo(buildDrawingPoint(xD, yD)));
 
         DrawLines series = converter.convert(drawingActionList);
         Iterator<DrawLine> drawLineIterator = series.stream().iterator();
@@ -136,5 +138,9 @@ public class DrawingActionsToDrawLinesConverterImplTest {
         assertEquals(yC, C.getY(), DELTA);
         assertEquals(xD, D.getX(), DELTA);
         assertEquals(yD, D.getY(), DELTA);
+    }
+
+    private static DrawingPoint buildDrawingPoint(float x, float y) {
+        return new DrawingPoint(x, y);
     }
 }

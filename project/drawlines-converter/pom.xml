@@ -8,10 +8,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>drawing-actions-parser</artifactId>
+    <artifactId>drawlines-converter</artifactId>
     <packaging>jar</packaging>
 
-    <name>PDF drawing actions parser</name>
+    <name>Drawing actions to drawlines converter</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -19,11 +19,15 @@
     </properties>
 
     <dependencies>
-        <!--PDFBox library is an open source Java tool for working with PDF documents-->
         <dependency>
-            <groupId>org.apache.pdfbox</groupId>
-            <artifactId>pdfbox</artifactId>
-            <version>2.0.3</version>
+            <groupId>com.fredericboisguerin.pdf</groupId>
+            <artifactId>drawing-actions-parser</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fredericboisguerin.pdf</groupId>
+            <artifactId>bezier-curve-sampler</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>

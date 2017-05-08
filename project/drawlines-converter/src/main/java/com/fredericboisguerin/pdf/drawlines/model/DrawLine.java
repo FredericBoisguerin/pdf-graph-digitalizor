@@ -1,8 +1,11 @@
-package com.fredericboisguerin.pdf.wrapper;
+package com.fredericboisguerin.pdf.drawlines.model;
 
 import com.fredericboisguerin.pdf.parser.model.DrawingPoint;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -42,7 +45,6 @@ public class DrawLine {
                             .max(comparator)
                             .orElseThrow(IllegalStateException::new);
     }
-
 
     public Stream<DrawingPoint> stream() {
         return drawingPoints.stream();

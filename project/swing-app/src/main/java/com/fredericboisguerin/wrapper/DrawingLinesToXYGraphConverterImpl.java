@@ -2,10 +2,8 @@ package com.fredericboisguerin.wrapper;
 
 import com.fredericboisguerin.graph.*;
 import com.fredericboisguerin.pdf.parser.model.DrawingPoint;
-import com.fredericboisguerin.pdf.wrapper.CoordComparator;
-import com.fredericboisguerin.pdf.wrapper.DrawLine;
-import com.fredericboisguerin.pdf.wrapper.DrawLineHelper;
-import com.fredericboisguerin.pdf.wrapper.DrawLines;
+import com.fredericboisguerin.pdf.drawlines.model.DrawLine;
+import com.fredericboisguerin.pdf.drawlines.model.DrawLines;
 
 import java.util.Comparator;
 import java.util.function.BiFunction;

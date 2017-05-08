@@ -20,6 +20,7 @@
 
     <dependencies>
 
+        <!-- Internal dependencies -->
         <dependency>
             <groupId>com.fredericboisguerin.pdf</groupId>
             <artifactId>drawing-actions-parser</artifactId>
@@ -27,9 +28,11 @@
         </dependency>
         <dependency>
             <groupId>com.fredericboisguerin.pdf</groupId>
-            <artifactId>bezier-curve-discretizer</artifactId>
+            <artifactId>drawlines-converter</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <!-- External dependencies -->
         <dependency>
             <groupId>com.intellij</groupId>
             <artifactId>forms_rt</artifactId>

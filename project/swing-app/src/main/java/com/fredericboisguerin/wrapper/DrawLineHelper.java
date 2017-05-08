@@ -1,6 +1,7 @@
-package com.fredericboisguerin.pdf.wrapper;
+package com.fredericboisguerin.wrapper;
 
 import com.fredericboisguerin.pdf.parser.model.DrawingPoint;
+import com.fredericboisguerin.pdf.drawlines.model.DrawLine;
 
 import java.util.function.Function;
 
