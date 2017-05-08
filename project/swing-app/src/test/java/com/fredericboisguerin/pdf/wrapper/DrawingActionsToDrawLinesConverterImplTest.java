@@ -40,16 +40,14 @@ public class DrawingActionsToDrawLinesConverterImplTest {
         drawingActionList.add(new LineTo(new DrawingPoint(xB, yB)));
         drawingActionList.add(new LineTo(new DrawingPoint(xC, yC)));
 
-        DrawLines convert = converter.convert(drawingActionList);
-
-        DrawLines series = convert.getSeries();
-        Iterator<DrawLine> drawLineIterator = series.iterator();
+        DrawLines series = converter.convert(drawingActionList);
+        Iterator<DrawLine> drawLineIterator = series.stream().iterator();
 
         assertTrue(drawLineIterator.hasNext());
         DrawLine AC = drawLineIterator.next();
         assertFalse(drawLineIterator.hasNext());
 
-        Iterator<DrawingPoint> acIterator = AC.iterator();
+        Iterator<DrawingPoint> acIterator = AC.stream().iterator();
         assertTrue(acIterator.hasNext());
         DrawingPoint A = acIterator.next();
         assertTrue(acIterator.hasNext());
@@ -74,16 +72,14 @@ public class DrawingActionsToDrawLinesConverterImplTest {
         drawingActionList.add(new MoveTo(new DrawingPoint(xB, yB)));
         drawingActionList.add(new LineTo(new DrawingPoint(xC, yC)));
 
-        DrawLines convert = converter.convert(drawingActionList);
-
-        DrawLines series = convert.getSeries();
-        Iterator<DrawLine> drawLineIterator = series.iterator();
+        DrawLines series = converter.convert(drawingActionList);
+        Iterator<DrawLine> drawLineIterator = series.stream().iterator();
 
         assertTrue(drawLineIterator.hasNext());
         DrawLine AC = drawLineIterator.next();
         assertFalse(drawLineIterator.hasNext());
 
-        Iterator<DrawingPoint> acIterator = AC.iterator();
+        Iterator<DrawingPoint> acIterator = AC.stream().iterator();
         assertTrue(acIterator.hasNext());
         DrawingPoint A = acIterator.next();
         assertTrue(acIterator.hasNext());
@@ -108,10 +104,8 @@ public class DrawingActionsToDrawLinesConverterImplTest {
         drawingActionList.add(new MoveTo(new DrawingPoint(xC, yC)));
         drawingActionList.add(new LineTo(new DrawingPoint(xD, yD)));
 
-        DrawLines convert = converter.convert(drawingActionList);
-
-        DrawLines series = convert.getSeries();
-        Iterator<DrawLine> drawLineIterator = series.iterator();
+        DrawLines series = converter.convert(drawingActionList);
+        Iterator<DrawLine> drawLineIterator = series.stream().iterator();
 
         assertTrue(drawLineIterator.hasNext());
         DrawLine AB = drawLineIterator.next();
@@ -119,7 +113,7 @@ public class DrawingActionsToDrawLinesConverterImplTest {
         DrawLine CD = drawLineIterator.next();
         assertFalse(drawLineIterator.hasNext());
 
-        Iterator<DrawingPoint> abIterator = AB.iterator();
+        Iterator<DrawingPoint> abIterator = AB.stream().iterator();
         assertTrue(abIterator.hasNext());
         DrawingPoint A = abIterator.next();
         assertTrue(abIterator.hasNext());
@@ -131,7 +125,7 @@ public class DrawingActionsToDrawLinesConverterImplTest {
         assertEquals(xB, B.getX(), DELTA);
         assertEquals(yB, B.getY(), DELTA);
 
-        Iterator<DrawingPoint> cdIterator = CD.iterator();
+        Iterator<DrawingPoint> cdIterator = CD.stream().iterator();
         assertTrue(cdIterator.hasNext());
         DrawingPoint C = cdIterator.next();
         assertTrue(cdIterator.hasNext());

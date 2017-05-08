@@ -3,16 +3,15 @@ package com.fredericboisguerin.pdf.wrapper;
 import com.fredericboisguerin.pdf.parser.model.DrawingPoint;
 
 import java.util.*;
-import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
-public class DrawLine implements Iterable<DrawingPoint> {
+public class DrawLine {
 
-    public static final int MINIMUM_NUMBER_OF_POINTS_TO_BE_SERIES = 2;
-    public static final float RATIO_TOLERANCE = 1e-4f;
     private final List<DrawingPoint> drawingPoints = new ArrayList<>();
 
-    public DrawLine(DrawingPoint destination) {
-        add(destination);
+    public DrawLine(DrawingPoint startingPoint) {
+        add(startingPoint);
     }
 
     public void add(DrawingPoint drawingPoint) {
@@ -20,59 +19,32 @@ public class DrawLine implements Iterable<DrawingPoint> {
         Collections.sort(drawingPoints);
     }
 
-    public boolean isVertical() {
-        return isCoordTheSameForAll(DrawingPoint::getX);
+    public DrawingPoint getFirstPoint() {
+        return drawingPoints.get(0);
     }
 
-    public boolean isHorizontal() {
-        return isCoordTheSameForAll(DrawingPoint::getY);
+    public boolean allPointsMatch(Predicate<? super DrawingPoint> predicate) {
+        return drawingPoints.stream().allMatch(predicate);
     }
 
-    public boolean isSeries() {
-        return isValid() && !isVertical() && !isHorizontal();
+    public boolean hasAtLeast(int nbOfPoints) {
+        return drawingPoints.size() >= nbOfPoints;
     }
 
-    public DrawingPoint getMin(Function<DrawingPoint, Float> drawingPointMappingFunction) {
+    public DrawingPoint getMin(Comparator<DrawingPoint> comparator) {
         return drawingPoints.stream()
-                            .min(drawingPointComparator(drawingPointMappingFunction))
+                            .min(comparator)
                             .orElseThrow(IllegalStateException::new);
     }
 
-    public DrawingPoint getMax(Function<DrawingPoint, Float> drawingPointMappingFunction) {
+    public DrawingPoint getMax(Comparator<DrawingPoint> comparator) {
         return drawingPoints.stream()
-                            .max(drawingPointComparator(drawingPointMappingFunction))
+                            .max(comparator)
                             .orElseThrow(IllegalStateException::new);
     }
 
-    private Comparator<DrawingPoint> drawingPointComparator(Function<DrawingPoint, Float> drawingPointMappingFunction) {
-        return Comparator.comparing(drawingPointMappingFunction, Float::compareTo);
-    }
 
-    private boolean isValid() {
-        return drawingPoints.size() >= MINIMUM_NUMBER_OF_POINTS_TO_BE_SERIES;
-    }
-
-    public boolean isCoordTheSameForAll(Function<DrawingPoint, Float> coordGetter) {
-        DrawingPoint firstPoint = drawingPoints.get(0);
-        float coord = coordGetter.apply(firstPoint);
-        return areAllCoordsEqualTo(coord, coordGetter);
-    }
-
-    private boolean areAllCoordsEqualTo(float coord, Function<DrawingPoint, Float> coordGetter) {
-        return drawingPoints.stream()
-                            .map(coordGetter)
-                            .allMatch(other -> areCoordEqual(coord, other));
-    }
-
-    private static boolean areCoordEqual(float c1, float c2) {
-        float dist = Math.abs(c2 - c1);
-        float minAbs = Math.min(c1, c2);
-        float ratio = dist / minAbs;
-        return Float.compare(ratio, RATIO_TOLERANCE) < 0;
-    }
-
-    @Override
-    public Iterator<DrawingPoint> iterator() {
-        return drawingPoints.iterator();
+    public Stream<DrawingPoint> stream() {
+        return drawingPoints.stream();
     }
 }

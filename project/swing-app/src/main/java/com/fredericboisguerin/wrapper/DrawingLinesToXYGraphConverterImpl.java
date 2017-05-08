@@ -2,7 +2,9 @@ package com.fredericboisguerin.wrapper;
 
 import com.fredericboisguerin.graph.*;
 import com.fredericboisguerin.pdf.parser.model.DrawingPoint;
+import com.fredericboisguerin.pdf.wrapper.CoordComparator;
 import com.fredericboisguerin.pdf.wrapper.DrawLine;
+import com.fredericboisguerin.pdf.wrapper.DrawLineHelper;
 import com.fredericboisguerin.pdf.wrapper.DrawLines;
 
 import java.util.Comparator;
@@ -11,29 +13,31 @@ import java.util.function.Function;
 
 public class DrawingLinesToXYGraphConverterImpl implements DrawingLinesToXYGraphConverter {
 
+    private final DrawLineHelper drawLineHelper = new DrawLineHelper();
+
     @Override
     public EditableXYGraph convert(DrawLines drawLines) {
-        DrawLines horizontalGrid = drawLines.getHorizontalGrid();
+        DrawLines horizontalGrid = drawLines.getFilteredDrawLines(drawLineHelper::isHorizontal);
         Axis xAxis = getAxis(horizontalGrid, DrawingPoint::getX);
 
-        DrawLines verticalGrid = drawLines.getVerticalGrid();
+        DrawLines verticalGrid = drawLines.getFilteredDrawLines(drawLineHelper::isVertical);
         Axis yAxis = getAxis(verticalGrid, DrawingPoint::getY);
 
         EditableXYGraph graph = new EditableXYGraph(xAxis, yAxis);
 
-        DrawLines series = drawLines.getSeries();
-        for (DrawLine serie : series) {
-            XYPointSeries xyPointSeries = buildXYPointSeries(serie);
-
-            graph.add(xyPointSeries);
-        }
+        DrawLines series = drawLines.getFilteredDrawLines(drawLineHelper::isSerie);
+        series.stream().map(this::buildXYPointSeries).forEach(graph::add);
         return graph;
     }
 
-    private XYPointSeries buildXYPointSeries(DrawLine serie) {
+    private XYPointSeries buildXYPointSeries(DrawLine drawLine) {
         XYPointSeries xyPointSeries = new XYPointSeries();
-        serie.forEach(drawingPoint -> xyPointSeries.add(new XYPoint(drawingPoint.getX(), drawingPoint.getY())));
+        drawLine.stream().map(this::buildXYPoint).forEach(xyPointSeries::add);
         return xyPointSeries;
+    }
+
+    private XYPoint buildXYPoint(DrawingPoint drawingPoint) {
+        return new XYPoint(drawingPoint.getX(), drawingPoint.getY());
     }
 
     private Axis getAxis(DrawLines drawLines, Function<DrawingPoint, Float> coordGetter) {
@@ -42,19 +46,16 @@ public class DrawingLinesToXYGraphConverterImpl implements DrawingLinesToXYGraph
         return new LinearAxis(Coord.of(coordMin), Coord.of(coordMax));
     }
 
-    private static Float getDrawingPointValue(DrawLines drawLines, BiFunction<DrawLines, Comparator<DrawLine>, DrawLine> comparatorFunction,
-                                              BiFunction<DrawLine, Function<DrawingPoint, Float>, DrawingPoint> lineComparator,
+    private static Float getDrawingPointValue(DrawLines drawLines,
+                                              BiFunction<DrawLines, Comparator<DrawLine>, DrawLine> drawLineExtremumFinder,
+                                              BiFunction<DrawLine, Comparator<DrawingPoint>, DrawingPoint> drawingPointExtremumFinder,
                                               Function<DrawingPoint, Float> coordGetter) {
-        DrawLine drawLine = comparatorFunction.apply(drawLines, (o1, o2) -> compareDrawLines(o1, o2, lineComparator, coordGetter));
-        DrawingPoint drawingPoint = lineComparator.apply(drawLine, coordGetter);
-        return coordGetter.apply(drawingPoint);
+        Comparator<DrawingPoint> drawingPointComparator = Comparator
+                .comparing(coordGetter, new CoordComparator());
+        Comparator<DrawLine> drawLineComparator = Comparator.comparing(o -> drawingPointExtremumFinder
+                .apply(o, drawingPointComparator), drawingPointComparator);
+        DrawLine extremumLine = drawLineExtremumFinder.apply(drawLines, drawLineComparator);
+        DrawingPoint extremumPoint = extremumLine.getMin(drawingPointComparator);
+        return coordGetter.apply(extremumPoint);
     }
-
-    private static int compareDrawLines(DrawLine drawLine1, DrawLine drawLine2, BiFunction<DrawLine, Function<DrawingPoint, Float>, DrawingPoint> lineComparator, Function<DrawingPoint, Float> coordGetter) {
-        DrawingPoint p1 = lineComparator.apply(drawLine1, coordGetter);
-        DrawingPoint p2 = lineComparator.apply(drawLine2, coordGetter);
-        return Float.compare(coordGetter.apply(p1), coordGetter.apply(p2));
-    }
-
-
 }

@@ -5,8 +5,9 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
-public class DrawLines implements Iterable<DrawLine> {
+public class DrawLines {
 
     private final List<DrawLine> drawLines = new ArrayList<>();
 
@@ -14,34 +15,27 @@ public class DrawLines implements Iterable<DrawLine> {
         drawLines.add(drawLine);
     }
 
-    public DrawLines getHorizontalGrid() {
-        return getFilteredDrawLines(DrawLine::isHorizontal);
-    }
-
-    public DrawLines getVerticalGrid() {
-        return getFilteredDrawLines(DrawLine::isVertical);
-    }
-
-    public DrawLines getSeries() {
-        return getFilteredDrawLines(DrawLine::isSeries);
-    }
-
     public DrawLine getMin(Comparator<DrawLine> drawLineComparator) {
-        return drawLines.stream().min(drawLineComparator).orElseThrow(IllegalStateException::new);
+        return drawLines.stream()
+                        .min(drawLineComparator)
+                        .orElseThrow(IllegalStateException::new);
     }
 
     public DrawLine getMax(Comparator<DrawLine> drawLineComparator) {
-        return drawLines.stream().max(drawLineComparator).orElseThrow(IllegalStateException::new);
+        return drawLines.stream()
+                        .max(drawLineComparator)
+                        .orElseThrow(IllegalStateException::new);
     }
 
-    private DrawLines getFilteredDrawLines(Predicate<DrawLine> drawLinePredicate) {
+    public DrawLines getFilteredDrawLines(Predicate<DrawLine> drawLinePredicate) {
         DrawLines filteredDrawLines = new DrawLines();
-        drawLines.stream().filter(drawLinePredicate).forEach(filteredDrawLines::add);
+        drawLines.stream()
+                 .filter(drawLinePredicate)
+                 .forEach(filteredDrawLines::add);
         return filteredDrawLines;
     }
 
-    @Override
-    public Iterator<DrawLine> iterator() {
-        return drawLines.iterator();
+    public Stream<DrawLine> stream() {
+        return drawLines.stream();
     }
 }
