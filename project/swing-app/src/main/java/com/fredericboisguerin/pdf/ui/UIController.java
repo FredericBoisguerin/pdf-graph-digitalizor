@@ -9,8 +9,8 @@ import com.fredericboisguerin.pdf.parser.model.DrawingAction;
 import com.fredericboisguerin.pdf.parser.model.DrawingActionVisitor;
 import com.fredericboisguerin.pdf.drawlines.model.DrawLines;
 import com.fredericboisguerin.pdf.drawlines.converter.DrawingActionsToDrawLinesConverter;
+import com.fredericboisguerin.wrapper.CoordComparator;
 import com.fredericboisguerin.wrapper.DrawingLinesToXYGraphConverter;
-import com.fredericboisguerin.wrapper.DrawingLinesToXYGraphConverterImpl;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -43,7 +43,7 @@ public class UIController {
             drawingActions.forEach(drawingAction -> drawingAction.accept(logger));
             DrawingActionsToDrawLinesConverter linesConverter = new DrawingActionsToDrawLinesConverter();
             DrawLines drawLines = linesConverter.convert(drawingActions);
-            DrawingLinesToXYGraphConverter graphConverter = new DrawingLinesToXYGraphConverterImpl();
+            DrawingLinesToXYGraphConverter graphConverter = new DrawingLinesToXYGraphConverter(new CoordComparator());
             XYGraph graph = graphConverter.convert(drawLines);
 
             GraphEditor graphEditorForm = mainUI.getGraphEditorForm();
