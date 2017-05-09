@@ -44,8 +44,8 @@ public class ToggleList<T> {
         }
     }
 
-    public Enumeration<T> getSelectedElements() {
-        return destListModel.elements();
+    public Enumeration<T> getNotSelectedElements() {
+        return sourceListModel.elements();
     }
 
 }

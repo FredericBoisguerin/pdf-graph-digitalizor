@@ -14,17 +14,17 @@ public class DrawingLinesToXYGraphConverterImpl implements DrawingLinesToXYGraph
     private final DrawLineHelper drawLineHelper = new DrawLineHelper();
 
     @Override
-    public EditableXYGraph convert(DrawLines drawLines) {
+    public XYGraph convert(DrawLines drawLines) {
         DrawLines horizontalGrid = drawLines.getFilteredDrawLines(drawLineHelper::isHorizontal);
         Axis xAxis = getAxis(horizontalGrid, DrawingPoint::getX);
 
         DrawLines verticalGrid = drawLines.getFilteredDrawLines(drawLineHelper::isVertical);
         Axis yAxis = getAxis(verticalGrid, DrawingPoint::getY);
 
-        EditableXYGraph graph = new EditableXYGraph(xAxis, yAxis);
+        XYGraph graph = new XYGraph(xAxis, yAxis);
 
         DrawLines series = drawLines.getFilteredDrawLines(drawLineHelper::isSerie);
-        series.stream().map(this::buildXYPointSeries).forEach(graph::add);
+        series.stream().map(this::buildXYPointSeries).forEach(graph::remove);
         return graph;
     }
 

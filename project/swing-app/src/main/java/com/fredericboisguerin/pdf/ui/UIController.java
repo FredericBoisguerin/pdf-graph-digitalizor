@@ -44,7 +44,7 @@ public class UIController {
             DrawingActionsToDrawLinesConverter linesConverter = new DrawingActionsToDrawLinesConverter();
             DrawLines drawLines = linesConverter.convert(drawingActions);
             DrawingLinesToXYGraphConverter graphConverter = new DrawingLinesToXYGraphConverterImpl();
-            EditableXYGraph graph = graphConverter.convert(drawLines);
+            XYGraph graph = graphConverter.convert(drawLines);
 
             GraphEditor graphEditorForm = mainUI.getGraphEditorForm();
             graphEditorForm.addGoButtonListener(() -> {
@@ -67,17 +67,16 @@ public class UIController {
         }
     }
 
-    private static void onGoButtonClicked(GraphEditor graphEditorForm, EditableXYGraph graph) {
+    private static void onGoButtonClicked(GraphEditor graphEditorForm, XYGraph graph) {
         Axis xAxis = graphEditorForm.getxAxisEditorForm()
                                     .getAxis();
         Axis yAxis = graphEditorForm.getyAxisEditorForm()
                                     .getAxis();
 
-        graph.removeAll();
-        Enumeration<XYPointSeries> selectedElements = graphEditorForm.getSelectedElements();
-        while (selectedElements.hasMoreElements()) {
-            XYPointSeries xyPointSeries = selectedElements.nextElement();
-            graph.add(xyPointSeries);
+        Enumeration<XYPointSeries> notSelectedElements = graphEditorForm.getNotSelectedElements();
+        while (notSelectedElements.hasMoreElements()) {
+            XYPointSeries xyPointSeries = notSelectedElements.nextElement();
+            graph.remove(xyPointSeries);
         }
 
         XYGraph resizedGraph = graph.changeAxes(xAxis, yAxis, new CoordConverterProviderImpl());
