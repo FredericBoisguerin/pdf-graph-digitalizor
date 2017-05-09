@@ -6,6 +6,7 @@ import org.apache.pdfbox.rendering.PDFRenderer;
 import org.apache.pdfbox.rendering.PageDrawer;
 import org.apache.pdfbox.rendering.PageDrawerParameters;
 
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -52,6 +53,33 @@ public class PDFDrawingActionsParser {
             DrawingPoint destination = buildDrawingPoint(x, y);
             MoveTo moveTo = new MoveTo(destination);
             actionList.add(moveTo);
+        }
+
+        @Override
+        public void appendRectangle(Point2D p0, Point2D p1, Point2D p2, Point2D p3) {
+            super.appendRectangle(p0, p1, p2, p3);
+
+            System.out.println("Rectangle:");
+            System.out.println(p0);
+            System.out.println(p1);
+            System.out.println(p2);
+            System.out.println(p3);
+
+            actionList.add(new MoveTo(buildDrawingPoint(p0)));
+            actionList.add(new LineTo(buildDrawingPoint(p1)));
+
+            actionList.add(new MoveTo(buildDrawingPoint(p1)));
+            actionList.add(new LineTo(buildDrawingPoint(p2)));
+
+            actionList.add(new MoveTo(buildDrawingPoint(p2)));
+            actionList.add(new LineTo(buildDrawingPoint(p3)));
+
+            actionList.add(new MoveTo(buildDrawingPoint(p3)));
+            actionList.add(new LineTo(buildDrawingPoint(p0)));
+        }
+
+        private DrawingPoint buildDrawingPoint(Point2D point2D) {
+            return new DrawingPoint((float) point2D.getX(), (float) point2D.getY());
         }
 
         @Override
