@@ -6,12 +6,12 @@ import com.fredericboisguerin.pdf.model.datasheet.DatasheetService;
 import com.fredericboisguerin.pdf.model.datasheet.DatasheetSupplier;
 import com.fredericboisguerin.pdf.model.datasheet.PDFFile;
 
-public class ImportDatasheetDatasheetPresenter implements ImportDatasheetViewListener {
+public class ImportDatasheetPresenter implements ImportDatasheetViewListener {
 
     private final DatasheetService datasheetService;
     private final ImportDatasheetView importDatasheetView;
 
-    public ImportDatasheetDatasheetPresenter(ImportDatasheetView importDatasheetView, DatasheetService datasheetService) {
+    public ImportDatasheetPresenter(ImportDatasheetView importDatasheetView, DatasheetService datasheetService) {
         this.importDatasheetView = importDatasheetView;
         this.datasheetService = datasheetService;
     }
@@ -25,6 +25,6 @@ public class ImportDatasheetDatasheetPresenter implements ImportDatasheetViewLis
 
         String message = String.format("Datasheet %s (%s) imported!", reference, supplierName);
         importDatasheetView.notifyMessage(message);
-        importDatasheetView.navigateTo("");
+        importDatasheetView.navigateToRoot();
     }
 }

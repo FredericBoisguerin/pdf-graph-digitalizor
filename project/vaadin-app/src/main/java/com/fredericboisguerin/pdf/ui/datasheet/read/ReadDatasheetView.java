@@ -6,4 +6,8 @@ public interface ReadDatasheetView {
     void setListener(ReadDatasheetViewListener readDatasheetPresenter);
 
     void setDatasheets(List<DatasheetViewModel> datasheetViewModelList);
+
+    void notifyTray(String message);
+
+    void navigateToExtractDatasheetData(String param);
 }

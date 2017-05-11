@@ -8,4 +8,8 @@ public class PDFFile {
         this.filename = filename;
         this.file = file;
     }
+
+    public byte[] getBytes() {
+        return file;
+    }
 }

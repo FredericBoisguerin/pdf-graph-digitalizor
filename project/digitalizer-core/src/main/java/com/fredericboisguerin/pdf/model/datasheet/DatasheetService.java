@@ -20,4 +20,8 @@ public class DatasheetService {
     public Collection<Datasheet> getAllDatasheets() {
         return datasheetRepository.findAll();
     }
+
+    public Datasheet findById(String parameter) {
+        return datasheetRepository.findById(parameter).orElseThrow(IllegalAccessError::new);
+    }
 }

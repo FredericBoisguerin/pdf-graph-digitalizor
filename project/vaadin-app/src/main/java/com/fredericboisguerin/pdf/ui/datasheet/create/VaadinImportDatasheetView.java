@@ -8,7 +8,7 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.themes.ValoTheme;
 
-public class VaadinImportDatasheetDatasheetView extends VerticalLayout implements ImportDatasheetView, View {
+public class VaadinImportDatasheetView extends VerticalLayout implements ImportDatasheetView, View {
 
     public static final String VIEW_NAME = "import-datasheet";
 
@@ -21,7 +21,7 @@ public class VaadinImportDatasheetDatasheetView extends VerticalLayout implement
     private byte[] lastFileUpdated;
     private Navigator navigator;
 
-    public VaadinImportDatasheetDatasheetView() {
+    public VaadinImportDatasheetView() {
         Label title = new Label("Import a new datasheet");
         title.addStyleName(ValoTheme.LABEL_HUGE);
 
@@ -93,7 +93,7 @@ public class VaadinImportDatasheetDatasheetView extends VerticalLayout implement
     }
 
     @Override
-    public void navigateTo(String viewName) {
-        navigator.navigateTo(viewName);
+    public void navigateToRoot() {
+        navigator.navigateTo("");
     }
 }

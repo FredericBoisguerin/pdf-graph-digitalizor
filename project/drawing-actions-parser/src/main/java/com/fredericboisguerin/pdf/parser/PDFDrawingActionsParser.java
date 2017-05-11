@@ -6,7 +6,6 @@ import org.apache.pdfbox.rendering.PDFRenderer;
 import org.apache.pdfbox.rendering.PageDrawer;
 import org.apache.pdfbox.rendering.PageDrawerParameters;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,8 +13,17 @@ import java.util.List;
 
 public class PDFDrawingActionsParser {
 
+    public List<DrawingAction> parseDrawingActions(byte[] bytes) throws IOException {
+        PDDocument doc = PDDocument.load(bytes);
+        return getDrawingActionsFromPDFDocument(doc);
+    }
+
     public List<DrawingAction> parseDrawingActions(File file) throws IOException {
         PDDocument doc = PDDocument.load(file);
+        return getDrawingActionsFromPDFDocument(doc);
+    }
+
+    private List<DrawingAction> getDrawingActionsFromPDFDocument(PDDocument doc) throws IOException {
         MyPDFRenderer renderer = new MyPDFRenderer(doc);
         renderer.renderImage(0);
         doc.close();

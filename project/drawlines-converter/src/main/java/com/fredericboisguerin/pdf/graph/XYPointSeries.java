@@ -35,4 +35,8 @@ public class XYPointSeries implements Iterable<XYPoint>, Comparable<XYPointSerie
     public int compareTo(XYPointSeries other) {
         return Integer.compare(other.xyPoints.size(), this.xyPoints.size());
     }
+
+    public int size() {
+        return xyPoints.size();
+    }
 }

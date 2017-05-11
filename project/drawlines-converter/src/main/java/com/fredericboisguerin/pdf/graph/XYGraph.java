@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class XYGraph implements Iterable<XYPointSeries> {
 
@@ -16,6 +17,11 @@ public class XYGraph implements Iterable<XYPointSeries> {
     public XYGraph(Axis xAxis, Axis yAxis) {
         this.xAxis = xAxis;
         this.yAxis = yAxis;
+    }
+
+    public void add(XYPointSeries xyPoints) {
+        this.xyPointSeries.add(xyPoints);
+        Collections.sort(this.xyPointSeries);
     }
 
     public void remove(XYPointSeries xyPointSeries) {
@@ -42,5 +48,9 @@ public class XYGraph implements Iterable<XYPointSeries> {
     @Override
     public Iterator<XYPointSeries> iterator() {
         return xyPointSeries.iterator();
+    }
+
+    public Stream<XYPointSeries> stream() {
+        return xyPointSeries.stream();
     }
 }

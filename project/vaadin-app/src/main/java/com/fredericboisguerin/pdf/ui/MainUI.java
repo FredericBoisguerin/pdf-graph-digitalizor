@@ -2,8 +2,10 @@ package com.fredericboisguerin.pdf.ui;
 
 import com.fredericboisguerin.pdf.infrastructure.InMemoryDatasheetRepository;
 import com.fredericboisguerin.pdf.model.datasheet.DatasheetService;
-import com.fredericboisguerin.pdf.ui.datasheet.create.ImportDatasheetDatasheetPresenter;
-import com.fredericboisguerin.pdf.ui.datasheet.create.VaadinImportDatasheetDatasheetView;
+import com.fredericboisguerin.pdf.ui.datasheet.create.ImportDatasheetPresenter;
+import com.fredericboisguerin.pdf.ui.datasheet.create.VaadinImportDatasheetView;
+import com.fredericboisguerin.pdf.ui.datasheet.extract.ExtractDatasheetDataPresenter;
+import com.fredericboisguerin.pdf.ui.datasheet.extract.VaadinExtractDatasheetDataView;
 import com.fredericboisguerin.pdf.ui.datasheet.read.ReadDatasheetPresenter;
 import com.fredericboisguerin.pdf.ui.datasheet.read.VaadinReadDatasheetView;
 import com.vaadin.annotations.Theme;
@@ -41,12 +43,19 @@ public class MainUI extends UI {
         DatasheetService datasheetService = new DatasheetService(datasheetRepository);
         addImportDatasheetView(datasheetService);
         addReadDatasheetView(datasheetService);
+        addExtractInformationsView(datasheetService);
+    }
+
+    private void addExtractInformationsView(DatasheetService datasheetService) {
+        VaadinExtractDatasheetDataView extractDatasheetDataView = new VaadinExtractDatasheetDataView();
+        extractDatasheetDataView.setListener(new ExtractDatasheetDataPresenter(extractDatasheetDataView, datasheetService));
+        navigator.addView(VaadinExtractDatasheetDataView.VIEW_NAME, extractDatasheetDataView);
     }
 
     private void addImportDatasheetView(DatasheetService datasheetService) {
-        VaadinImportDatasheetDatasheetView vaadinImportDatasheetView = new VaadinImportDatasheetDatasheetView();
-        vaadinImportDatasheetView.setListener(new ImportDatasheetDatasheetPresenter(vaadinImportDatasheetView, datasheetService));
-        navigator.addView(VaadinImportDatasheetDatasheetView.VIEW_NAME, vaadinImportDatasheetView);
+        VaadinImportDatasheetView importDatasheetView = new VaadinImportDatasheetView();
+        importDatasheetView.setListener(new ImportDatasheetPresenter(importDatasheetView, datasheetService));
+        navigator.addView(VaadinImportDatasheetView.VIEW_NAME, importDatasheetView);
     }
 
     private void addReadDatasheetView(DatasheetService datasheetService) {

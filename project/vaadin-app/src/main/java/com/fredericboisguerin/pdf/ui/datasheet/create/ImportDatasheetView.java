@@ -6,5 +6,5 @@ public interface ImportDatasheetView {
 
     void notifyMessage(String message);
 
-    void navigateTo(String viewName);
+    void navigateToRoot();
 }

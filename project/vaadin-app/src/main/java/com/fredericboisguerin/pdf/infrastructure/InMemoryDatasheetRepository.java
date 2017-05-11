@@ -1,11 +1,8 @@
 package com.fredericboisguerin.pdf.infrastructure;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
 import com.fredericboisguerin.pdf.model.datasheet.Datasheet;
+
+import java.util.*;
 
 public class InMemoryDatasheetRepository implements DatasheetRepository {
 
@@ -19,5 +16,12 @@ public class InMemoryDatasheetRepository implements DatasheetRepository {
     @Override
     public Collection<Datasheet> findAll() {
         return Collections.unmodifiableCollection(datasheets);
+    }
+
+    @Override
+    public Optional<Datasheet> findById(String parameter) {
+        return datasheets.stream()
+                         .filter(datasheet -> datasheet.idEquals(parameter))
+                         .findFirst();
     }
 }
