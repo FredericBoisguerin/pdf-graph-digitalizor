@@ -1,14 +1,17 @@
 package com.fredericboisguerin.pdf.ui;
 
-import com.fredericboisguerin.graph.*;
-import com.fredericboisguerin.graph.report.ReportGenerator;
-import com.fredericboisguerin.graph.report.ReportGeneratorImpl;
+import com.fredericboisguerin.pdf.graph.Axis;
+import com.fredericboisguerin.pdf.graph.CoordConverterProviderImpl;
+import com.fredericboisguerin.pdf.graph.XYGraph;
+import com.fredericboisguerin.pdf.graph.XYPointSeries;
+import com.fredericboisguerin.report.ReportGenerator;
+import com.fredericboisguerin.report.ReportGeneratorImpl;
 import com.fredericboisguerin.pdf.DrawingActionLogger;
+import com.fredericboisguerin.pdf.drawlines.converter.DrawingActionsToDrawLinesConverter;
+import com.fredericboisguerin.pdf.drawlines.model.DrawLines;
 import com.fredericboisguerin.pdf.parser.PDFDrawingActionsParser;
 import com.fredericboisguerin.pdf.parser.model.DrawingAction;
 import com.fredericboisguerin.pdf.parser.model.DrawingActionVisitor;
-import com.fredericboisguerin.pdf.drawlines.model.DrawLines;
-import com.fredericboisguerin.pdf.drawlines.converter.DrawingActionsToDrawLinesConverter;
 import com.fredericboisguerin.wrapper.CoordComparator;
 import com.fredericboisguerin.wrapper.DrawingLinesToXYGraphConverter;
 

@@ -1,7 +1,7 @@
 package com.fredericboisguerin.wrapper;
 
 import com.fredericboisguerin.pdf.drawlines.model.DrawLine;
-import com.fredericboisguerin.pdf.parser.model.DrawingPoint;
+import com.fredericboisguerin.pdf.drawlines.model.DrawPoint;
 
 import java.util.Comparator;
 import java.util.function.Function;
@@ -15,11 +15,11 @@ public class DrawLineHelper {
     }
 
     public boolean isVertical(DrawLine drawLine) {
-        return hasAtLeastTwoPoints(drawLine) && isCoordTheSameForAll(drawLine, DrawingPoint::getX);
+        return hasAtLeastTwoPoints(drawLine) && isCoordTheSameForAll(drawLine, DrawPoint::getX);
     }
 
     public boolean isHorizontal(DrawLine drawLine) {
-        return hasAtLeastTwoPoints(drawLine) && isCoordTheSameForAll(drawLine, DrawingPoint::getY);
+        return hasAtLeastTwoPoints(drawLine) && isCoordTheSameForAll(drawLine, DrawPoint::getY);
     }
 
     public boolean isSerie(DrawLine drawLine) {
@@ -27,8 +27,8 @@ public class DrawLineHelper {
     }
 
     private boolean isCoordTheSameForAll(DrawLine drawLine,
-                                         Function<DrawingPoint, Float> coordGetter) {
-        DrawingPoint firstPoint = drawLine.getFirstPoint();
+                                         Function<DrawPoint, Float> coordGetter) {
+        DrawPoint firstPoint = drawLine.getFirstPoint();
         float coord = coordGetter.apply(firstPoint);
         return areAllCoordsEqualTo(drawLine, coord, coordGetter);
     }
@@ -39,7 +39,7 @@ public class DrawLineHelper {
     }
 
     private boolean areAllCoordsEqualTo(DrawLine drawLine, float coord,
-                                        Function<DrawingPoint, Float> coordGetter) {
+                                        Function<DrawPoint, Float> coordGetter) {
         return drawLine.allPointsMatch(
                 drawingPoint -> areCoordEqual(coord, coordGetter.apply(drawingPoint)));
     }

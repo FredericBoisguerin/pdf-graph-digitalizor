@@ -11,6 +11,7 @@
         <module>drawing-actions-parser</module>
         <module>swing-app</module>
         <module>bezier-curve-sampler</module>
+        <module>drawing-actions-converter</module>
         <module>drawlines-converter</module>
     </modules>
 

@@ -2,10 +2,10 @@ package com.fredericboisguerin.pdf.ui;
 
 import javax.swing.*;
 
-import com.fredericboisguerin.graph.Axis;
-import com.fredericboisguerin.graph.Coord;
-import com.fredericboisguerin.graph.LinearAxis;
-import com.fredericboisguerin.graph.LogAxis;
+import com.fredericboisguerin.pdf.graph.Axis;
+import com.fredericboisguerin.pdf.graph.Coord;
+import com.fredericboisguerin.pdf.graph.LinearAxis;
+import com.fredericboisguerin.pdf.graph.LogAxis;
 import com.fredericboisguerin.pdf.ui.exceptions.InvalidInputException;
 
 public class AxisEditorForm {

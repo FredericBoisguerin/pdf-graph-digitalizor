@@ -28,6 +28,11 @@
         </dependency>
         <dependency>
             <groupId>com.fredericboisguerin.pdf</groupId>
+            <artifactId>drawing-actions-converter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fredericboisguerin.pdf</groupId>
             <artifactId>drawlines-converter</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -110,6 +115,7 @@
                                          classname="com.intellij.ant.Javac2"/>
                                 <javac2 destdir="${project.basedir}\target\classes"> <!-- Maybe finer paths could be defined. -->
                                     <src refid="j2sp"/>
+                                    <src path="${project.basedir}\..\drawlines-converter\src\main\java\com\fredericboisguerin\pdf\graph"/>
                                 </javac2>
                             </tasks>
                         </configuration>

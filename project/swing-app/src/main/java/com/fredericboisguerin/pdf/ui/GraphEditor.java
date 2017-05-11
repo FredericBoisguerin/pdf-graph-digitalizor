@@ -1,9 +1,8 @@
 package com.fredericboisguerin.pdf.ui;
 
-import com.fredericboisguerin.graph.XYPointSeries;
+import com.fredericboisguerin.pdf.graph.XYPointSeries;
 
 import javax.swing.*;
-
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;

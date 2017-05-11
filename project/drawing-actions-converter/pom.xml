@@ -8,14 +8,26 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>drawlines-converter</artifactId>
+    <artifactId>drawing-actions-converter</artifactId>
     <packaging>jar</packaging>
 
-    <name>drawlines-converter</name>
+    <name>Drawing actions to drawlines converter</name>
     <url>http://maven.apache.org</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.fredericboisguerin.pdf</groupId>
+            <artifactId>drawing-actions-parser</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fredericboisguerin.pdf</groupId>
+            <artifactId>bezier-curve-sampler</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 </project>

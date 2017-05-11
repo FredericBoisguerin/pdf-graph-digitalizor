@@ -1,8 +1,9 @@
 package com.fredericboisguerin.wrapper;
 
-import com.fredericboisguerin.graph.*;
 import com.fredericboisguerin.pdf.drawlines.model.DrawLine;
 import com.fredericboisguerin.pdf.drawlines.model.DrawLines;
+import com.fredericboisguerin.pdf.drawlines.model.DrawPoint;
+import com.fredericboisguerin.pdf.graph.*;
 import com.fredericboisguerin.pdf.parser.model.DrawingPoint;
 
 import java.util.Comparator;
@@ -19,10 +20,10 @@ public class DrawingLinesToXYGraphConverter {
 
     public XYGraph convert(DrawLines drawLines) {
         DrawLines horizontalGrid = drawLines.getFilteredDrawLines(drawLineHelper::isHorizontal);
-        Axis xAxis = getAxis(horizontalGrid, DrawingPoint::getX);
+        Axis xAxis = getAxis(horizontalGrid, DrawPoint::getX);
 
         DrawLines verticalGrid = drawLines.getFilteredDrawLines(drawLineHelper::isVertical);
-        Axis yAxis = getAxis(verticalGrid, DrawingPoint::getY);
+        Axis yAxis = getAxis(verticalGrid, DrawPoint::getY);
 
         XYGraph graph = new XYGraph(xAxis, yAxis);
 
@@ -41,11 +42,11 @@ public class DrawingLinesToXYGraphConverter {
         return xyPointSeries;
     }
 
-    private static XYPoint buildXYPoint(DrawingPoint drawingPoint) {
+    private static XYPoint buildXYPoint(DrawPoint drawingPoint) {
         return new XYPoint(drawingPoint.getX(), drawingPoint.getY());
     }
 
-    private static Axis getAxis(DrawLines drawLines, Function<DrawingPoint, Float> coordGetter) {
+    private static Axis getAxis(DrawLines drawLines, Function<DrawPoint, Float> coordGetter) {
         Float coordMin = getDrawingPointValue(drawLines, DrawLines::getMin, DrawLine::getMin, coordGetter);
         Float coordMax = getDrawingPointValue(drawLines, DrawLines::getMax, DrawLine::getMax, coordGetter);
         return new LinearAxis(Coord.of(coordMin), Coord.of(coordMax));
@@ -53,14 +54,14 @@ public class DrawingLinesToXYGraphConverter {
 
     private static Float getDrawingPointValue(DrawLines drawLines,
                                               BiFunction<DrawLines, Comparator<DrawLine>, DrawLine> drawLineExtremumFinder,
-                                              BiFunction<DrawLine, Comparator<DrawingPoint>, DrawingPoint> drawingPointExtremumFinder,
-                                              Function<DrawingPoint, Float> coordGetter) {
-        Comparator<DrawingPoint> drawingPointComparator = Comparator
+                                              BiFunction<DrawLine, Comparator<DrawPoint>, DrawPoint> drawingPointExtremumFinder,
+                                              Function<DrawPoint, Float> coordGetter) {
+        Comparator<DrawPoint> drawingPointComparator = Comparator
                 .comparing(coordGetter, new CoordComparator());
         Comparator<DrawLine> drawLineComparator = Comparator.comparing(o -> drawingPointExtremumFinder
                 .apply(o, drawingPointComparator), drawingPointComparator);
         DrawLine extremumLine = drawLineExtremumFinder.apply(drawLines, drawLineComparator);
-        DrawingPoint extremumPoint = extremumLine.getMin(drawingPointComparator);
+        DrawPoint extremumPoint = extremumLine.getMin(drawingPointComparator);
         return coordGetter.apply(extremumPoint);
     }
 }
