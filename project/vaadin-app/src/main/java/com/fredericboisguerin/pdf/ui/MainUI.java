@@ -2,8 +2,10 @@ package com.fredericboisguerin.pdf.ui;
 
 import com.fredericboisguerin.pdf.infrastructure.InMemoryDatasheetRepository;
 import com.fredericboisguerin.pdf.model.datasheet.DatasheetService;
-import com.fredericboisguerin.pdf.ui.create.ImportPresenter;
-import com.fredericboisguerin.pdf.ui.create.VaadinImportView;
+import com.fredericboisguerin.pdf.ui.datasheet.create.ImportDatasheetDatasheetPresenter;
+import com.fredericboisguerin.pdf.ui.datasheet.create.VaadinImportDatasheetDatasheetView;
+import com.fredericboisguerin.pdf.ui.datasheet.read.ReadDatasheetPresenter;
+import com.fredericboisguerin.pdf.ui.datasheet.read.VaadinReadDatasheetView;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.navigator.Navigator;
@@ -23,7 +25,8 @@ import javax.servlet.annotation.WebServlet;
 @Theme("mytheme")
 public class MainUI extends UI {
 
-    Navigator navigator;
+    private static final InMemoryDatasheetRepository datasheetRepository = new InMemoryDatasheetRepository();
+    private Navigator navigator;
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
@@ -31,14 +34,26 @@ public class MainUI extends UI {
         // Create a navigator to control the views
         navigator = new Navigator(this, this);
 
-        // START VIEW
+        // 1. START VIEW
         navigator.addView("", new StartView());
 
-        // IMPORT VIEW
-        VaadinImportView vaadinImportView = new VaadinImportView();
-        DatasheetService datasheetService = new DatasheetService(new InMemoryDatasheetRepository());
-        vaadinImportView.setListener(new ImportPresenter(vaadinImportView, datasheetService));
-        navigator.addView(VaadinImportView.VIEW_NAME, vaadinImportView);
+        // 2. DATASHEET
+        DatasheetService datasheetService = new DatasheetService(datasheetRepository);
+        addImportDatasheetView(datasheetService);
+        addReadDatasheetView(datasheetService);
+    }
+
+    private void addImportDatasheetView(DatasheetService datasheetService) {
+        VaadinImportDatasheetDatasheetView vaadinImportDatasheetView = new VaadinImportDatasheetDatasheetView();
+        vaadinImportDatasheetView.setListener(new ImportDatasheetDatasheetPresenter(vaadinImportDatasheetView, datasheetService));
+        navigator.addView(VaadinImportDatasheetDatasheetView.VIEW_NAME, vaadinImportDatasheetView);
+    }
+
+    private void addReadDatasheetView(DatasheetService datasheetService) {
+        VaadinReadDatasheetView vaadinReadDatasheetView = new VaadinReadDatasheetView();
+        ReadDatasheetPresenter readDatasheetPresenter = new ReadDatasheetPresenter(vaadinReadDatasheetView, datasheetService);
+        vaadinReadDatasheetView.setListener(readDatasheetPresenter);
+        navigator.addView(VaadinReadDatasheetView.VIEW_NAME, vaadinReadDatasheetView);
     }
 
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)

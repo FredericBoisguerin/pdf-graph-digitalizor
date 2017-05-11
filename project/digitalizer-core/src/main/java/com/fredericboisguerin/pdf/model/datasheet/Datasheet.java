@@ -15,4 +15,8 @@ public class Datasheet {
     public DatasheetReference getDatasheetReference() {
         return datasheetReference;
     }
+
+    public DatasheetSupplier getSupplier() {
+        return supplier;
+    }
 }

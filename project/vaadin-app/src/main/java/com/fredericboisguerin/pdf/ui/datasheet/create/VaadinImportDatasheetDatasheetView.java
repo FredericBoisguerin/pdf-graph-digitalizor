@@ -1,4 +1,4 @@
-package com.fredericboisguerin.pdf.ui.create;
+package com.fredericboisguerin.pdf.ui.datasheet.create;
 
 import com.fredericboisguerin.pdf.ui.upload.FileDropBox;
 import com.vaadin.navigator.Navigator;
@@ -6,22 +6,24 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.themes.ValoTheme;
 
-public class VaadinImportView extends VerticalLayout implements ImportView, View {
+public class VaadinImportDatasheetDatasheetView extends VerticalLayout implements ImportDatasheetView, View {
 
-    public static final String VIEW_NAME = "import";
+    public static final String VIEW_NAME = "import-datasheet";
 
     private final TextField referenceTextField;
     private final TextField supplierTextField;
     private final Label filenameLabel;
 
-    private ImportViewListener listener;
+    private ImportDatasheetViewListener listener;
     private String lastFileNameUpdated;
     private byte[] lastFileUpdated;
     private Navigator navigator;
 
-    public VaadinImportView() {
-        Label instructionsLabel = new Label("You are at the import page.");
+    public VaadinImportDatasheetDatasheetView() {
+        Label title = new Label("Import a new datasheet");
+        title.addStyleName(ValoTheme.LABEL_HUGE);
 
         referenceTextField = new TextField("Reference");
         supplierTextField = new TextField("Supplier");
@@ -34,7 +36,7 @@ public class VaadinImportView extends VerticalLayout implements ImportView, View
         Button validateButton = new Button("Validate");
         validateButton.addClickListener(this::onValidateButtonClicked);
 
-        addComponents(instructionsLabel, referenceTextField, supplierTextField, components,
+        addComponents(title, referenceTextField, supplierTextField, components,
                 fileUpdatedLayout, validateButton);
     }
 
@@ -80,7 +82,8 @@ public class VaadinImportView extends VerticalLayout implements ImportView, View
         navigator = viewChangeEvent.getNavigator();
     }
 
-    public void setListener(ImportViewListener listener) {
+    @Override
+    public void setListener(ImportDatasheetViewListener listener) {
         this.listener = listener;
     }
 

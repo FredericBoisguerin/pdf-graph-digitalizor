@@ -1,4 +1,4 @@
-package com.fredericboisguerin.pdf.ui.create;
+package com.fredericboisguerin.pdf.ui.datasheet.create;
 
 import com.fredericboisguerin.pdf.actions.ImportPDF;
 import com.fredericboisguerin.pdf.model.datasheet.DatasheetReference;
@@ -6,13 +6,13 @@ import com.fredericboisguerin.pdf.model.datasheet.DatasheetService;
 import com.fredericboisguerin.pdf.model.datasheet.DatasheetSupplier;
 import com.fredericboisguerin.pdf.model.datasheet.PDFFile;
 
-public class ImportPresenter implements ImportViewListener {
+public class ImportDatasheetDatasheetPresenter implements ImportDatasheetViewListener {
 
     private final DatasheetService datasheetService;
-    private final ImportView importView;
+    private final ImportDatasheetView importDatasheetView;
 
-    public ImportPresenter(ImportView importView,DatasheetService datasheetService) {
-        this.importView = importView;
+    public ImportDatasheetDatasheetPresenter(ImportDatasheetView importDatasheetView, DatasheetService datasheetService) {
+        this.importDatasheetView = importDatasheetView;
         this.datasheetService = datasheetService;
     }
 
@@ -24,7 +24,7 @@ public class ImportPresenter implements ImportViewListener {
         importPDF.execute(datasheetService);
 
         String message = String.format("Datasheet %s (%s) imported!", reference, supplierName);
-        importView.notifyMessage(message);
-        importView.navigateTo("");
+        importDatasheetView.notifyMessage(message);
+        importDatasheetView.navigateTo("");
     }
 }

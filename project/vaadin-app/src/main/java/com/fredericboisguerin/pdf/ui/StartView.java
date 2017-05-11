@@ -1,6 +1,7 @@
 package com.fredericboisguerin.pdf.ui;
 
-import com.fredericboisguerin.pdf.ui.create.VaadinImportView;
+import com.fredericboisguerin.pdf.ui.datasheet.create.VaadinImportDatasheetDatasheetView;
+import com.fredericboisguerin.pdf.ui.datasheet.read.VaadinReadDatasheetView;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
@@ -15,9 +16,15 @@ public class StartView extends VerticalLayout implements View {
     public StartView() {
         String text = "Hello. You're in StartView. There's nothing to do here.";
         addComponent(new Label(text));
-        Button goImportButton = new Button("Import");
-        goImportButton.addClickListener(clickEvent -> navigateTo(VaadinImportView.VIEW_NAME));
-        addComponent(goImportButton);
+        Button importDatasheetButton = buildNavigationButton("Import", VaadinImportDatasheetDatasheetView.VIEW_NAME);
+        Button readDatasheetsButton = buildNavigationButton("Read datasheets", VaadinReadDatasheetView.VIEW_NAME);
+        addComponents(importDatasheetButton, readDatasheetsButton);
+    }
+
+    private Button buildNavigationButton(String caption, String viewName) {
+        Button goImportButton = new Button(caption);
+        goImportButton.addClickListener(clickEvent -> navigateTo(viewName));
+        return goImportButton;
     }
 
     private void navigateTo(String viewName) {
