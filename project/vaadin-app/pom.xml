@@ -48,6 +48,13 @@
     </dependencyManagement>
 
     <dependencies>
+        <!-- Internal dependencies -->
+        <dependency>
+            <groupId>com.fredericboisguerin.pdf</groupId>
+            <artifactId>digitalizer-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!-- External dependencies -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>

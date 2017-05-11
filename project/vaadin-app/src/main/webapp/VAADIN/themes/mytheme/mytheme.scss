@@ -35,4 +35,9 @@
   @include valo;
 
   // Insert your own theme rules here
+
+  .drop-area {
+    border: 3px dashed grey;
+  }
+
 }

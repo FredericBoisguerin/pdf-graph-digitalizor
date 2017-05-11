@@ -2,6 +2,8 @@ package com.fredericboisguerin.pdf.ui;
 
 import javax.servlet.annotation.WebServlet;
 
+import com.fredericboisguerin.pdf.infrastructure.InMemoryDatasheetRepository;
+import com.fredericboisguerin.pdf.model.datasheet.DatasheetService;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.navigator.Navigator;
@@ -27,9 +29,14 @@ public class MainUI extends UI {
         // Create a navigator to control the views
         navigator = new Navigator(this, this);
 
-        // Create and register the views
+        // START VIEW
         navigator.addView("", new StartView());
-        navigator.addView(ImportView.VIEW_NAME, new ImportView());
+        ImportView importView = new ImportView();
+
+        // IMPORT VIEW
+        DatasheetService datasheetService = new DatasheetService(new InMemoryDatasheetRepository());
+        importView.setListener(new ImportPresenter(datasheetService));
+        navigator.addView(ImportView.VIEW_NAME, importView);
     }
 
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
