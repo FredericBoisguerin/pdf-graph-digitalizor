@@ -1,17 +1,13 @@
-package com.fredericboisguerin.pdf.ui;
+package com.fredericboisguerin.pdf.ui.create;
 
+import com.fredericboisguerin.pdf.ui.upload.FileDropBox;
+import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
+import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.VerticalLayout;
 
-public class ImportView extends VerticalLayout implements View {
+public class VaadinImportView extends VerticalLayout implements ImportView, View {
 
     public static final String VIEW_NAME = "import";
 
@@ -22,8 +18,9 @@ public class ImportView extends VerticalLayout implements View {
     private ImportViewListener listener;
     private String lastFileNameUpdated;
     private byte[] lastFileUpdated;
+    private Navigator navigator;
 
-    public ImportView() {
+    public VaadinImportView() {
         Label instructionsLabel = new Label("You are at the import page.");
 
         referenceTextField = new TextField("Reference");
@@ -80,10 +77,20 @@ public class ImportView extends VerticalLayout implements View {
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
-
+        navigator = viewChangeEvent.getNavigator();
     }
 
     public void setListener(ImportViewListener listener) {
         this.listener = listener;
+    }
+
+    @Override
+    public void notifyMessage(String message) {
+        Notification.show(message);
+    }
+
+    @Override
+    public void navigateTo(String viewName) {
+        navigator.navigateTo(viewName);
     }
 }

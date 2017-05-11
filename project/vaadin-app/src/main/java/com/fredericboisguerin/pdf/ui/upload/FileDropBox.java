@@ -1,4 +1,4 @@
-package com.fredericboisguerin.pdf.ui;
+package com.fredericboisguerin.pdf.ui.upload;
 
 import static com.vaadin.ui.Notification.Type;
 import static com.vaadin.ui.Notification.show;
