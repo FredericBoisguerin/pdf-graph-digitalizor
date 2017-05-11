@@ -4,7 +4,6 @@ import com.fredericboisguerin.pdf.drawlines.model.DrawLine;
 import com.fredericboisguerin.pdf.drawlines.model.DrawLines;
 import com.fredericboisguerin.pdf.drawlines.model.DrawPoint;
 import com.fredericboisguerin.pdf.graph.*;
-import com.fredericboisguerin.pdf.parser.model.DrawingPoint;
 
 import java.util.Comparator;
 import java.util.function.BiFunction;
@@ -30,7 +29,7 @@ public class DrawingLinesToXYGraphConverter {
         DrawLines series = drawLines.getFilteredDrawLines(drawLineHelper::isSerie);
         series.stream()
               .map(DrawingLinesToXYGraphConverter::buildXYPointSeries)
-              .forEach(graph::remove);
+              .forEach(graph::add);
         return graph;
     }
 
@@ -61,7 +60,7 @@ public class DrawingLinesToXYGraphConverter {
         Comparator<DrawLine> drawLineComparator = Comparator.comparing(o -> drawingPointExtremumFinder
                 .apply(o, drawingPointComparator), drawingPointComparator);
         DrawLine extremumLine = drawLineExtremumFinder.apply(drawLines, drawLineComparator);
-        DrawPoint extremumPoint = extremumLine.getMin(drawingPointComparator);
+        DrawPoint extremumPoint = drawingPointExtremumFinder.apply(extremumLine, drawingPointComparator);
         return coordGetter.apply(extremumPoint);
     }
 }
