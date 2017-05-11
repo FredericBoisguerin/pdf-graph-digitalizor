@@ -13,6 +13,7 @@
         <module>bezier-curve-sampler</module>
         <module>drawing-actions-converter</module>
         <module>drawlines-converter</module>
+        <module>digitalizer-core</module>
     </modules>
 
     <name>Parent project</name>
