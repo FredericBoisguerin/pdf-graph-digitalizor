@@ -3,6 +3,7 @@ package com.fredericboisguerin.pdf.ui;
 import javax.swing.*;
 
 import com.fredericboisguerin.pdf.graph.Axis;
+import com.fredericboisguerin.pdf.graph.AxisCoords;
 import com.fredericboisguerin.pdf.graph.Coord;
 import com.fredericboisguerin.pdf.graph.LinearAxis;
 import com.fredericboisguerin.pdf.graph.LogAxis;
@@ -42,7 +43,8 @@ public class AxisEditorForm {
     }
 
     private Axis getAxisNew(Coord minCoord, Coord maxCoord, boolean isLogarithmic) {
-        return isLogarithmic ? new LogAxis(minCoord, maxCoord) : new LinearAxis(minCoord, maxCoord);
+        AxisCoords axisCoords = new AxisCoords(minCoord, maxCoord);
+        return isLogarithmic ? new LogAxis(axisCoords) : new LinearAxis(axisCoords);
     }
 
     private float getFloatValue(JTextField field, String designation) throws InvalidInputException {

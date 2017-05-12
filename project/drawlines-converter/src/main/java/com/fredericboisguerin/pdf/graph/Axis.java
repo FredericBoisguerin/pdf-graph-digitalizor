@@ -4,9 +4,9 @@ public abstract class Axis {
     private final Coord min;
     private final Coord max;
 
-    public Axis(Coord min, Coord max) {
-        this.min = min;
-        this.max = max;
+    public Axis(AxisCoords axisCoords) {
+        this.min = axisCoords.getMin();
+        this.max = axisCoords.getMax();
     }
 
     public Coord getMin() {

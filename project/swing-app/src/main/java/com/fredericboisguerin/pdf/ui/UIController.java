@@ -4,7 +4,6 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 
 import javax.swing.*;
@@ -71,9 +70,9 @@ public class UIController {
     private static void onGoButtonClicked(GraphEditor graphEditorForm, XYGraph graph) {
         Axis xAxis = graphEditorForm.getxAxisEditorForm().getAxis();
         Axis yAxis = graphEditorForm.getyAxisEditorForm().getAxis();
-        Enumeration<XYPointSeries> notSelectedElements = graphEditorForm.getNotSelectedElements();
+        List<XYPointSeries> selectedElements = graphEditorForm.getSelectedElements();
 
-        ExportDataExcel exportDataExcel = new ExportDataExcel(graph, xAxis, yAxis, notSelectedElements);
+        ExportDataExcel exportDataExcel = new ExportDataExcel(graph.withOnly(selectedElements), xAxis, yAxis);
         try {
             File file = exportDataExcel.execute();
             try {

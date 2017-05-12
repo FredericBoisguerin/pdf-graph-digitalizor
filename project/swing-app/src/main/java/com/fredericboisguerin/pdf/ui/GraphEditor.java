@@ -4,7 +4,7 @@ import com.fredericboisguerin.pdf.graph.XYPointSeries;
 
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Enumeration;
+import java.util.Collections;
 import java.util.List;
 
 public class GraphEditor {
@@ -52,7 +52,7 @@ public class GraphEditor {
         return yAxisEditorForm;
     }
 
-    public Enumeration<XYPointSeries> getNotSelectedElements() {
-        return seriesToggleList.getNotSelectedElements();
+    public List<XYPointSeries> getSelectedElements() {
+        return Collections.list(seriesToggleList.getSelectedElements());
     }
 }

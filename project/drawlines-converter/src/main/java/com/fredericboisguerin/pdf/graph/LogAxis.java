@@ -1,8 +1,8 @@
 package com.fredericboisguerin.pdf.graph;
 
 public class LogAxis extends Axis {
-    public LogAxis(Coord min, Coord max) {
-        super(min, max);
+    public LogAxis(AxisCoords axisCoords) {
+        super(axisCoords);
     }
 
     @Override

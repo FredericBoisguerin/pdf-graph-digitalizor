@@ -19,8 +19,8 @@ public class CoordConverterProviderImplTest {
     @Test
     public void should_convert_linear() throws Exception {
         Coord old = Coord.of(50);
-        Axis from = new LinearAxis(Coord.of(0), Coord.of(100));
-        Axis to = new LinearAxis(Coord.of(1), Coord.of(3));
+        Axis from = new LinearAxis(new AxisCoords(Coord.of(0), Coord.of(100)));
+        Axis to = new LinearAxis(new AxisCoords(Coord.of(1), Coord.of(3)));
 
         Function<Coord, Coord> converter = getConverter(from, to);
         Coord actual = converter.apply(old);
@@ -35,8 +35,8 @@ public class CoordConverterProviderImplTest {
     @Test(expected = UnsupportedOperationException.class)
     public void should_throw_NotImplementedException_when_convert_from_logarithmic_axis()
             throws Exception {
-        Axis from = new LogAxis(Coord.of(0), Coord.of(100));
-        Axis to = new LinearAxis(Coord.of(1), Coord.of(3));
+        Axis from = new LogAxis(new AxisCoords(Coord.of(0), Coord.of(100)));
+        Axis to = new LinearAxis(new AxisCoords(Coord.of(1), Coord.of(3)));
 
         getConverter(from, to);
     }
@@ -44,8 +44,8 @@ public class CoordConverterProviderImplTest {
     @Test
     public void should_convert_log_case_1() throws Exception {
         Coord old = Coord.of(50);
-        Axis from = new LinearAxis(Coord.of(0), Coord.of(100));
-        Axis to = new LogAxis(Coord.of(10), Coord.of(1000));
+        Axis from = new LinearAxis(new AxisCoords(Coord.of(0), Coord.of(100)));
+        Axis to = new LogAxis(new AxisCoords(Coord.of(10), Coord.of(1000)));
 
         Function<Coord, Coord> converter = getConverter(from, to);
         Coord actual = converter.apply(old);
@@ -56,8 +56,8 @@ public class CoordConverterProviderImplTest {
     @Test
     public void should_convert_log_case_2() throws Exception {
         Coord old = Coord.of(50);
-        Axis from = new LinearAxis(Coord.of(0), Coord.of(100));
-        Axis to = new LogAxis(Coord.of(100), Coord.of(10000));
+        Axis from = new LinearAxis(new AxisCoords(Coord.of(0), Coord.of(100)));
+        Axis to = new LogAxis(new AxisCoords(Coord.of(100), Coord.of(10000)));
 
         Function<Coord, Coord> converter = getConverter(from, to);
         Coord actual = converter.apply(old);
@@ -68,8 +68,8 @@ public class CoordConverterProviderImplTest {
     @Test
     public void should_convert_log_case_3() throws Exception {
         Coord old = Coord.of(50);
-        Axis from = new LinearAxis(Coord.of(0), Coord.of(100));
-        Axis to = new LogAxis(Coord.of(1e9f), Coord.of(1e11f));
+        Axis from = new LinearAxis(new AxisCoords(Coord.of(0), Coord.of(100)));
+        Axis to = new LogAxis(new AxisCoords(Coord.of(1e9f), Coord.of(1e11f)));
 
         Function<Coord, Coord> converter = getConverter(from, to);
         Coord actual = converter.apply(old);

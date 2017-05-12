@@ -1,8 +1,8 @@
 package com.fredericboisguerin.pdf.graph;
 
 public class LinearAxis extends Axis {
-    public LinearAxis(Coord min, Coord max) {
-        super(min, max);
+    public LinearAxis(AxisCoords axisCoords) {
+        super(axisCoords);
     }
 
     @Override

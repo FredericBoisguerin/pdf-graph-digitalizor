@@ -1,5 +1,6 @@
 package com.fredericboisguerin.pdf.ui.datasheet.extract;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface ExtractDatasheetDataView {
@@ -12,4 +13,9 @@ public interface ExtractDatasheetDataView {
     void setSeries(List<SerieViewModel> serieViewModels);
 
     void setDatasheetInfo(String datasheetInfo);
+
+    void setAxesViewModels(AxesViewModel axesViewModel);
+
+    Collection<SerieViewModel> getSelectedSeries();
+
 }

@@ -48,7 +48,7 @@ public class DrawingLinesToXYGraphConverter {
     private static Axis getAxis(DrawLines drawLines, Function<DrawPoint, Float> coordGetter) {
         Float coordMin = getDrawingPointValue(drawLines, DrawLines::getMin, DrawLine::getMin, coordGetter);
         Float coordMax = getDrawingPointValue(drawLines, DrawLines::getMax, DrawLine::getMax, coordGetter);
-        return new LinearAxis(Coord.of(coordMin), Coord.of(coordMax));
+        return new LinearAxis(new AxisCoords(Coord.of(coordMin), Coord.of(coordMax)));
     }
 
     private static Float getDrawingPointValue(DrawLines drawLines,
