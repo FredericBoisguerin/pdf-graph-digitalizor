@@ -1,4 +1,4 @@
-package com.fredericboisguerin.wrapper;
+package com.fredericboisguerin.pdf.infrastructure.wrapper;
 
 import com.fredericboisguerin.pdf.drawlines.model.DrawLine;
 import com.fredericboisguerin.pdf.drawlines.model.DrawPoint;

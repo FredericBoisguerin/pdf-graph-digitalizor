@@ -1,4 +1,4 @@
-package com.fredericboisguerin.report;
+package com.fredericboisguerin.pdf.infrastructure.report;
 
 import com.fredericboisguerin.pdf.graph.Coord;
 import com.fredericboisguerin.pdf.graph.XYGraph;
@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static jxl.biff.FormatRecord.logger;
+
+import jxl.biff.FormatRecord;
 
 public class ReportGeneratorImpl implements ReportGenerator {
 
@@ -90,12 +92,12 @@ public class ReportGeneratorImpl implements ReportGenerator {
                 context.putVar("headers", headers);
                 context.putVar("rows", rows);
                 // applying transformation
-                logger.info("Applying area " + xlsArea.getAreaRef() + " at cell " + new CellRef("Result!A1"));
+                FormatRecord.logger.info("Applying area " + xlsArea.getAreaRef() + " at cell " + new CellRef("Result!A1"));
                 xlsArea.applyAt(new CellRef("Result!A1"), context);
                 // saving the results to file
                 transformer.write();
-                logger.info("Complete");
-                logger.info(tempFile.getAbsolutePath());
+                FormatRecord.logger.info("Complete");
+                FormatRecord.logger.info(tempFile.getAbsolutePath());
             }
         }
 

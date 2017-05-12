@@ -14,25 +14,38 @@
     <name>digitalizer-core</name>
     <url>http://maven.apache.org</url>
     <dependencies>
+        <!-- Internal dependencies -->
         <dependency>
             <groupId>com.fredericboisguerin.pdf</groupId>
             <artifactId>drawlines-converter</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fredericboisguerin.pdf</groupId>
             <artifactId>drawing-actions-parser</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fredericboisguerin.pdf</groupId>
             <artifactId>drawing-actions-converter</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- External dependencies -->
+        <dependency>
+            <groupId>org.jxls</groupId>
+            <artifactId>jxls</artifactId>
+            <version>[2.0.0,)</version>
         </dependency>
         <dependency>
-            <groupId>com.fredericboisguerin.pdf</groupId>
-            <artifactId>swing-app</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>org.jxls</groupId>
+            <artifactId>jxls-poi</artifactId>
+            <version>[1.0.0,)</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jxls</groupId>
+            <artifactId>jxls-jexcel</artifactId>
+            <version>[1.0.0,)</version>
         </dependency>
     </dependencies>
 

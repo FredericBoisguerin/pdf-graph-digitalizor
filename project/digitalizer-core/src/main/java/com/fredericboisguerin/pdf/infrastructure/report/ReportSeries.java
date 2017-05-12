@@ -1,4 +1,4 @@
-package com.fredericboisguerin.report;
+package com.fredericboisguerin.pdf.infrastructure.report;
 
 import java.util.ArrayList;
 import java.util.Collections;

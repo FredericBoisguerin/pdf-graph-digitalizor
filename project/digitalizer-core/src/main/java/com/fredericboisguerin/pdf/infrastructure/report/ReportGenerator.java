@@ -1,4 +1,4 @@
-package com.fredericboisguerin.report;
+package com.fredericboisguerin.pdf.infrastructure.report;
 
 
 import com.fredericboisguerin.pdf.graph.XYGraph;

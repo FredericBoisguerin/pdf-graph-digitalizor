@@ -1,22 +1,5 @@
 package com.fredericboisguerin.pdf.ui;
 
-import com.fredericboisguerin.pdf.graph.Axis;
-import com.fredericboisguerin.pdf.graph.CoordConverterProviderImpl;
-import com.fredericboisguerin.pdf.graph.XYGraph;
-import com.fredericboisguerin.pdf.graph.XYPointSeries;
-import com.fredericboisguerin.report.ReportGenerator;
-import com.fredericboisguerin.report.ReportGeneratorImpl;
-import com.fredericboisguerin.pdf.DrawingActionLogger;
-import com.fredericboisguerin.pdf.drawlines.converter.DrawingActionsToDrawLinesConverter;
-import com.fredericboisguerin.pdf.drawlines.model.DrawLines;
-import com.fredericboisguerin.pdf.parser.PDFDrawingActionsParser;
-import com.fredericboisguerin.pdf.parser.model.DrawingAction;
-import com.fredericboisguerin.pdf.parser.model.DrawingActionVisitor;
-import com.fredericboisguerin.wrapper.CoordComparator;
-import com.fredericboisguerin.wrapper.DrawingLinesToXYGraphConverter;
-
-import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -24,9 +7,23 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
-public class UIController {
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
-    public static final ReportGenerator REPORT_GENERATOR = new ReportGeneratorImpl();
+import com.fredericboisguerin.pdf.DrawingActionLogger;
+import com.fredericboisguerin.pdf.actions.ExportDataExcel;
+import com.fredericboisguerin.pdf.drawlines.converter.DrawingActionsToDrawLinesConverter;
+import com.fredericboisguerin.pdf.drawlines.model.DrawLines;
+import com.fredericboisguerin.pdf.graph.Axis;
+import com.fredericboisguerin.pdf.graph.XYGraph;
+import com.fredericboisguerin.pdf.graph.XYPointSeries;
+import com.fredericboisguerin.pdf.parser.PDFDrawingActionsParser;
+import com.fredericboisguerin.pdf.parser.model.DrawingAction;
+import com.fredericboisguerin.pdf.parser.model.DrawingActionVisitor;
+import com.fredericboisguerin.pdf.infrastructure.wrapper.CoordComparator;
+import com.fredericboisguerin.pdf.infrastructure.wrapper.DrawingLinesToXYGraphConverter;
+
+public class UIController {
 
     public static void main(String[] args) {
         MainUI mainUI = new MainUI();
@@ -46,7 +43,8 @@ public class UIController {
             drawingActions.forEach(drawingAction -> drawingAction.accept(logger));
             DrawingActionsToDrawLinesConverter linesConverter = new DrawingActionsToDrawLinesConverter();
             DrawLines drawLines = linesConverter.convert(drawingActions);
-            DrawingLinesToXYGraphConverter graphConverter = new DrawingLinesToXYGraphConverter(new CoordComparator());
+            DrawingLinesToXYGraphConverter graphConverter = new DrawingLinesToXYGraphConverter(
+                    new CoordComparator());
             XYGraph graph = graphConverter.convert(drawLines);
 
             GraphEditor graphEditorForm = mainUI.getGraphEditorForm();
@@ -71,32 +69,24 @@ public class UIController {
     }
 
     private static void onGoButtonClicked(GraphEditor graphEditorForm, XYGraph graph) {
-        Axis xAxis = graphEditorForm.getxAxisEditorForm()
-                                    .getAxis();
-        Axis yAxis = graphEditorForm.getyAxisEditorForm()
-                                    .getAxis();
-
+        Axis xAxis = graphEditorForm.getxAxisEditorForm().getAxis();
+        Axis yAxis = graphEditorForm.getyAxisEditorForm().getAxis();
         Enumeration<XYPointSeries> notSelectedElements = graphEditorForm.getNotSelectedElements();
-        while (notSelectedElements.hasMoreElements()) {
-            XYPointSeries xyPointSeries = notSelectedElements.nextElement();
-            graph.remove(xyPointSeries);
-        }
 
-        XYGraph resizedGraph = graph.changeAxes(xAxis, yAxis, new CoordConverterProviderImpl());
-
-        File file;
+        ExportDataExcel exportDataExcel = new ExportDataExcel(graph, xAxis, yAxis, notSelectedElements);
         try {
-            file = REPORT_GENERATOR.generateReport(resizedGraph);
+            File file = exportDataExcel.execute();
             try {
                 Desktop desktop = Desktop.getDesktop();
                 desktop.open(file);
             } catch (IOException e) {
-                NotificationUtils.showError(graphEditorForm.getMainPanel(), "Cannot open file " + file.getAbsolutePath());
+                NotificationUtils.showError(graphEditorForm.getMainPanel(),
+                        "Cannot open file " + file.getAbsolutePath());
             }
         } catch (Exception e) {
             e.printStackTrace();
-            NotificationUtils.showError(graphEditorForm.getMainPanel(), "Cannot export to file: " + e.getMessage());
+            NotificationUtils.showError(graphEditorForm.getMainPanel(),
+                    "Cannot export to file: " + e.getMessage());
         }
-
     }
 }

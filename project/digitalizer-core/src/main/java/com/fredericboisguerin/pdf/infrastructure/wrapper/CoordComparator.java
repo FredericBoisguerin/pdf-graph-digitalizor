@@ -1,4 +1,4 @@
-package com.fredericboisguerin.wrapper;
+package com.fredericboisguerin.pdf.infrastructure.wrapper;
 
 import java.util.Comparator;
 
