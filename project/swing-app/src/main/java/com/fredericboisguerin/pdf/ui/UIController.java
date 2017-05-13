@@ -72,7 +72,7 @@ public class UIController {
         Axis yAxis = graphEditorForm.getyAxisEditorForm().getAxis();
         List<XYPointSeries> selectedElements = graphEditorForm.getSelectedElements();
 
-        ExportDataExcel exportDataExcel = new ExportDataExcel(graph.withOnly(selectedElements), xAxis, yAxis);
+        ExportDataExcel exportDataExcel = new ExportDataExcel(graph, xAxis, yAxis, selectedElements);
         try {
             File file = exportDataExcel.execute();
             try {

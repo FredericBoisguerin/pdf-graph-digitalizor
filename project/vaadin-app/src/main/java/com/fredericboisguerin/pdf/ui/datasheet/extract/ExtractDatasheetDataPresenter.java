@@ -85,8 +85,8 @@ public class ExtractDatasheetDataPresenter implements ExtractDatasheetDataViewLi
         List<XYPointSeries> selectedSeries = selectedSeriesModel.stream()
                                                                 .map(pointSeriesMap::get)
                                                                 .collect(Collectors.toList());
-        ExportDataExcel exportDataExcel = new ExportDataExcel(xyGraph.withOnly(selectedSeries),
-                xAxis, yAxis);
+        ExportDataExcel exportDataExcel = new ExportDataExcel(xyGraph, xAxis, yAxis,
+                selectedSeries);
         try {
             File execute = exportDataExcel.execute();
             return new FileInputStream(execute);
