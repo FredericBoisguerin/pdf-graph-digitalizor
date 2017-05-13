@@ -6,7 +6,7 @@ import java.util.List;
 import com.fredericboisguerin.pdf.graph.Axis;
 import com.fredericboisguerin.pdf.graph.CoordConverterProviderImpl;
 import com.fredericboisguerin.pdf.graph.XYGraph;
-import com.fredericboisguerin.pdf.graph.XYPointSeries;
+import com.fredericboisguerin.pdf.graph.Serie;
 import com.fredericboisguerin.pdf.infrastructure.report.ReportGenerator;
 import com.fredericboisguerin.pdf.infrastructure.report.ReportGeneratorImpl;
 
@@ -14,10 +14,10 @@ public class ExportDataExcel {
     private final XYGraph graph;
     private final Axis xAxis;
     private final Axis yAxis;
-    private final List<XYPointSeries> selectedElements;
+    private final List<Serie> selectedElements;
 
     public ExportDataExcel(XYGraph graph, Axis xAxis, Axis yAxis,
-            List<XYPointSeries> selectedElements) {
+            List<Serie> selectedElements) {
         this.graph = graph;
         this.xAxis = xAxis;
         this.yAxis = yAxis;

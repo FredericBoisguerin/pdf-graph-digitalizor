@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class XYGraph {
 
-    private final List<XYPointSeries> xyPointSeries = new ArrayList<>();
+    private final List<Serie> xyPointSeries = new ArrayList<>();
     private final Axis xAxis;
     private final Axis yAxis;
 
@@ -18,7 +18,7 @@ public class XYGraph {
         this.yAxis = yAxis;
     }
 
-    public void add(XYPointSeries xyPoints) {
+    public void add(Serie xyPoints) {
         this.xyPointSeries.add(xyPoints);
     }
 
@@ -27,10 +27,10 @@ public class XYGraph {
         XYGraph xyGraph = new XYGraph(xAxis, yAxis);
         Function<Coord, Coord> xConverter = coordConverterProvider.getConverter(this.xAxis, xAxis);
         Function<Coord, Coord> yConverter = coordConverterProvider.getConverter(this.yAxis, yAxis);
-        List<XYPointSeries> collect = xyPointSeries.stream()
-                                                   .map(series -> series.convert(xConverter,
+        List<Serie> collect = xyPointSeries.stream()
+                                           .map(series -> series.convert(xConverter,
                                                            yConverter))
-                                                   .collect(Collectors.toList());
+                                           .collect(Collectors.toList());
         xyGraph.xyPointSeries.addAll(collect);
         return xyGraph;
     }
@@ -41,9 +41,9 @@ public class XYGraph {
                 yAxis);
     }
 
-    public XYGraph withOnly(List<XYPointSeries> selectedElements) {
+    public XYGraph withOnly(List<Serie> selectedElements) {
         XYGraph xyPointSeries = new XYGraph(xAxis, yAxis);
-        for (XYPointSeries selectedElement : selectedElements) {
+        for (Serie selectedElement : selectedElements) {
             if (this.xyPointSeries.contains(selectedElement)) {
                 xyPointSeries.add(selectedElement);
             }
@@ -51,9 +51,9 @@ public class XYGraph {
         return xyPointSeries;
     }
 
-    public List<XYPointSeries> getSeriesBySizeDesc() {
-        Comparator<XYPointSeries> comparator = Comparator.comparing(XYPointSeries::size).reversed();
-        ArrayList<XYPointSeries> sorted = new ArrayList<>(this.xyPointSeries);
+    public List<Serie> getSeriesBySizeDesc() {
+        Comparator<Serie> comparator = Comparator.comparing(Serie::size).reversed();
+        ArrayList<Serie> sorted = new ArrayList<>(this.xyPointSeries);
         sorted.sort(comparator);
         return Collections.unmodifiableList(sorted);
     }

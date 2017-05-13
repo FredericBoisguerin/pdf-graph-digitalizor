@@ -3,7 +3,7 @@ package com.fredericboisguerin.pdf.infrastructure.report;
 import com.fredericboisguerin.pdf.graph.Coord;
 import com.fredericboisguerin.pdf.graph.XYGraph;
 import com.fredericboisguerin.pdf.graph.PointCoords;
-import com.fredericboisguerin.pdf.graph.XYPointSeries;
+import com.fredericboisguerin.pdf.graph.Serie;
 import org.jxls.area.Area;
 import org.jxls.builder.AreaBuilder;
 import org.jxls.builder.xml.XmlAreaBuilder;
@@ -34,7 +34,7 @@ public class ReportGeneratorImpl implements ReportGenerator {
     private ReportModel convertGraphToReportModel(XYGraph graph) {
         int i = 0;
         ReportModel reportModel = new ReportModel();
-        for (XYPointSeries series : graph.getSeriesBySizeDesc()) {
+        for (Serie series : graph.getSeriesBySizeDesc()) {
             String seriesName = String.format("Série %d", i);
             ReportSeries reportSeries = new ReportSeries(seriesName);
             reportModel.add(reportSeries);

@@ -1,6 +1,6 @@
 package com.fredericboisguerin.pdf.ui;
 
-import com.fredericboisguerin.pdf.graph.XYPointSeries;
+import com.fredericboisguerin.pdf.graph.Serie;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ public class GraphEditor {
     private AxisEditorForm yAxisEditorForm;
     private JPanel mainPanel;
     private JButton goButton;
-    private ToggleList<XYPointSeries> seriesToggleList;
+    private ToggleList<Serie> seriesToggleList;
 
     private final List<GoButtonListener> goButtonListeners = new ArrayList<>();
 
@@ -30,7 +30,7 @@ public class GraphEditor {
         return goButtonListeners.add(goButtonListener);
     }
 
-    public void setElements(List<XYPointSeries> elements) {
+    public void setElements(List<Serie> elements) {
         seriesToggleList.setElements(elements);
     }
 
@@ -52,7 +52,7 @@ public class GraphEditor {
         return yAxisEditorForm;
     }
 
-    public List<XYPointSeries> getSelectedElements() {
+    public List<Serie> getSelectedElements() {
         return Collections.list(seriesToggleList.getSelectedElements());
     }
 }

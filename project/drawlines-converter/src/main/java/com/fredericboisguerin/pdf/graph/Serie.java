@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Function;
 
-public class XYPointSeries implements Iterable<PointCoords> {
+public class Serie implements Iterable<PointCoords> {
 
     private final List<PointCoords> pointCoordsCoords = new ArrayList<>();
 
@@ -13,8 +13,8 @@ public class XYPointSeries implements Iterable<PointCoords> {
         this.pointCoordsCoords.add(pointCoords);
     }
 
-    public XYPointSeries convert(Function<Coord, Coord> xTransformation, Function<Coord, Coord> yTransformation) {
-        XYPointSeries series = new XYPointSeries();
+    public Serie convert(Function<Coord, Coord> xTransformation, Function<Coord, Coord> yTransformation) {
+        Serie series = new Serie();
         pointCoordsCoords.stream()
                          .map(pointCoords -> new PointCoords(xTransformation.apply(pointCoords.getX()), yTransformation.apply(
                            pointCoords.getY())))

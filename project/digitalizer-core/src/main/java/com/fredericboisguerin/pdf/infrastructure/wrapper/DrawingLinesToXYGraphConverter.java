@@ -33,12 +33,12 @@ public class DrawingLinesToXYGraphConverter {
         return graph;
     }
 
-    private static XYPointSeries buildXYPointSeries(DrawLine drawLine) {
-        XYPointSeries xyPointSeries = new XYPointSeries();
+    private static Serie buildXYPointSeries(DrawLine drawLine) {
+        Serie serie = new Serie();
         drawLine.stream()
                 .map(DrawingLinesToXYGraphConverter::buildXYPoint)
-                .forEach(xyPointSeries::add);
-        return xyPointSeries;
+                .forEach(serie::add);
+        return serie;
     }
 
     private static PointCoords buildXYPoint(DrawPoint drawingPoint) {

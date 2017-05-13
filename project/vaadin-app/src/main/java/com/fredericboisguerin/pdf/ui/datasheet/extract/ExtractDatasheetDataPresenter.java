@@ -19,7 +19,7 @@ import com.fredericboisguerin.pdf.graph.Coord;
 import com.fredericboisguerin.pdf.graph.LinearAxis;
 import com.fredericboisguerin.pdf.graph.LogAxis;
 import com.fredericboisguerin.pdf.graph.XYGraph;
-import com.fredericboisguerin.pdf.graph.XYPointSeries;
+import com.fredericboisguerin.pdf.graph.Serie;
 import com.fredericboisguerin.pdf.model.datasheet.Datasheet;
 import com.fredericboisguerin.pdf.model.datasheet.DatasheetService;
 
@@ -33,7 +33,7 @@ public class ExtractDatasheetDataPresenter implements ExtractDatasheetDataViewLi
     private final DatasheetService datasheetService;
 
     private AxesViewModel axesViewModel;
-    private Map<SerieViewModel, XYPointSeries> pointSeriesMap;
+    private Map<SerieViewModel, Serie> pointSeriesMap;
     private XYGraph xyGraph;
 
     public ExtractDatasheetDataPresenter(ExtractDatasheetDataView view,
@@ -67,11 +67,11 @@ public class ExtractDatasheetDataPresenter implements ExtractDatasheetDataViewLi
         int currentSerieId = 1;
         pointSeriesMap = new HashMap<>();
         List<SerieViewModel> serieViewModels = new ArrayList<>();
-        for (XYPointSeries xyPoints : xyGraph.getSeriesBySizeDesc()) {
+        for (Serie serie : xyGraph.getSeriesBySizeDesc()) {
             SerieViewModel serieViewModel = new SerieViewModel(currentSerieId,
-                    "Serie n°" + currentSerieId, xyPoints.size());
+                    "Serie n°" + currentSerieId, serie.size());
             serieViewModels.add(serieViewModel);
-            pointSeriesMap.put(serieViewModel, xyPoints);
+            pointSeriesMap.put(serieViewModel, serie);
             currentSerieId++;
         }
         return serieViewModels;
@@ -82,9 +82,9 @@ public class ExtractDatasheetDataPresenter implements ExtractDatasheetDataViewLi
         Collection<SerieViewModel> selectedSeriesModel = view.getSelectedSeries();
         Axis xAxis = toAxis(axesViewModel.getAxisX());
         Axis yAxis = toAxis(axesViewModel.getAxisY());
-        List<XYPointSeries> selectedSeries = selectedSeriesModel.stream()
-                                                                .map(pointSeriesMap::get)
-                                                                .collect(Collectors.toList());
+        List<Serie> selectedSeries = selectedSeriesModel.stream()
+                                                        .map(pointSeriesMap::get)
+                                                        .collect(Collectors.toList());
         ExportDataExcel exportDataExcel = new ExportDataExcel(xyGraph, xAxis, yAxis,
                 selectedSeries);
         try {

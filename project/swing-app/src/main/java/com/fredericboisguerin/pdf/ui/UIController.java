@@ -15,7 +15,7 @@ import com.fredericboisguerin.pdf.drawlines.converter.DrawingActionsToDrawLinesC
 import com.fredericboisguerin.pdf.drawlines.model.DrawLines;
 import com.fredericboisguerin.pdf.graph.Axis;
 import com.fredericboisguerin.pdf.graph.XYGraph;
-import com.fredericboisguerin.pdf.graph.XYPointSeries;
+import com.fredericboisguerin.pdf.graph.Serie;
 import com.fredericboisguerin.pdf.parser.PDFDrawingActionsParser;
 import com.fredericboisguerin.pdf.parser.model.DrawingAction;
 import com.fredericboisguerin.pdf.parser.model.DrawingActionVisitor;
@@ -52,8 +52,8 @@ public class UIController {
                 onGoButtonClicked(graphEditorForm, graph);
             });
 
-            List<XYPointSeries> xyPointSeries = new ArrayList<>();
-            for (XYPointSeries series : graph) {
+            List<Serie> xyPointSeries = new ArrayList<>();
+            for (Serie series : graph) {
                 xyPointSeries.add(series);
             }
             graphEditorForm.setElements(xyPointSeries);
@@ -70,7 +70,7 @@ public class UIController {
     private static void onGoButtonClicked(GraphEditor graphEditorForm, XYGraph graph) {
         Axis xAxis = graphEditorForm.getxAxisEditorForm().getAxis();
         Axis yAxis = graphEditorForm.getyAxisEditorForm().getAxis();
-        List<XYPointSeries> selectedElements = graphEditorForm.getSelectedElements();
+        List<Serie> selectedElements = graphEditorForm.getSelectedElements();
 
         ExportDataExcel exportDataExcel = new ExportDataExcel(graph, xAxis, yAxis, selectedElements);
         try {
