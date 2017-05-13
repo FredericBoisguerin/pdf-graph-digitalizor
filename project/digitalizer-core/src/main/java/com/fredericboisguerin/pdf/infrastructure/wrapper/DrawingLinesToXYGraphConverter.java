@@ -41,8 +41,8 @@ public class DrawingLinesToXYGraphConverter {
         return xyPointSeries;
     }
 
-    private static XYPoint buildXYPoint(DrawPoint drawingPoint) {
-        return new XYPoint(drawingPoint.getX(), drawingPoint.getY());
+    private static PointCoords buildXYPoint(DrawPoint drawingPoint) {
+        return new PointCoords(drawingPoint.getX(), drawingPoint.getY());
     }
 
     private static Axis getAxis(DrawLines drawLines, Function<DrawPoint, Float> coordGetter) {

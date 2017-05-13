@@ -5,33 +5,34 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Function;
 
-public class XYPointSeries implements Iterable<XYPoint> {
+public class XYPointSeries implements Iterable<PointCoords> {
 
-    private final List<XYPoint> xyPoints = new ArrayList<>();
+    private final List<PointCoords> pointCoordsCoords = new ArrayList<>();
 
-    public void add(XYPoint xyPoint) {
-        xyPoints.add(xyPoint);
+    public void add(PointCoords pointCoords) {
+        this.pointCoordsCoords.add(pointCoords);
     }
 
     public XYPointSeries convert(Function<Coord, Coord> xTransformation, Function<Coord, Coord> yTransformation) {
         XYPointSeries series = new XYPointSeries();
-        xyPoints.stream()
-                .map(xyPoint -> new XYPoint(xTransformation.apply(xyPoint.getX()), yTransformation.apply(xyPoint.getY())))
-                .forEach(series::add);
+        pointCoordsCoords.stream()
+                         .map(pointCoords -> new PointCoords(xTransformation.apply(pointCoords.getX()), yTransformation.apply(
+                           pointCoords.getY())))
+                         .forEach(series::add);
         return series;
     }
 
     @Override
     public String toString() {
-        return String.format("Série #%d (%d points)", this.hashCode(), xyPoints.size());
+        return String.format("Série #%d (%d points)", this.hashCode(), pointCoordsCoords.size());
     }
 
     @Override
-    public Iterator<XYPoint> iterator() {
-        return xyPoints.iterator();
+    public Iterator<PointCoords> iterator() {
+        return pointCoordsCoords.iterator();
     }
 
     public int size() {
-        return xyPoints.size();
+        return pointCoordsCoords.size();
     }
 }
