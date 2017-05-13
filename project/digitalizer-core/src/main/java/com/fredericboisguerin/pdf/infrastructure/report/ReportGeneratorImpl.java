@@ -18,8 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static jxl.biff.FormatRecord.logger;
-
 import jxl.biff.FormatRecord;
 
 public class ReportGeneratorImpl implements ReportGenerator {
@@ -36,7 +34,7 @@ public class ReportGeneratorImpl implements ReportGenerator {
     private ReportModel convertGraphToReportModel(XYGraph graph) {
         int i = 0;
         ReportModel reportModel = new ReportModel();
-        for (XYPointSeries series : graph) {
+        for (XYPointSeries series : graph.getSeriesBySizeDesc()) {
             String seriesName = String.format("Série %d", i);
             ReportSeries reportSeries = new ReportSeries(seriesName);
             reportModel.add(reportSeries);

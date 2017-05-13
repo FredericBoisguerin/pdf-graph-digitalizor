@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Function;
 
-public class XYPointSeries implements Iterable<XYPoint>, Comparable<XYPointSeries> {
+public class XYPointSeries implements Iterable<XYPoint> {
 
     private final List<XYPoint> xyPoints = new ArrayList<>();
 
@@ -29,11 +29,6 @@ public class XYPointSeries implements Iterable<XYPoint>, Comparable<XYPointSerie
     @Override
     public Iterator<XYPoint> iterator() {
         return xyPoints.iterator();
-    }
-
-    @Override
-    public int compareTo(XYPointSeries other) {
-        return Integer.compare(other.xyPoints.size(), this.xyPoints.size());
     }
 
     public int size() {

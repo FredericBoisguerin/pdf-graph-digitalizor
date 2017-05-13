@@ -67,7 +67,7 @@ public class ExtractDatasheetDataPresenter implements ExtractDatasheetDataViewLi
         int currentSerieId = 1;
         pointSeriesMap = new HashMap<>();
         List<SerieViewModel> serieViewModels = new ArrayList<>();
-        for (XYPointSeries xyPoints : xyGraph) {
+        for (XYPointSeries xyPoints : xyGraph.getSeriesBySizeDesc()) {
             SerieViewModel serieViewModel = new SerieViewModel(currentSerieId,
                     "Serie n°" + currentSerieId, xyPoints.size());
             serieViewModels.add(serieViewModel);

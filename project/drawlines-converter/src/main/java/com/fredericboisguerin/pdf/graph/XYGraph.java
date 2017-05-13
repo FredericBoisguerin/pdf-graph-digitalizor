@@ -2,13 +2,12 @@ package com.fredericboisguerin.pdf.graph;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-public class XYGraph implements Iterable<XYPointSeries> {
+public class XYGraph {
 
     private final List<XYPointSeries> xyPointSeries = new ArrayList<>();
     private final Axis xAxis;
@@ -21,7 +20,6 @@ public class XYGraph implements Iterable<XYPointSeries> {
 
     public void add(XYPointSeries xyPoints) {
         this.xyPointSeries.add(xyPoints);
-        Collections.sort(this.xyPointSeries);
     }
 
     public XYGraph changeAxes(Axis xAxis, Axis yAxis,
@@ -43,15 +41,6 @@ public class XYGraph implements Iterable<XYPointSeries> {
                 yAxis);
     }
 
-    @Override
-    public Iterator<XYPointSeries> iterator() {
-        return xyPointSeries.iterator();
-    }
-
-    public Stream<XYPointSeries> stream() {
-        return xyPointSeries.stream();
-    }
-
     public XYGraph withOnly(List<XYPointSeries> selectedElements) {
         XYGraph xyPointSeries = new XYGraph(xAxis, yAxis);
         for (XYPointSeries selectedElement : selectedElements) {
@@ -60,5 +49,12 @@ public class XYGraph implements Iterable<XYPointSeries> {
             }
         }
         return xyPointSeries;
+    }
+
+    public List<XYPointSeries> getSeriesBySizeDesc() {
+        Comparator<XYPointSeries> comparator = Comparator.comparing(XYPointSeries::size).reversed();
+        ArrayList<XYPointSeries> sorted = new ArrayList<>(this.xyPointSeries);
+        sorted.sort(comparator);
+        return Collections.unmodifiableList(sorted);
     }
 }
