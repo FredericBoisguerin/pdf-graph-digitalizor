@@ -1,15 +1,14 @@
 package com.fredericboisguerin.pdf.graph;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class XYGraph {
 
     private final List<Serie> xyPointSeries = new ArrayList<>();
+    private final Series series = new Series();
+
     private final Axis xAxis;
     private final Axis yAxis;
 
@@ -18,43 +17,38 @@ public class XYGraph {
         this.yAxis = yAxis;
     }
 
-    public void add(Serie xyPoints) {
-        this.xyPointSeries.add(xyPoints);
+    public void add(Serie serie) {
+        this.xyPointSeries.add(serie);
+        this.series.add(serie);
     }
 
-    public XYGraph changeAxes(Axis xAxis, Axis yAxis,
-            CoordConverterProvider coordConverterProvider) {
+    public XYGraph transposeAxesTo(Axis xAxis, Axis yAxis) {
         XYGraph xyGraph = new XYGraph(xAxis, yAxis);
+        CoordConverterProvider coordConverterProvider = new CoordConverterProvider();
         Function<Coord, Coord> xConverter = coordConverterProvider.getConverter(this.xAxis, xAxis);
         Function<Coord, Coord> yConverter = coordConverterProvider.getConverter(this.yAxis, yAxis);
-        List<Serie> collect = xyPointSeries.stream()
-                                           .map(series -> series.convert(xConverter,
-                                                           yConverter))
-                                           .collect(Collectors.toList());
-        xyGraph.xyPointSeries.addAll(collect);
+        series.addTransposedSeriesTo(xyGraph.series, xConverter, yConverter);
         return xyGraph;
     }
 
     @Override
     public String toString() {
-        return String.format("%d curves\nX axis: %s\nY axis: %s", xyPointSeries.size(), xAxis,
+        return String.format("%d curves\nX axis: %s\nY axis: %s", series.size(), xAxis,
                 yAxis);
     }
 
-    public XYGraph withOnly(List<Serie> selectedElements) {
-        XYGraph xyPointSeries = new XYGraph(xAxis, yAxis);
-        for (Serie selectedElement : selectedElements) {
-            if (this.xyPointSeries.contains(selectedElement)) {
-                xyPointSeries.add(selectedElement);
-            }
-        }
-        return xyPointSeries;
+    public XYGraph withOnlySelected() {
+        XYGraph xyGraph = new XYGraph(xAxis, yAxis);
+        this.series.addOnlySelectedTo(xyGraph.series);
+        return xyGraph;
     }
 
     public List<Serie> getSeriesBySizeDesc() {
-        Comparator<Serie> comparator = Comparator.comparing(Serie::size).reversed();
-        ArrayList<Serie> sorted = new ArrayList<>(this.xyPointSeries);
-        sorted.sort(comparator);
-        return Collections.unmodifiableList(sorted);
+        return series.getSeriesBySizeDesc();
+
+    }
+
+    public void select(List<Serie> selectedElements) {
+        selectedElements.forEach(series::select);
     }
 }

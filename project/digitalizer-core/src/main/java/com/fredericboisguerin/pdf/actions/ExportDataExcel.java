@@ -4,9 +4,8 @@ import java.io.File;
 import java.util.List;
 
 import com.fredericboisguerin.pdf.graph.Axis;
-import com.fredericboisguerin.pdf.graph.CoordConverterProviderImpl;
-import com.fredericboisguerin.pdf.graph.XYGraph;
 import com.fredericboisguerin.pdf.graph.Serie;
+import com.fredericboisguerin.pdf.graph.XYGraph;
 import com.fredericboisguerin.pdf.infrastructure.report.ReportGenerator;
 import com.fredericboisguerin.pdf.infrastructure.report.ReportGeneratorImpl;
 
@@ -25,9 +24,9 @@ public class ExportDataExcel {
     }
 
     public File execute() throws Exception {
-        XYGraph filteredSeries = graph.withOnly(selectedElements);
-        CoordConverterProviderImpl coordConverterProvider = new CoordConverterProviderImpl();
-        XYGraph resizedGraph = filteredSeries.changeAxes(xAxis, yAxis, coordConverterProvider);
+        graph.select(selectedElements);
+        XYGraph filteredSeries = graph.withOnlySelected();
+        XYGraph resizedGraph = filteredSeries.transposeAxesTo(xAxis, yAxis);
         ReportGenerator reportGenerator = new ReportGeneratorImpl();
         return reportGenerator.generateReport(resizedGraph);
     }

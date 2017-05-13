@@ -7,13 +7,13 @@ import java.util.function.Function;
 
 import static junit.framework.Assert.assertEquals;
 
-public class CoordConverterProviderImplTest {
+public class CoordConverterProviderTest {
 
     private CoordConverterProvider coordConverterProvider;
 
     @Before
     public void setUp() throws Exception {
-        coordConverterProvider = new CoordConverterProviderImpl();
+        coordConverterProvider = new CoordConverterProvider();
     }
 
     @Test

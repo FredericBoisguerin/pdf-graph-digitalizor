@@ -1,7 +1,9 @@
 package com.fredericboisguerin.pdf.ui;
 
 import java.awt.*;
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,13 +11,17 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.apache.poi.util.IOUtils;
+
 import com.fredericboisguerin.pdf.DrawingActionLogger;
 import com.fredericboisguerin.pdf.actions.ExportDataExcel;
+import com.fredericboisguerin.pdf.actions.extract.ExtractGraphFromPDFFile;
 import com.fredericboisguerin.pdf.drawlines.converter.DrawingActionsToDrawLinesConverter;
 import com.fredericboisguerin.pdf.drawlines.model.DrawLines;
 import com.fredericboisguerin.pdf.graph.Axis;
 import com.fredericboisguerin.pdf.graph.XYGraph;
 import com.fredericboisguerin.pdf.graph.Serie;
+import com.fredericboisguerin.pdf.model.datasheet.PDFFile;
 import com.fredericboisguerin.pdf.parser.PDFDrawingActionsParser;
 import com.fredericboisguerin.pdf.parser.model.DrawingAction;
 import com.fredericboisguerin.pdf.parser.model.DrawingActionVisitor;
@@ -35,25 +41,17 @@ public class UIController {
         jFileChooser.showOpenDialog(mainUI);
         File selectedFile = jFileChooser.getSelectedFile();
 
-        PDFDrawingActionsParser parser = new PDFDrawingActionsParser();
         try {
-            List<DrawingAction> drawingActions = parser.parseDrawingActions(selectedFile);
-            DrawingActionVisitor logger = new DrawingActionLogger();
-            drawingActions.forEach(drawingAction -> drawingAction.accept(logger));
-            DrawingActionsToDrawLinesConverter linesConverter = new DrawingActionsToDrawLinesConverter();
-            DrawLines drawLines = linesConverter.convert(drawingActions);
-            DrawingLinesToXYGraphConverter graphConverter = new DrawingLinesToXYGraphConverter(
-                    new CoordComparator());
-            XYGraph graph = graphConverter.convert(drawLines);
+            byte[] file = IOUtils.toByteArray(new FileInputStream(selectedFile));
+            ExtractGraphFromPDFFile extractGraphFromPDFFile = new ExtractGraphFromPDFFile(
+                    new PDFFile(selectedFile.getName(), file));
+            XYGraph graph = extractGraphFromPDFFile.execute();
 
             GraphEditor graphEditorForm = mainUI.getGraphEditorForm();
-            graphEditorForm.addGoButtonListener(() -> {
-                // On go button clicked
-                onGoButtonClicked(graphEditorForm, graph);
-            });
+            graphEditorForm.addGoButtonListener(() -> onGoButtonClicked(graphEditorForm, graph));
 
             List<Serie> xyPointSeries = new ArrayList<>();
-            for (Serie series : graph) {
+            for (Serie series : graph.getSeriesBySizeDesc()) {
                 xyPointSeries.add(series);
             }
             graphEditorForm.setElements(xyPointSeries);
