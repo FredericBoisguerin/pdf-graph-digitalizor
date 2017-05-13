@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class DatasheetCollection {
 
@@ -14,7 +15,7 @@ public class DatasheetCollection {
         datasheetList.sort(Comparator.comparing(Datasheet::getDatasheetReference));
     }
 
-    public List<Datasheet> getDatasheetList() {
-        return datasheetList;
+    public Stream<Datasheet> stream() {
+        return datasheetList.stream();
     }
 }

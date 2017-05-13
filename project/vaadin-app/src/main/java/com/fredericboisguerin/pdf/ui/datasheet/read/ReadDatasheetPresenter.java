@@ -1,14 +1,13 @@
 package com.fredericboisguerin.pdf.ui.datasheet.read;
 
-import com.fredericboisguerin.pdf.model.datasheet.Datasheet;
-import com.fredericboisguerin.pdf.model.datasheet.DatasheetService;
-import com.fredericboisguerin.pdf.ui.datasheet.extract.ExtractDatasheetDataView;
-import com.fredericboisguerin.pdf.ui.datasheet.extract.VaadinExtractDatasheetDataView;
-
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import com.fredericboisguerin.pdf.actions.ViewAllDatasheets;
+import com.fredericboisguerin.pdf.model.datasheet.Datasheet;
+import com.fredericboisguerin.pdf.model.datasheet.DatasheetCollection;
+import com.fredericboisguerin.pdf.model.datasheet.DatasheetService;
 
 public class ReadDatasheetPresenter implements ReadDatasheetViewListener {
     private final DatasheetService datasheetService;
@@ -21,7 +20,7 @@ public class ReadDatasheetPresenter implements ReadDatasheetViewListener {
 
     @Override
     public void onViewEntered() {
-        Collection<Datasheet> datasheets = datasheetService.getAllDatasheets();
+        DatasheetCollection datasheets = new ViewAllDatasheets().execute(datasheetService);
         List<DatasheetViewModel> datasheetViewModels = datasheets.stream()
                                                                  .map(this::buildDatasheetViewModel)
                                                                  .collect(Collectors
