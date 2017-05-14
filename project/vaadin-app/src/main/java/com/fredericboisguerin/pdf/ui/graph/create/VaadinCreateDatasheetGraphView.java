@@ -103,7 +103,13 @@ public class VaadinCreateDatasheetGraphView extends VerticalLayout
     @Override
     public void enter(ViewChangeEvent event) {
         navigator = event.getNavigator();
-        filenameLabel.setValue("");
+        init();
         listener.onViewEntered(event.getParameters());
+    }
+
+    private void init() {
+        filenameLabel.setValue("");
+        lastFileUpdated = null;
+        lastFileNameUpdated = "";
     }
 }
