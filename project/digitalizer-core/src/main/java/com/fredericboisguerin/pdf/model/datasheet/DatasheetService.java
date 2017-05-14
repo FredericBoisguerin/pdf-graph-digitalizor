@@ -13,7 +13,7 @@ public class DatasheetService {
         this.datasheetRepository = datasheetRepository;
     }
 
-    public UUID importDatasheet(DatasheetReference datasheetReference, DatasheetSupplier supplier) {
+    public UUID createDatasheet(DatasheetReference datasheetReference, DatasheetSupplier supplier) {
         Datasheet datasheet = new Datasheet(datasheetReference, supplier);
         datasheetRepository.save(datasheet);
         return datasheet.getUUID();

@@ -3,7 +3,7 @@ package com.fredericboisguerin.pdf.ui.datasheet.create;
 import java.util.UUID;
 
 import com.fredericboisguerin.pdf.actions.AddGraphToDatasheet;
-import com.fredericboisguerin.pdf.actions.ImportPDF;
+import com.fredericboisguerin.pdf.actions.CreateDatasheet;
 import com.fredericboisguerin.pdf.model.datasheet.DatasheetReference;
 import com.fredericboisguerin.pdf.model.datasheet.DatasheetService;
 import com.fredericboisguerin.pdf.model.datasheet.DatasheetSupplier;
@@ -22,9 +22,9 @@ public class ImportDatasheetPresenter implements ImportDatasheetViewListener {
     @Override
     public void onValidateButtonClicked(String reference, String supplierName, byte[] file,
             String filename) {
-        ImportPDF importPDF = new ImportPDF(new DatasheetReference(reference),
+        CreateDatasheet createDatasheet = new CreateDatasheet(new DatasheetReference(reference),
                 new DatasheetSupplier(supplierName));
-        UUID datasheetId = importPDF.execute(datasheetService);
+        UUID datasheetId = createDatasheet.execute(datasheetService);
 
         PDFFile pdfFile = new PDFFile(filename, file);
         AddGraphToDatasheet addGraphToDatasheet = new AddGraphToDatasheet(datasheetId, pdfFile);
