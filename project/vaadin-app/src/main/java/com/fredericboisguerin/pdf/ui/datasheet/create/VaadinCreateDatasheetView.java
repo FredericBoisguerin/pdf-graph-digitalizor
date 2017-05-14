@@ -45,6 +45,8 @@ public class VaadinCreateDatasheetView extends VerticalLayout implements CreateD
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
         navigator = viewChangeEvent.getNavigator();
+        referenceTextField.clear();
+        supplierTextField.clear();
     }
 
     @Override
