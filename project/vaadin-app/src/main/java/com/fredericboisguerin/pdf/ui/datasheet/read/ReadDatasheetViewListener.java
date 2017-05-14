@@ -5,5 +5,5 @@ import java.util.Optional;
 public interface ReadDatasheetViewListener {
     void onViewEntered();
 
-    void onDatasheetSelectedForExtraction(Optional<DatasheetViewModel> datasheetViewModel);
+    void onDatasheetSelectedForViewGraphs(Optional<DatasheetViewModel> datasheetViewModel);
 }

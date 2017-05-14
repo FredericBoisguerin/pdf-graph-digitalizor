@@ -12,16 +12,17 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.fredericboisguerin.pdf.actions.ExportDataExcel;
+import com.fredericboisguerin.pdf.actions.ViewDatasheetGraphPDFFile;
 import com.fredericboisguerin.pdf.actions.extract.ExtractGraphFromPDFFile;
 import com.fredericboisguerin.pdf.graph.Axis;
 import com.fredericboisguerin.pdf.graph.AxisCoords;
 import com.fredericboisguerin.pdf.graph.Coord;
 import com.fredericboisguerin.pdf.graph.LinearAxis;
 import com.fredericboisguerin.pdf.graph.LogAxis;
-import com.fredericboisguerin.pdf.graph.XYGraph;
 import com.fredericboisguerin.pdf.graph.Serie;
-import com.fredericboisguerin.pdf.model.datasheet.Datasheet;
+import com.fredericboisguerin.pdf.graph.XYGraph;
 import com.fredericboisguerin.pdf.model.datasheet.DatasheetService;
+import com.fredericboisguerin.pdf.model.datasheet.PDFFile;
 
 public class ExtractDatasheetDataPresenter implements ExtractDatasheetDataViewListener {
 
@@ -47,13 +48,14 @@ public class ExtractDatasheetDataPresenter implements ExtractDatasheetDataViewLi
     }
 
     @Override
-    public void onViewEntered(String parameter) {
+    public void onViewEntered(String datasheetId, String graphId) {
         this.axesViewModel = new AxesViewModel(buildAxisViewModel(), buildAxisViewModel());
-        Datasheet datasheet = datasheetService.findById(parameter);
-        view.setDatasheetInfo(datasheet.toString());
+        view.setDatasheetInfo(datasheetService.getDatasheetInfo(datasheetId));
+        ViewDatasheetGraphPDFFile viewDatasheetGraphPDFFile = new ViewDatasheetGraphPDFFile(
+                datasheetId, graphId);
+        PDFFile pdfFile = viewDatasheetGraphPDFFile.execute(datasheetService);
         view.setAxesViewModels(axesViewModel);
-        ExtractGraphFromPDFFile extractGraphFromPDFFile = new ExtractGraphFromPDFFile(
-                datasheet.getPDFFile());
+        ExtractGraphFromPDFFile extractGraphFromPDFFile = new ExtractGraphFromPDFFile(pdfFile);
         try {
             xyGraph = extractGraphFromPDFFile.execute();
             List<SerieViewModel> serieViewModels = getSerieViewModels(xyGraph);

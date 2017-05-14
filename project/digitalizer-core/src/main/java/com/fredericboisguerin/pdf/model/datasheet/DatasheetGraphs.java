@@ -1,17 +1,26 @@
 package com.fredericboisguerin.pdf.model.datasheet;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 class DatasheetGraphs {
 
     private final List<DatasheetGraph> datasheetGraphs = new ArrayList<>();
 
-    public void add(DatasheetGraph datasheetGraph) {
+    void add(DatasheetGraph datasheetGraph) {
         datasheetGraphs.add(datasheetGraph);
     }
 
-    public PDFFile getFirst() {
-        return datasheetGraphs.get(0).getPDFFile();
+    public Collection<DatasheetGraph> getList() {
+        return datasheetGraphs.stream().collect(Collectors.toList());
+    }
+
+    public Optional<DatasheetGraph> get(String graphId) {
+        return datasheetGraphs.stream()
+                              .filter(datasheetGraph -> graphId.equals(datasheetGraph.getId()))
+                              .findFirst();
     }
 }

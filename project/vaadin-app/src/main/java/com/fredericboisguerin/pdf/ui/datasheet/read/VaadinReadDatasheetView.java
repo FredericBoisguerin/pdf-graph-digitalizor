@@ -1,6 +1,7 @@
 package com.fredericboisguerin.pdf.ui.datasheet.read;
 
 import com.fredericboisguerin.pdf.ui.datasheet.extract.VaadinExtractDatasheetDataView;
+import com.fredericboisguerin.pdf.ui.graph.VaadinReadDatasheetGraphView;
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.navigator.Navigator;
@@ -33,17 +34,17 @@ public class VaadinReadDatasheetView extends VerticalLayout implements ReadDatas
             .setCaption("Supplier");
         grid.setSizeFull();
 
-        Button extractDataButton = new Button("Extract data");
-        extractDataButton.addClickListener(event -> notifyExtractButtonClicked());
+        Button viewGraphsButton = new Button("View graphs");
+        viewGraphsButton.addClickListener(event -> notifyViewGraphsClicked());
 
-        addComponents(title, grid, extractDataButton);
+        addComponents(title, grid, viewGraphsButton);
     }
 
-    private void notifyExtractButtonClicked() {
+    private void notifyViewGraphsClicked() {
         Optional<DatasheetViewModel> datasheetViewModel = grid
                 .asSingleSelect()
                 .getOptionalValue();
-        listener.onDatasheetSelectedForExtraction(datasheetViewModel);
+        listener.onDatasheetSelectedForViewGraphs(datasheetViewModel);
     }
 
     @Override
@@ -64,8 +65,8 @@ public class VaadinReadDatasheetView extends VerticalLayout implements ReadDatas
     }
 
     @Override
-    public void navigateToExtractDatasheetData(String param) {
-        navigator.navigateTo(VaadinExtractDatasheetDataView.VIEW_NAME + "/" + param);
+    public void navigateToViewDatasheetGraphs(String param) {
+        navigator.navigateTo(VaadinReadDatasheetGraphView.VIEW_NAME + "/" + param);
     }
 
     @Override

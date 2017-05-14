@@ -9,5 +9,5 @@ public interface ReadDatasheetView {
 
     void notifyTray(String message);
 
-    void navigateToExtractDatasheetData(String param);
+    void navigateToViewDatasheetGraphs(String param);
 }

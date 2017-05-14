@@ -8,6 +8,8 @@ import com.fredericboisguerin.pdf.ui.datasheet.extract.ExtractDatasheetDataPrese
 import com.fredericboisguerin.pdf.ui.datasheet.extract.VaadinExtractDatasheetDataView;
 import com.fredericboisguerin.pdf.ui.datasheet.read.ReadDatasheetPresenter;
 import com.fredericboisguerin.pdf.ui.datasheet.read.VaadinReadDatasheetView;
+import com.fredericboisguerin.pdf.ui.graph.ReadDatasheetGraphPresenter;
+import com.fredericboisguerin.pdf.ui.graph.VaadinReadDatasheetGraphView;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.navigator.Navigator;
@@ -43,7 +45,15 @@ public class MainUI extends UI {
         DatasheetService datasheetService = new DatasheetService(datasheetRepository);
         addImportDatasheetView(datasheetService);
         addReadDatasheetView(datasheetService);
+        addReadDatasheetGraphView(datasheetService);
         addExtractInformationsView(datasheetService);
+    }
+
+    private void addReadDatasheetGraphView(DatasheetService datasheetService) {
+        VaadinReadDatasheetGraphView vaadinReadDatasheetGraphView = new VaadinReadDatasheetGraphView();
+        ReadDatasheetGraphPresenter readDatasheetGraphPresenter = new ReadDatasheetGraphPresenter(vaadinReadDatasheetGraphView, datasheetService);
+        vaadinReadDatasheetGraphView.setListener(readDatasheetGraphPresenter);
+        navigator.addView(VaadinReadDatasheetGraphView.VIEW_NAME, vaadinReadDatasheetGraphView);
     }
 
     private void addExtractInformationsView(DatasheetService datasheetService) {

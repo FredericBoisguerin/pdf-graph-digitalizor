@@ -116,6 +116,8 @@ public class VaadinExtractDatasheetDataView extends VerticalLayout
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        listener.onViewEntered(event.getParameters());
+        String parameters = event.getParameters();
+        String[] split = parameters.split("/");
+        listener.onViewEntered(split[0], split[1]);
     }
 }

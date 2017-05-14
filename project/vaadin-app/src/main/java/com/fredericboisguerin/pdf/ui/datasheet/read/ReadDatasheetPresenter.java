@@ -29,13 +29,13 @@ public class ReadDatasheetPresenter implements ReadDatasheetViewListener {
     }
 
     @Override
-    public void onDatasheetSelectedForExtraction(Optional<DatasheetViewModel> datasheetViewModel) {
+    public void onDatasheetSelectedForViewGraphs(Optional<DatasheetViewModel> datasheetViewModel) {
         if (!datasheetViewModel.isPresent()){
-            view.notifyTray("Please select a datasheet to extract data from!");
+            view.notifyTray("Please select a datasheet!");
             return;
         }
         String id = datasheetViewModel.map(DatasheetViewModel::getId).get();
-        view.navigateToExtractDatasheetData(id);
+        view.navigateToViewDatasheetGraphs(id);
     }
 
     private DatasheetViewModel buildDatasheetViewModel(Datasheet datasheet) {

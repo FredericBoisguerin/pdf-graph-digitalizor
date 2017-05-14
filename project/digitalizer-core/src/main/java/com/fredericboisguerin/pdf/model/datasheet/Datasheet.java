@@ -1,5 +1,7 @@
 package com.fredericboisguerin.pdf.model.datasheet;
 
+import java.util.Collection;
+import java.util.Optional;
 import java.util.UUID;
 
 public class Datasheet {
@@ -8,7 +10,7 @@ public class Datasheet {
     private final DatasheetSupplier supplier;
     private final DatasheetGraphs datasheetGraphs = new DatasheetGraphs();
 
-    public Datasheet(DatasheetReference datasheetReference, DatasheetSupplier supplier) {
+    Datasheet(DatasheetReference datasheetReference, DatasheetSupplier supplier) {
         this.datasheetReference = datasheetReference;
         this.supplier = supplier;
     }
@@ -21,24 +23,28 @@ public class Datasheet {
         return supplier;
     }
 
+    public Collection<DatasheetGraph> getDatasheetGraphs() {
+        return datasheetGraphs.getList();
+    }
+
     @Override
     public String toString() {
         return String.format("%s (%s)", datasheetReference, supplier);
-    }
-
-    public PDFFile getPDFFile() {
-        return datasheetGraphs.getFirst();
     }
 
     public String getId() {
         return uuid.toString();
     }
 
-    public void addGraph(DatasheetGraph datasheetGraph) {
+    void addGraph(DatasheetGraph datasheetGraph) {
         datasheetGraphs.add(datasheetGraph);
     }
 
-    public UUID getUUID() {
+    UUID getUUID() {
         return uuid;
+    }
+
+    public Optional<DatasheetGraph> getDatasheetGraphs(String graphId) {
+        return datasheetGraphs.get(graphId);
     }
 }

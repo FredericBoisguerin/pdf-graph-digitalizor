@@ -23,13 +23,28 @@ public class DatasheetService {
         return datasheetRepository.findAll();
     }
 
-    public Datasheet findById(String parameter) {
-        return datasheetRepository.findById(parameter).orElseThrow(IllegalAccessError::new);
+    public Datasheet findById(String datasheetId) {
+        return datasheetRepository.findById(datasheetId).orElseThrow(IllegalAccessError::new);
     }
 
     public void addGraphFromPDF(String datasheetId, DatasheetGraph datasheetGraph) {
         Datasheet datasheet = findById(datasheetId);
         datasheet.addGraph(datasheetGraph);
         datasheetRepository.save(datasheet);
+    }
+
+    public Collection<DatasheetGraph> getAllDatasheetGraphs(String datasheetId) {
+        Datasheet datasheet = findById(datasheetId);
+        return datasheet.getDatasheetGraphs();
+    }
+
+    public PDFFile getPDFFile(String datasheetId, String graphId) {
+        return findById(datasheetId).getDatasheetGraphs(graphId)
+                                    .map(DatasheetGraph::getPDFFile)
+                                    .orElseThrow(IllegalStateException::new);
+    }
+
+    public String getDatasheetInfo(String datasheetId) {
+        return findById(datasheetId).toString();
     }
 }

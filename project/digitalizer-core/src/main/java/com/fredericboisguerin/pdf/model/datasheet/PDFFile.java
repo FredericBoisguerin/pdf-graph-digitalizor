@@ -12,4 +12,9 @@ public class PDFFile {
     public byte[] getBytes() {
         return file;
     }
+
+    @Override
+    public String toString() {
+        return filename;
+    }
 }
