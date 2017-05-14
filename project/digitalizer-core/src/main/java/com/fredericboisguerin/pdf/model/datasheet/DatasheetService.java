@@ -13,10 +13,9 @@ public class DatasheetService {
         this.datasheetRepository = datasheetRepository;
     }
 
-    public UUID createDatasheet(DatasheetReference datasheetReference, DatasheetSupplier supplier) {
+    public void createDatasheet(DatasheetReference datasheetReference, DatasheetSupplier supplier) {
         Datasheet datasheet = new Datasheet(datasheetReference, supplier);
         datasheetRepository.save(datasheet);
-        return datasheet.getUUID();
     }
 
     public Collection<Datasheet> getAllDatasheets() {
