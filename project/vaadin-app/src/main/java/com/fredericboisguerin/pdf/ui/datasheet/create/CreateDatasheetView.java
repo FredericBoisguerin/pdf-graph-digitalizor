@@ -1,8 +1,8 @@
 package com.fredericboisguerin.pdf.ui.datasheet.create;
 
-public interface ImportDatasheetView {
+public interface CreateDatasheetView {
 
-    void setListener(ImportDatasheetViewListener listener);
+    void setListener(CreateDatasheetViewListener listener);
 
     void notifyMessage(String message);
 

@@ -1,6 +1,6 @@
 package com.fredericboisguerin.pdf.ui.datasheet.create;
 
-public interface ImportDatasheetViewListener {
+public interface CreateDatasheetViewListener {
     void onValidateButtonClicked(String reference, String supplierName, byte[] lastFileUpdated,
             String filename);
 }

@@ -9,13 +9,13 @@ import com.fredericboisguerin.pdf.model.datasheet.DatasheetService;
 import com.fredericboisguerin.pdf.model.datasheet.DatasheetSupplier;
 import com.fredericboisguerin.pdf.model.datasheet.PDFFile;
 
-public class ImportDatasheetPresenter implements ImportDatasheetViewListener {
+public class CreateDatasheetPresenter implements CreateDatasheetViewListener {
 
     private final DatasheetService datasheetService;
-    private final ImportDatasheetView importDatasheetView;
+    private final CreateDatasheetView createDatasheetView;
 
-    public ImportDatasheetPresenter(ImportDatasheetView importDatasheetView, DatasheetService datasheetService) {
-        this.importDatasheetView = importDatasheetView;
+    public CreateDatasheetPresenter(CreateDatasheetView createDatasheetView, DatasheetService datasheetService) {
+        this.createDatasheetView = createDatasheetView;
         this.datasheetService = datasheetService;
     }
 
@@ -31,7 +31,7 @@ public class ImportDatasheetPresenter implements ImportDatasheetViewListener {
         addGraphToDatasheet.execute(datasheetService);
 
         String message = String.format("Datasheet %s (%s) imported!", reference, supplierName);
-        importDatasheetView.notifyMessage(message);
-        importDatasheetView.navigateToRoot();
+        createDatasheetView.notifyMessage(message);
+        createDatasheetView.navigateToRoot();
     }
 }

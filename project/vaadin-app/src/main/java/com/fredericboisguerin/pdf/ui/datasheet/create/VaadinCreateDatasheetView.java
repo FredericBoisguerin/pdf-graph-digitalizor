@@ -8,20 +8,20 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.themes.ValoTheme;
 
-public class VaadinImportDatasheetView extends VerticalLayout implements ImportDatasheetView, View {
+public class VaadinCreateDatasheetView extends VerticalLayout implements CreateDatasheetView, View {
 
-    public static final String VIEW_NAME = "import-datasheet";
+    public static final String VIEW_NAME = "create-datasheet";
 
     private final TextField referenceTextField;
     private final TextField supplierTextField;
     private final Label filenameLabel;
 
-    private ImportDatasheetViewListener listener;
+    private CreateDatasheetViewListener listener;
     private String lastFileNameUpdated;
     private byte[] lastFileUpdated;
     private Navigator navigator;
 
-    public VaadinImportDatasheetView() {
+    public VaadinCreateDatasheetView() {
         Label title = new Label("Import a new datasheet");
         title.addStyleName(ValoTheme.LABEL_HUGE);
 
@@ -83,7 +83,7 @@ public class VaadinImportDatasheetView extends VerticalLayout implements ImportD
     }
 
     @Override
-    public void setListener(ImportDatasheetViewListener listener) {
+    public void setListener(CreateDatasheetViewListener listener) {
         this.listener = listener;
     }
 
