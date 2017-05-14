@@ -2,11 +2,15 @@ package com.fredericboisguerin.pdf.model.datasheet;
 
 import java.util.UUID;
 
+import com.fredericboisguerin.pdf.model.DatasheetGraphExtraInfo;
+
 public class DatasheetGraph {
     private final UUID uuid = UUID.randomUUID();
+    private final DatasheetGraphExtraInfo datasheetGraphExtraInfo;
     private final PDFFile pdfFile;
 
-    public DatasheetGraph(PDFFile pdfFile) {
+    public DatasheetGraph(DatasheetGraphExtraInfo datasheetGraphExtraInfo, PDFFile pdfFile) {
+        this.datasheetGraphExtraInfo = datasheetGraphExtraInfo;
         this.pdfFile = pdfFile;
     }
 

@@ -8,4 +8,6 @@ public interface CreateDatasheetGraphView {
     void notifyMessage(String message);
 
     void navigateToReadDatasheet(String datasheetId);
+
+    void setModel(CreateDatasheetGraphViewModel model);
 }

@@ -21,6 +21,7 @@ public class VaadinCreateDatasheetGraphView extends VerticalLayout
 
     private final Label title = new Label();
     private final Label filenameLabel = new Label();
+    private final DatasheetGraphInfoEditor graphInfoEditor = new DatasheetGraphInfoEditor();
 
     private CreateDatasheetGraphListener listener;
     private String lastFileNameUpdated;
@@ -31,17 +32,18 @@ public class VaadinCreateDatasheetGraphView extends VerticalLayout
         title.addStyleName(ValoTheme.LABEL_HUGE);
 
         FileDropBox components = (FileDropBox) buildDropPane();
-
         Component fileUpdatedLayout = buildFileUpdatedLayout();
 
         Button validateButton = new Button("Validate");
         validateButton.addClickListener(this::onValidateButtonClicked);
 
-        addComponents(title, components, fileUpdatedLayout, validateButton);
+        addComponents(title, components, fileUpdatedLayout, graphInfoEditor, validateButton);
     }
 
     private void onValidateButtonClicked(ClickEvent clickEvent) {
-        listener.onValidateButtonClicked(lastFileNameUpdated, lastFileUpdated);
+        if (graphInfoEditor.valid()) {
+            listener.onValidateButtonClicked(lastFileNameUpdated, lastFileUpdated);
+        }
     }
 
     private Component buildDropPane() {
@@ -94,8 +96,14 @@ public class VaadinCreateDatasheetGraphView extends VerticalLayout
     }
 
     @Override
+    public void setModel(CreateDatasheetGraphViewModel model) {
+        graphInfoEditor.setModel(model);
+    }
+
+    @Override
     public void enter(ViewChangeEvent event) {
         navigator = event.getNavigator();
+        filenameLabel.setValue("");
         listener.onViewEntered(event.getParameters());
     }
 }
