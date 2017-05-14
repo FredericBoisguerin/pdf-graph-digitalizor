@@ -21,11 +21,6 @@ public class Datasheet {
         return supplier;
     }
 
-    public boolean idEquals(String parameter) {
-        UUID other = UUID.fromString(parameter);
-        return this.uuid.equals(other);
-    }
-
     @Override
     public String toString() {
         return String.format("%s (%s)", datasheetReference, supplier);
