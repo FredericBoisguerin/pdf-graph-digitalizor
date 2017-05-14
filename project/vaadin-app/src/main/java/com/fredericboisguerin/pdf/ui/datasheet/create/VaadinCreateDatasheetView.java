@@ -1,5 +1,6 @@
 package com.fredericboisguerin.pdf.ui.datasheet.create;
 
+import com.fredericboisguerin.pdf.ui.datasheet.read.VaadinReadDatasheetView;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
@@ -57,7 +58,7 @@ public class VaadinCreateDatasheetView extends VerticalLayout implements CreateD
     }
 
     @Override
-    public void navigateToRoot() {
-        navigator.navigateTo("");
+    public void navigateToReadDatasheet() {
+        navigator.navigateTo(VaadinReadDatasheetView.VIEW_NAME);
     }
 }

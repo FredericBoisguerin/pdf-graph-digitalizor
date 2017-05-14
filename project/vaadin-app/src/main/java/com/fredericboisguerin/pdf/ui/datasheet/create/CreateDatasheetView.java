@@ -6,5 +6,5 @@ public interface CreateDatasheetView {
 
     void notifyMessage(String message);
 
-    void navigateToRoot();
+    void navigateToReadDatasheet();
 }

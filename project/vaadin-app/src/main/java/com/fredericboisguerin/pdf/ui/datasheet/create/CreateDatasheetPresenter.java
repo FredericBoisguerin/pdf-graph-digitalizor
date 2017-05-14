@@ -23,6 +23,6 @@ public class CreateDatasheetPresenter implements CreateDatasheetViewListener {
 
         String message = String.format("Datasheet %s (%s) created!", reference, supplierName);
         createDatasheetView.notifyMessage(message);
-        createDatasheetView.navigateToRoot();
+        createDatasheetView.navigateToReadDatasheet();
     }
 }
