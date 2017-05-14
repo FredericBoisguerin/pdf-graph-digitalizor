@@ -10,4 +10,6 @@ public interface ReadDatasheetView {
     void notifyTray(String message);
 
     void navigateToViewDatasheetGraphs(String param);
+
+    void navigateToAddDatasheetGraph(String id);
 }

@@ -1,7 +1,6 @@
 package com.fredericboisguerin.pdf.ui.datasheet.read;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.fredericboisguerin.pdf.actions.ViewAllDatasheets;
@@ -13,7 +12,8 @@ public class ReadDatasheetPresenter implements ReadDatasheetViewListener {
     private final DatasheetService datasheetService;
     private final ReadDatasheetView view;
 
-    public ReadDatasheetPresenter(ReadDatasheetView vaadinReadView, DatasheetService datasheetService) {
+    public ReadDatasheetPresenter(ReadDatasheetView vaadinReadView,
+            DatasheetService datasheetService) {
         view = vaadinReadView;
         this.datasheetService = datasheetService;
     }
@@ -23,19 +23,20 @@ public class ReadDatasheetPresenter implements ReadDatasheetViewListener {
         DatasheetCollection datasheets = new ViewAllDatasheets().execute(datasheetService);
         List<DatasheetViewModel> datasheetViewModels = datasheets.stream()
                                                                  .map(this::buildDatasheetViewModel)
-                                                                 .collect(Collectors
-                                                                         .toList());
+                                                                 .collect(Collectors.toList());
         view.setDatasheets(datasheetViewModels);
     }
 
     @Override
-    public void onDatasheetSelectedForViewGraphs(Optional<DatasheetViewModel> datasheetViewModel) {
-        if (!datasheetViewModel.isPresent()){
-            view.notifyTray("Please select a datasheet!");
-            return;
-        }
-        String id = datasheetViewModel.map(DatasheetViewModel::getId).get();
+    public void onDatasheetSelectedForViewGraphs(DatasheetViewModel datasheetViewModel) {
+        String id = datasheetViewModel.getId();
         view.navigateToViewDatasheetGraphs(id);
+    }
+
+    @Override
+    public void onDatasheetSelectedForAddGraph(DatasheetViewModel datasheetViewModel) {
+        String id = datasheetViewModel.getId();
+        view.navigateToAddDatasheetGraph(id);
     }
 
     private DatasheetViewModel buildDatasheetViewModel(Datasheet datasheet) {

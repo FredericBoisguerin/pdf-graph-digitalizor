@@ -1,5 +1,7 @@
 package com.fredericboisguerin.pdf.ui;
 
+import javax.servlet.annotation.WebServlet;
+
 import com.fredericboisguerin.pdf.infrastructure.InMemoryDatasheetRepository;
 import com.fredericboisguerin.pdf.model.datasheet.DatasheetService;
 import com.fredericboisguerin.pdf.ui.datasheet.create.CreateDatasheetPresenter;
@@ -8,6 +10,8 @@ import com.fredericboisguerin.pdf.ui.datasheet.extract.ExtractDatasheetDataPrese
 import com.fredericboisguerin.pdf.ui.datasheet.extract.VaadinExtractDatasheetDataView;
 import com.fredericboisguerin.pdf.ui.datasheet.read.ReadDatasheetPresenter;
 import com.fredericboisguerin.pdf.ui.datasheet.read.VaadinReadDatasheetView;
+import com.fredericboisguerin.pdf.ui.graph.create.CreateDatasheetGraphPresenter;
+import com.fredericboisguerin.pdf.ui.graph.create.VaadinCreateDatasheetGraphView;
 import com.fredericboisguerin.pdf.ui.graph.list.ReadDatasheetGraphPresenter;
 import com.fredericboisguerin.pdf.ui.graph.list.VaadinReadDatasheetGraphView;
 import com.vaadin.annotations.Theme;
@@ -16,8 +20,6 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
-
-import javax.servlet.annotation.WebServlet;
 
 /**
  * This UI is the application entry point. A UI may either represent a browser window
@@ -47,30 +49,43 @@ public class MainUI extends UI {
         addReadDatasheetView(datasheetService);
         addReadDatasheetGraphView(datasheetService);
         addExtractInformationsView(datasheetService);
+        addCreateDatasheetGraphView(datasheetService);
+    }
+
+    private void addCreateDatasheetGraphView(DatasheetService datasheetService) {
+        VaadinCreateDatasheetGraphView view = new VaadinCreateDatasheetGraphView();
+        CreateDatasheetGraphPresenter presenter = new CreateDatasheetGraphPresenter(view,
+                datasheetService);
+        view.setListener(presenter);
+        navigator.addView(VaadinCreateDatasheetGraphView.VIEW_NAME, view);
     }
 
     private void addReadDatasheetGraphView(DatasheetService datasheetService) {
         VaadinReadDatasheetGraphView vaadinReadDatasheetGraphView = new VaadinReadDatasheetGraphView();
-        ReadDatasheetGraphPresenter readDatasheetGraphPresenter = new ReadDatasheetGraphPresenter(vaadinReadDatasheetGraphView, datasheetService);
+        ReadDatasheetGraphPresenter readDatasheetGraphPresenter = new ReadDatasheetGraphPresenter(
+                vaadinReadDatasheetGraphView, datasheetService);
         vaadinReadDatasheetGraphView.setListener(readDatasheetGraphPresenter);
         navigator.addView(VaadinReadDatasheetGraphView.VIEW_NAME, vaadinReadDatasheetGraphView);
     }
 
     private void addExtractInformationsView(DatasheetService datasheetService) {
         VaadinExtractDatasheetDataView extractDatasheetDataView = new VaadinExtractDatasheetDataView();
-        extractDatasheetDataView.setListener(new ExtractDatasheetDataPresenter(extractDatasheetDataView, datasheetService));
+        extractDatasheetDataView.setListener(
+                new ExtractDatasheetDataPresenter(extractDatasheetDataView, datasheetService));
         navigator.addView(VaadinExtractDatasheetDataView.VIEW_NAME, extractDatasheetDataView);
     }
 
     private void addCreateDatasheetView(DatasheetService datasheetService) {
         VaadinCreateDatasheetView importDatasheetView = new VaadinCreateDatasheetView();
-        importDatasheetView.setListener(new CreateDatasheetPresenter(importDatasheetView, datasheetService));
+        importDatasheetView.setListener(
+                new CreateDatasheetPresenter(importDatasheetView, datasheetService));
         navigator.addView(VaadinCreateDatasheetView.VIEW_NAME, importDatasheetView);
     }
 
     private void addReadDatasheetView(DatasheetService datasheetService) {
         VaadinReadDatasheetView vaadinReadDatasheetView = new VaadinReadDatasheetView();
-        ReadDatasheetPresenter readDatasheetPresenter = new ReadDatasheetPresenter(vaadinReadDatasheetView, datasheetService);
+        ReadDatasheetPresenter readDatasheetPresenter = new ReadDatasheetPresenter(
+                vaadinReadDatasheetView, datasheetService);
         vaadinReadDatasheetView.setListener(readDatasheetPresenter);
         navigator.addView(VaadinReadDatasheetView.VIEW_NAME, vaadinReadDatasheetView);
     }

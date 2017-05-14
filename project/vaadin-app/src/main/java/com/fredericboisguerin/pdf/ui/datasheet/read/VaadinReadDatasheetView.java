@@ -1,5 +1,10 @@
 package com.fredericboisguerin.pdf.ui.datasheet.read;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Consumer;
+
+import com.fredericboisguerin.pdf.ui.graph.create.VaadinCreateDatasheetGraphView;
 import com.fredericboisguerin.pdf.ui.graph.list.VaadinReadDatasheetGraphView;
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.ListDataProvider;
@@ -7,11 +12,13 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.SerializablePredicate;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Grid;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
-
-import java.util.List;
-import java.util.Optional;
 
 public class VaadinReadDatasheetView extends VerticalLayout implements ReadDatasheetView, View {
     public static final String VIEW_NAME = "read-datasheets";
@@ -33,17 +40,23 @@ public class VaadinReadDatasheetView extends VerticalLayout implements ReadDatas
             .setCaption("Supplier");
         grid.setSizeFull();
 
-        Button viewGraphsButton = new Button("View graphs");
-        viewGraphsButton.addClickListener(event -> notifyViewGraphsClicked());
+        Button addGraphButton = new Button("Add a graph");
+        addGraphButton.addClickListener(event -> consumeOrWarn(listener::onDatasheetSelectedForAddGraph));
 
-        addComponents(title, grid, viewGraphsButton);
+        Button viewGraphsButton = new Button("View graphs");
+        viewGraphsButton.addClickListener(event -> consumeOrWarn(listener::onDatasheetSelectedForViewGraphs));
+
+        HorizontalLayout actionsLayout = new HorizontalLayout(addGraphButton, viewGraphsButton);
+        addComponents(title, grid, actionsLayout);
     }
 
-    private void notifyViewGraphsClicked() {
-        Optional<DatasheetViewModel> datasheetViewModel = grid
-                .asSingleSelect()
-                .getOptionalValue();
-        listener.onDatasheetSelectedForViewGraphs(datasheetViewModel);
+    private void consumeOrWarn(Consumer<DatasheetViewModel> modelConsumer) {
+        Optional<DatasheetViewModel> selectedDatasheetViewModel = grid.asSingleSelect().getOptionalValue();
+        if (!selectedDatasheetViewModel.isPresent()) {
+            notifyTray("Please select a datasheet!");
+            return;
+        }
+        selectedDatasheetViewModel.ifPresent(modelConsumer);
     }
 
     @Override
@@ -53,8 +66,8 @@ public class VaadinReadDatasheetView extends VerticalLayout implements ReadDatas
 
     @Override
     public void setDatasheets(List<DatasheetViewModel> datasheetViewModelList) {
-        DataProvider<DatasheetViewModel, SerializablePredicate<DatasheetViewModel>> dataProvider =
-                new ListDataProvider<>(datasheetViewModelList);
+        DataProvider<DatasheetViewModel, SerializablePredicate<DatasheetViewModel>> dataProvider = new ListDataProvider<>(
+                datasheetViewModelList);
         grid.setDataProvider(dataProvider);
     }
 
@@ -65,7 +78,16 @@ public class VaadinReadDatasheetView extends VerticalLayout implements ReadDatas
 
     @Override
     public void navigateToViewDatasheetGraphs(String param) {
-        navigator.navigateTo(VaadinReadDatasheetGraphView.VIEW_NAME + "/" + param);
+        navigateToView(VaadinReadDatasheetGraphView.VIEW_NAME, param);
+    }
+
+    protected void navigateToView(String viewName, String param) {
+        navigator.navigateTo(viewName + "/" + param);
+    }
+
+    @Override
+    public void navigateToAddDatasheetGraph(String param) {
+        navigateToView(VaadinCreateDatasheetGraphView.VIEW_NAME, param);
     }
 
     @Override
