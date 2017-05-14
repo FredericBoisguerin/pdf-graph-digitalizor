@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import com.fredericboisguerin.pdf.ui.datasheet.create.VaadinCreateDatasheetView;
 import com.fredericboisguerin.pdf.ui.graph.create.VaadinCreateDatasheetGraphView;
 import com.fredericboisguerin.pdf.ui.graph.list.VaadinReadDatasheetGraphView;
 import com.vaadin.data.provider.DataProvider;
@@ -40,13 +41,16 @@ public class VaadinReadDatasheetView extends VerticalLayout implements ReadDatas
             .setCaption("Supplier");
         grid.setSizeFull();
 
+        Button createDatasheetButton = new Button("Create a datasheet");
+        createDatasheetButton.addClickListener(event -> listener.onCreateDatasheetButtonClicked());
+
         Button addGraphButton = new Button("Add a graph");
         addGraphButton.addClickListener(event -> consumeOrWarn(listener::onDatasheetSelectedForAddGraph));
 
         Button viewGraphsButton = new Button("View graphs");
         viewGraphsButton.addClickListener(event -> consumeOrWarn(listener::onDatasheetSelectedForViewGraphs));
 
-        HorizontalLayout actionsLayout = new HorizontalLayout(addGraphButton, viewGraphsButton);
+        HorizontalLayout actionsLayout = new HorizontalLayout(createDatasheetButton, addGraphButton, viewGraphsButton);
         addComponents(title, grid, actionsLayout);
     }
 
@@ -88,6 +92,11 @@ public class VaadinReadDatasheetView extends VerticalLayout implements ReadDatas
     @Override
     public void navigateToAddDatasheetGraph(String param) {
         navigateToView(VaadinCreateDatasheetGraphView.VIEW_NAME, param);
+    }
+
+    @Override
+    public void navigateToCreateDatasheet() {
+        navigator.navigateTo(VaadinCreateDatasheetView.VIEW_NAME);
     }
 
     @Override

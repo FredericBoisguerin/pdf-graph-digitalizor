@@ -6,4 +6,6 @@ public interface ReadDatasheetViewListener {
     void onDatasheetSelectedForViewGraphs(DatasheetViewModel datasheetViewModel);
 
     void onDatasheetSelectedForAddGraph(DatasheetViewModel datasheetViewModel);
+
+    void onCreateDatasheetButtonClicked();
 }

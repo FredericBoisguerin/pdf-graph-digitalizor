@@ -39,6 +39,11 @@ public class ReadDatasheetPresenter implements ReadDatasheetViewListener {
         view.navigateToAddDatasheetGraph(id);
     }
 
+    @Override
+    public void onCreateDatasheetButtonClicked() {
+        view.navigateToCreateDatasheet();
+    }
+
     private DatasheetViewModel buildDatasheetViewModel(Datasheet datasheet) {
         String reference = datasheet.getDatasheetReference().toString();
         String supplier = datasheet.getSupplier().toString();
