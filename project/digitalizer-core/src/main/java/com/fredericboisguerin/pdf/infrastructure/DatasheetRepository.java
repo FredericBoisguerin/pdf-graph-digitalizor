@@ -6,7 +6,7 @@ import java.util.Optional;
 import com.fredericboisguerin.pdf.model.datasheet.Datasheet;
 
 public interface DatasheetRepository {
-    void create(Datasheet datasheet);
+    void save(Datasheet datasheet);
 
     Collection<Datasheet> findAll();
 

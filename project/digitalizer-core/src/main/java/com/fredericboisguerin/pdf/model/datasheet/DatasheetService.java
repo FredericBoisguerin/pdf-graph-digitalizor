@@ -1,6 +1,7 @@
 package com.fredericboisguerin.pdf.model.datasheet;
 
 import java.util.Collection;
+import java.util.UUID;
 
 import com.fredericboisguerin.pdf.infrastructure.DatasheetRepository;
 
@@ -12,9 +13,10 @@ public class DatasheetService {
         this.datasheetRepository = datasheetRepository;
     }
 
-    public void importDatasheet(DatasheetReference datasheetReference, DatasheetSupplier supplier,
-            PDFFile pdfFile) {
-        datasheetRepository.create(new Datasheet(datasheetReference, supplier, pdfFile));
+    public UUID importDatasheet(DatasheetReference datasheetReference, DatasheetSupplier supplier) {
+        Datasheet datasheet = new Datasheet(datasheetReference, supplier);
+        datasheetRepository.save(datasheet);
+        return datasheet.getUUID();
     }
 
     public Collection<Datasheet> getAllDatasheets() {
@@ -23,5 +25,11 @@ public class DatasheetService {
 
     public Datasheet findById(String parameter) {
         return datasheetRepository.findById(parameter).orElseThrow(IllegalAccessError::new);
+    }
+
+    public void addGraphFromPDF(String datasheetId, DatasheetGraph datasheetGraph) {
+        Datasheet datasheet = findById(datasheetId);
+        datasheet.addGraph(datasheetGraph);
+        datasheetRepository.save(datasheet);
     }
 }

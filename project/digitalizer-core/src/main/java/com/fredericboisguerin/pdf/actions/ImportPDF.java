@@ -1,25 +1,23 @@
 package com.fredericboisguerin.pdf.actions;
 
+import java.util.UUID;
+
 import com.fredericboisguerin.pdf.model.datasheet.DatasheetReference;
-import com.fredericboisguerin.pdf.model.datasheet.DatasheetSupplier;
-import com.fredericboisguerin.pdf.model.datasheet.PDFFile;
 import com.fredericboisguerin.pdf.model.datasheet.DatasheetService;
+import com.fredericboisguerin.pdf.model.datasheet.DatasheetSupplier;
 
 public class ImportPDF {
 
-    private final PDFFile pdfFile;
     private final DatasheetReference datasheetReference;
     private final DatasheetSupplier supplier;
 
-    public ImportPDF(PDFFile pdfFile, DatasheetReference datasheetReference,
-            DatasheetSupplier supplier) {
-        this.pdfFile = pdfFile;
+    public ImportPDF(DatasheetReference datasheetReference, DatasheetSupplier supplier) {
         this.datasheetReference = datasheetReference;
         this.supplier = supplier;
     }
 
-    public void execute(DatasheetService datasheetService) {
-        datasheetService.importDatasheet(datasheetReference, supplier,  pdfFile);
+    public UUID execute(DatasheetService datasheetService) {
+        return datasheetService.importDatasheet(datasheetReference, supplier);
     }
 
 }

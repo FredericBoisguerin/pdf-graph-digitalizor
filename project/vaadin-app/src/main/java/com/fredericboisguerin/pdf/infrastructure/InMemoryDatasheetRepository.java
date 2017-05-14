@@ -1,27 +1,29 @@
 package com.fredericboisguerin.pdf.infrastructure;
 
-import com.fredericboisguerin.pdf.model.datasheet.Datasheet;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
-import java.util.*;
+import com.fredericboisguerin.pdf.model.datasheet.Datasheet;
 
 public class InMemoryDatasheetRepository implements DatasheetRepository {
 
-    private final List<Datasheet> datasheets = new ArrayList<>();
+    private final Map<String, Datasheet> datasheets = new HashMap<>();
 
     @Override
-    public void create(Datasheet datasheet) {
-        datasheets.add(datasheet);
+    public void save(Datasheet datasheet) {
+        datasheets.put(datasheet.getId(), datasheet);
     }
 
     @Override
     public Collection<Datasheet> findAll() {
-        return Collections.unmodifiableCollection(datasheets);
+        return Collections.unmodifiableCollection(datasheets.values());
     }
 
     @Override
     public Optional<Datasheet> findById(String parameter) {
-        return datasheets.stream()
-                         .filter(datasheet -> datasheet.idEquals(parameter))
-                         .findFirst();
+        return Optional.ofNullable(datasheets.get(parameter));
     }
 }

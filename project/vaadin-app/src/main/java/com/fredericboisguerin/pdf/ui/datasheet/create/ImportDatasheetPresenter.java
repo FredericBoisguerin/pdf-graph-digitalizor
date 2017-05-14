@@ -1,5 +1,8 @@
 package com.fredericboisguerin.pdf.ui.datasheet.create;
 
+import java.util.UUID;
+
+import com.fredericboisguerin.pdf.actions.AddGraphToDatasheet;
 import com.fredericboisguerin.pdf.actions.ImportPDF;
 import com.fredericboisguerin.pdf.model.datasheet.DatasheetReference;
 import com.fredericboisguerin.pdf.model.datasheet.DatasheetService;
@@ -19,9 +22,13 @@ public class ImportDatasheetPresenter implements ImportDatasheetViewListener {
     @Override
     public void onValidateButtonClicked(String reference, String supplierName, byte[] file,
             String filename) {
-        ImportPDF importPDF = new ImportPDF(new PDFFile(filename, file), new DatasheetReference(reference),
+        ImportPDF importPDF = new ImportPDF(new DatasheetReference(reference),
                 new DatasheetSupplier(supplierName));
-        importPDF.execute(datasheetService);
+        UUID datasheetId = importPDF.execute(datasheetService);
+
+        PDFFile pdfFile = new PDFFile(filename, file);
+        AddGraphToDatasheet addGraphToDatasheet = new AddGraphToDatasheet(datasheetId, pdfFile);
+        addGraphToDatasheet.execute(datasheetService);
 
         String message = String.format("Datasheet %s (%s) imported!", reference, supplierName);
         importDatasheetView.notifyMessage(message);

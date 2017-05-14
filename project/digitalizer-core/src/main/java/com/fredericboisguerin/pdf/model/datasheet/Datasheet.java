@@ -6,13 +6,11 @@ public class Datasheet {
     private final UUID uuid = UUID.randomUUID();
     private final DatasheetReference datasheetReference;
     private final DatasheetSupplier supplier;
-    private final PDFFile pdfFile;
+    private final DatasheetGraphs datasheetGraphs = new DatasheetGraphs();
 
-    public Datasheet(DatasheetReference datasheetReference, DatasheetSupplier supplier,
-                     PDFFile pdfFile) {
+    public Datasheet(DatasheetReference datasheetReference, DatasheetSupplier supplier) {
         this.datasheetReference = datasheetReference;
         this.supplier = supplier;
-        this.pdfFile = pdfFile;
     }
 
     public DatasheetReference getDatasheetReference() {
@@ -34,10 +32,18 @@ public class Datasheet {
     }
 
     public PDFFile getPDFFile() {
-        return pdfFile;
+        return datasheetGraphs.getFirst();
     }
 
     public String getId() {
         return uuid.toString();
+    }
+
+    public void addGraph(DatasheetGraph datasheetGraph) {
+        datasheetGraphs.add(datasheetGraph);
+    }
+
+    public UUID getUUID() {
+        return uuid;
     }
 }
