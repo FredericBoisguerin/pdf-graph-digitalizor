@@ -8,8 +8,8 @@ import com.fredericboisguerin.pdf.ui.datasheet.extract.ExtractDatasheetDataPrese
 import com.fredericboisguerin.pdf.ui.datasheet.extract.VaadinExtractDatasheetDataView;
 import com.fredericboisguerin.pdf.ui.datasheet.read.ReadDatasheetPresenter;
 import com.fredericboisguerin.pdf.ui.datasheet.read.VaadinReadDatasheetView;
-import com.fredericboisguerin.pdf.ui.graph.ReadDatasheetGraphPresenter;
-import com.fredericboisguerin.pdf.ui.graph.VaadinReadDatasheetGraphView;
+import com.fredericboisguerin.pdf.ui.graph.list.ReadDatasheetGraphPresenter;
+import com.fredericboisguerin.pdf.ui.graph.list.VaadinReadDatasheetGraphView;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.navigator.Navigator;

@@ -1,7 +1,6 @@
 package com.fredericboisguerin.pdf.ui.datasheet.read;
 
-import com.fredericboisguerin.pdf.ui.datasheet.extract.VaadinExtractDatasheetDataView;
-import com.fredericboisguerin.pdf.ui.graph.VaadinReadDatasheetGraphView;
+import com.fredericboisguerin.pdf.ui.graph.list.VaadinReadDatasheetGraphView;
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.navigator.Navigator;

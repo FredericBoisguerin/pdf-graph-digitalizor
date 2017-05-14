@@ -1,4 +1,4 @@
-package com.fredericboisguerin.pdf.ui.graph;
+package com.fredericboisguerin.pdf.ui.graph.list;
 
 import java.util.Optional;
 
