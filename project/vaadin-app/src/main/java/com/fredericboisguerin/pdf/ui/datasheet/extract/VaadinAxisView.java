@@ -55,7 +55,7 @@ class VaadinAxisView extends VerticalLayout {
     }
 
     public boolean isValid() {
-        return binder.validate().isOk();
+        return binder.isValid();
     }
 
     public Registration addStatusChangeListener(StatusChangeListener listener) {

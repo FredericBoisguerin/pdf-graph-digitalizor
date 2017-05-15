@@ -63,6 +63,7 @@ public class VaadinExtractDatasheetDataView extends VerticalLayout
                 (StreamSource) () -> listener.getExportInputStream(), "report.xls");
         FileDownloader fileDownloader = new FileDownloader(resource);
         fileDownloader.extend(export);
+        export.setEnabled(false);
         return export;
     }
 
