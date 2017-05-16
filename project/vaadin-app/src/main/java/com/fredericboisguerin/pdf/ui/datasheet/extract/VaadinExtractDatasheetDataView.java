@@ -26,8 +26,8 @@ public class VaadinExtractDatasheetDataView extends VerticalLayout
     private static final String AXIS_Y_CAPTION = "Axis Y";
 
     private final Label title;
-    private final VaadinAxisView xAxisView = new VaadinAxisView();
-    private final VaadinAxisView yAxisView = new VaadinAxisView();
+    private final VaadinAxisEditorView xAxisView = new VaadinAxisEditorView();
+    private final VaadinAxisEditorView yAxisView = new VaadinAxisEditorView();
     private final TwinColSelect<SerieViewModel> twinColSelect = new TwinColSelect<>();
     private final Button exportButton;
 
@@ -72,7 +72,7 @@ public class VaadinExtractDatasheetDataView extends VerticalLayout
         exportButton.setEnabled(formIsValid);
     }
 
-    private VerticalLayout buildAxisLayout(String caption, VaadinAxisView axisView) {
+    private VerticalLayout buildAxisLayout(String caption, VaadinAxisEditorView axisView) {
         Label label = new Label(caption);
         axisView.addStatusChangeListener(event -> onStatusChanged());
         VerticalLayout layout = new VerticalLayout(label, axisView);

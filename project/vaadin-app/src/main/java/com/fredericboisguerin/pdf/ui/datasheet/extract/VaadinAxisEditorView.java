@@ -13,7 +13,7 @@ import com.vaadin.ui.RadioButtonGroup;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
-class VaadinAxisView extends VerticalLayout {
+class VaadinAxisEditorView extends VerticalLayout {
     private static final String DECIMAL_NUMBER_EXPECTED = "Decimal number expected";
     private static final String SCALE = "Scale";
     private static final String MIN = "Min";
@@ -25,7 +25,7 @@ class VaadinAxisView extends VerticalLayout {
             SCALE);
     private final TextField minTextField;
 
-    VaadinAxisView() {
+    VaadinAxisEditorView() {
         minTextField = new TextField(MIN);
         bindWithModel(minTextField, AxisViewModel::getMin, AxisViewModel::setMin);
 
