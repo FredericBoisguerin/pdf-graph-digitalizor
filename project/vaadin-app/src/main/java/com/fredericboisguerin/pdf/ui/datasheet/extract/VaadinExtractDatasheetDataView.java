@@ -3,7 +3,6 @@ package com.fredericboisguerin.pdf.ui.datasheet.extract;
 import java.util.Collection;
 import java.util.List;
 
-import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FileDownloader;
@@ -14,7 +13,6 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.TwinColSelect;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
@@ -28,7 +26,7 @@ public class VaadinExtractDatasheetDataView extends VerticalLayout
     private final Label title;
     private final VaadinAxisEditorView xAxisView = new VaadinAxisEditorView();
     private final VaadinAxisEditorView yAxisView = new VaadinAxisEditorView();
-    private final TwinColSelect<SerieViewModel> twinColSelect = new TwinColSelect<>();
+    private final VaadinSeriesComponent seriesView = new VaadinSeriesComponent();
     private final Button exportButton;
 
     private ExtractDatasheetDataViewListener listener;
@@ -46,13 +44,10 @@ public class VaadinExtractDatasheetDataView extends VerticalLayout
         exportButton = buildExportButton();
 
         axesLayout.setWidth(67, Unit.PERCENTAGE);
-        twinColSelect.setWidth(67, Unit.PERCENTAGE);
+        seriesView.setWidth(67, Unit.PERCENTAGE);
 
-        addComponents(title, axesLayout, twinColSelect, exportButton);
-
-        setComponentAlignment(axesLayout, Alignment.MIDDLE_CENTER);
-        setComponentAlignment(twinColSelect, Alignment.MIDDLE_CENTER);
-        setComponentAlignment(exportButton, Alignment.MIDDLE_CENTER);
+        setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
+        addComponents(title, seriesView, axesLayout, exportButton);
 
         xAxisView.getFocus();
     }
@@ -93,8 +88,7 @@ public class VaadinExtractDatasheetDataView extends VerticalLayout
 
     @Override
     public void setSeries(List<SerieViewModel> serieViewModels) {
-        ListDataProvider<SerieViewModel> dataProvider = new ListDataProvider<>(serieViewModels);
-        twinColSelect.setDataProvider(dataProvider);
+        seriesView.setSeries(serieViewModels);
     }
 
     @Override
@@ -111,8 +105,8 @@ public class VaadinExtractDatasheetDataView extends VerticalLayout
     }
 
     @Override
-    public Collection<SerieViewModel> getSelectedSeries() {
-        return twinColSelect.getSelectedItems();
+    public Collection<Integer> getSelectedSeriesIds() {
+        return seriesView.getSelectedSeriesIds();
     }
 
     @Override

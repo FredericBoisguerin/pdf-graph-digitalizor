@@ -1,28 +1,17 @@
 package com.fredericboisguerin.pdf.ui.datasheet.extract;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import com.fredericboisguerin.pdf.actions.ExportDataExcel;
 import com.fredericboisguerin.pdf.actions.ViewDatasheetGraphPDFFile;
 import com.fredericboisguerin.pdf.actions.extract.ExtractGraphFromPDFFile;
-import com.fredericboisguerin.pdf.graph.Axis;
-import com.fredericboisguerin.pdf.graph.AxisCoords;
-import com.fredericboisguerin.pdf.graph.Coord;
-import com.fredericboisguerin.pdf.graph.LinearAxis;
-import com.fredericboisguerin.pdf.graph.LogAxis;
-import com.fredericboisguerin.pdf.graph.Serie;
-import com.fredericboisguerin.pdf.graph.XYGraph;
+import com.fredericboisguerin.pdf.graph.*;
 import com.fredericboisguerin.pdf.model.datasheet.DatasheetService;
 import com.fredericboisguerin.pdf.model.datasheet.PDFFile;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class ExtractDatasheetDataPresenter implements ExtractDatasheetDataViewListener {
 
@@ -34,11 +23,11 @@ public class ExtractDatasheetDataPresenter implements ExtractDatasheetDataViewLi
     private final DatasheetService datasheetService;
 
     private AxesViewModel axesViewModel;
-    private Map<SerieViewModel, Serie> pointSeriesMap;
+    private Map<Integer, Serie> pointSeriesMap;
     private XYGraph xyGraph;
 
     public ExtractDatasheetDataPresenter(ExtractDatasheetDataView view,
-            DatasheetService datasheetService) {
+                                         DatasheetService datasheetService) {
         this.view = view;
         this.datasheetService = datasheetService;
     }
@@ -69,11 +58,13 @@ public class ExtractDatasheetDataPresenter implements ExtractDatasheetDataViewLi
         int currentSerieId = 1;
         pointSeriesMap = new HashMap<>();
         List<SerieViewModel> serieViewModels = new ArrayList<>();
+        RawPointsBuilder rawPointsBuilder = new RawPointsBuilder();
         for (Serie serie : xyGraph.getSeriesBySizeDesc()) {
+            RawPoints rawPoints = rawPointsBuilder.buildRawPoints(serie);
             SerieViewModel serieViewModel = new SerieViewModel(currentSerieId,
-                    "Serie n°" + currentSerieId, serie.size());
+                    rawPoints);
             serieViewModels.add(serieViewModel);
-            pointSeriesMap.put(serieViewModel, serie);
+            pointSeriesMap.put(currentSerieId, serie);
             currentSerieId++;
         }
         return serieViewModels;
@@ -81,12 +72,12 @@ public class ExtractDatasheetDataPresenter implements ExtractDatasheetDataViewLi
 
     @Override
     public InputStream getExportInputStream() {
-        Collection<SerieViewModel> selectedSeriesModel = view.getSelectedSeries();
+        Collection<Integer> selectedSeriesIds = view.getSelectedSeriesIds();
         Axis xAxis = toAxis(axesViewModel.getAxisX());
         Axis yAxis = toAxis(axesViewModel.getAxisY());
-        List<Serie> selectedSeries = selectedSeriesModel.stream()
-                                                        .map(pointSeriesMap::get)
-                                                        .collect(Collectors.toList());
+        List<Serie> selectedSeries = selectedSeriesIds.stream()
+                                                      .map(pointSeriesMap::get)
+                                                      .collect(Collectors.toList());
         ExportDataExcel exportDataExcel = new ExportDataExcel(xyGraph, xAxis, yAxis,
                 selectedSeries);
         try {

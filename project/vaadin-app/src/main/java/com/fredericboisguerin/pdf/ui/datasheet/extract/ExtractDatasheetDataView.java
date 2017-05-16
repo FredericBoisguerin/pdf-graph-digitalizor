@@ -16,6 +16,6 @@ public interface ExtractDatasheetDataView {
 
     void setAxesViewModels(AxesViewModel axesViewModel);
 
-    Collection<SerieViewModel> getSelectedSeries();
+    Collection<Integer> getSelectedSeriesIds();
 
 }
