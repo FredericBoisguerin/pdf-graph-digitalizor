@@ -20,10 +20,6 @@ public class Series {
         series.selected.addAll(selected);
     }
 
-    public void select(UUID uuid) {
-        selected.add(uuid);
-    }
-
     public void addOnlySelectedTo(Series series) {
         serieList.stream()
                  .filter(this::isSelected)
@@ -37,7 +33,7 @@ public class Series {
 
     private void addAndSelect(Serie serie) {
         add(serie);
-        select(serie.getUuid());
+        selected.add(serie.getUuid());
     }
 
     public int size() {
@@ -50,5 +46,10 @@ public class Series {
         ArrayList<Serie> sorted = new ArrayList<>(serieList);
         sorted.sort(comparator);
         return Collections.unmodifiableList(sorted);
+    }
+
+    public void selectOnly(Collection<UUID> selectedElements) {
+        selected.clear();
+        selected.addAll(selectedElements);
     }
 }

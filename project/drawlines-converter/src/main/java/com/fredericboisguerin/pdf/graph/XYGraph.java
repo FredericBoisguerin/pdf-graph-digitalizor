@@ -47,6 +47,6 @@ public class XYGraph {
     }
 
     public void select(Collection<UUID> selectedElements) {
-        selectedElements.forEach(series::select);
+        series.selectOnly(selectedElements);
     }
 }
