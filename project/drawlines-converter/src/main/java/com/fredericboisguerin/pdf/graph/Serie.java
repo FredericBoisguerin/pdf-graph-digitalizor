@@ -3,11 +3,17 @@ package com.fredericboisguerin.pdf.graph;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 import java.util.function.Function;
 
 public class Serie implements Iterable<PointCoords> {
 
+    private final UUID uuid = UUID.randomUUID();
     private final List<PointCoords> pointCoordsCoords = new ArrayList<>();
+
+    public UUID getUuid() {
+        return uuid;
+    }
 
     public void add(PointCoords pointCoords) {
         this.pointCoordsCoords.add(pointCoords);
@@ -16,15 +22,17 @@ public class Serie implements Iterable<PointCoords> {
     public Serie convert(Function<Coord, Coord> xTransformation, Function<Coord, Coord> yTransformation) {
         Serie series = new Serie();
         pointCoordsCoords.stream()
-                         .map(pointCoords -> new PointCoords(xTransformation.apply(pointCoords.getX()), yTransformation.apply(
-                           pointCoords.getY())))
+                         .map(pointCoords -> new PointCoords(xTransformation.apply(pointCoords
+                                 .getX()), yTransformation.apply(
+                                 pointCoords.getY())))
                          .forEach(series::add);
         return series;
     }
 
     @Override
     public String toString() {
-        return String.format("Série #%d (%d points)", this.hashCode(), pointCoordsCoords.size());
+        return String.format("Série #%d (%d points)", this.hashCode(), pointCoordsCoords
+                .size());
     }
 
     @Override

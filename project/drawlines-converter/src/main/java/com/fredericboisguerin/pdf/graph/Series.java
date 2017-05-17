@@ -17,8 +17,7 @@ public class Series {
     private final Set<UUID> selected = new HashSet<>();
 
     public void add(Serie serie) {
-        UUID uuid = UUID.randomUUID();
-        serieMap.put(uuid, serie);
+        serieMap.put(serie.getUuid(), serie);
     }
 
     public void addTransposedSeriesTo(Series series, Function<Coord, Coord> xConverter,
