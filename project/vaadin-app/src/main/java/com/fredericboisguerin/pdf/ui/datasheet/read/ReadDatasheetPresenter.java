@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import com.fredericboisguerin.pdf.actions.ViewAllDatasheets;
 import com.fredericboisguerin.pdf.model.datasheet.Datasheet;
 import com.fredericboisguerin.pdf.model.datasheet.DatasheetCollection;
+import com.fredericboisguerin.pdf.model.datasheet.DatasheetMetaInfo;
 import com.fredericboisguerin.pdf.model.datasheet.DatasheetService;
 
 public class ReadDatasheetPresenter implements ReadDatasheetViewListener {
@@ -45,8 +46,9 @@ public class ReadDatasheetPresenter implements ReadDatasheetViewListener {
     }
 
     private DatasheetViewModel buildDatasheetViewModel(Datasheet datasheet) {
-        String reference = datasheet.getDatasheetReference().toString();
-        String supplier = datasheet.getSupplier().toString();
+        DatasheetMetaInfo datasheetMetaInfo = datasheet.getDatasheetMetaInfo();
+        String reference = datasheetMetaInfo.getDatasheetReference().toString();
+        String supplier = datasheetMetaInfo.getSupplier().toString();
         return new DatasheetViewModel(datasheet.getId(), reference, supplier);
     }
 }

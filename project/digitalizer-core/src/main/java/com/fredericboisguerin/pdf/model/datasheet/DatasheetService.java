@@ -14,7 +14,7 @@ public class DatasheetService {
     }
 
     public void createDatasheet(DatasheetReference datasheetReference, DatasheetSupplier supplier) {
-        Datasheet datasheet = new Datasheet(datasheetReference, supplier);
+        Datasheet datasheet = new Datasheet(new DatasheetMetaInfo(datasheetReference, supplier));
         datasheetRepository.save(datasheet);
     }
 

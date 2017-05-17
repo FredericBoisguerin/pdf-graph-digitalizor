@@ -12,7 +12,7 @@ public class DatasheetCollection {
 
     public DatasheetCollection(Collection<Datasheet> datasheets) {
         this.datasheetList.addAll(datasheets);
-        datasheetList.sort(Comparator.comparing(Datasheet::getDatasheetReference));
+        datasheetList.sort(Comparator.comparing(Datasheet::getDatasheetMetaInfo));
     }
 
     public Stream<Datasheet> stream() {

@@ -6,21 +6,15 @@ import java.util.UUID;
 
 public class Datasheet {
     private final UUID uuid = UUID.randomUUID();
-    private final DatasheetReference datasheetReference;
-    private final DatasheetSupplier supplier;
+    private final DatasheetMetaInfo datasheetMetaInfo;
     private final DatasheetGraphs datasheetGraphs = new DatasheetGraphs();
 
-    Datasheet(DatasheetReference datasheetReference, DatasheetSupplier supplier) {
-        this.datasheetReference = datasheetReference;
-        this.supplier = supplier;
+    Datasheet(DatasheetMetaInfo datasheetMetaInfo) {
+        this.datasheetMetaInfo = datasheetMetaInfo;
     }
 
-    public DatasheetReference getDatasheetReference() {
-        return datasheetReference;
-    }
-
-    public DatasheetSupplier getSupplier() {
-        return supplier;
+    public DatasheetMetaInfo getDatasheetMetaInfo() {
+        return datasheetMetaInfo;
     }
 
     public Collection<DatasheetGraph> getDatasheetGraphs() {
@@ -29,7 +23,7 @@ public class Datasheet {
 
     @Override
     public String toString() {
-        return String.format("%s (%s)", datasheetReference, supplier);
+        return String.format("%s", datasheetMetaInfo);
     }
 
     public String getId() {
