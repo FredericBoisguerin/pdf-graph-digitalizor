@@ -2,6 +2,7 @@ package com.fredericboisguerin.pdf.ui.datasheet.extract;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 public interface ExtractDatasheetDataView {
     String VIEW_NAME = "extract-datasheet-data";
@@ -16,6 +17,6 @@ public interface ExtractDatasheetDataView {
 
     void setAxesViewModels(AxesViewModel axesViewModel);
 
-    Collection<Integer> getSelectedSeriesIds();
+    Collection<UUID> getSelectedSeriesIds();
 
 }

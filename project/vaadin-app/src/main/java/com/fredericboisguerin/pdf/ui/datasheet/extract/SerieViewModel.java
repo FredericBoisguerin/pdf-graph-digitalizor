@@ -1,11 +1,15 @@
 package com.fredericboisguerin.pdf.ui.datasheet.extract;
 
+import java.util.UUID;
+
 class SerieViewModel {
-    private final int id;
+    private final UUID uuid;
+    private final int displayedId;
     private final RawPoints rawPoints;
 
-    SerieViewModel(int id, RawPoints rawPoints) {
-        this.id = id;
+    SerieViewModel(UUID uuid, int displayedId, RawPoints rawPoints) {
+        this.uuid = uuid;
+        this.displayedId = displayedId;
         this.rawPoints = rawPoints;
     }
 
@@ -13,29 +17,27 @@ class SerieViewModel {
         return rawPoints;
     }
 
-    int getId() {
-        return id;
+    UUID getUUID() {
+        return uuid;
     }
 
     @Override
     public String toString() {
-        return String.format("Série n°%d (%s points)", id, rawPoints.size());
+        return String.format("Série n°%d (%s points)", displayedId, rawPoints.size());
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
         SerieViewModel that = (SerieViewModel) o;
 
-        return id == that.id;
+        return uuid.equals(that.uuid);
     }
 
     @Override
     public int hashCode() {
-        return id;
+        return uuid.hashCode();
     }
 }

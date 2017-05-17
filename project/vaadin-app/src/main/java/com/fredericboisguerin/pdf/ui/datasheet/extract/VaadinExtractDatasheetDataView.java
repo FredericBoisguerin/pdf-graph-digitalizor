@@ -2,6 +2,7 @@ package com.fredericboisguerin.pdf.ui.datasheet.extract;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
@@ -105,7 +106,7 @@ public class VaadinExtractDatasheetDataView extends VerticalLayout
     }
 
     @Override
-    public Collection<Integer> getSelectedSeriesIds() {
+    public Collection<UUID> getSelectedSeriesIds() {
         return seriesView.getSelectedSeriesIds();
     }
 

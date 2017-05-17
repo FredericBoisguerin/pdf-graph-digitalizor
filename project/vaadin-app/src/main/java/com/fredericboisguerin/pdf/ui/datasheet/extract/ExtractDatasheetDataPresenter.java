@@ -11,7 +11,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class ExtractDatasheetDataPresenter implements ExtractDatasheetDataViewListener {
 
@@ -23,7 +22,6 @@ public class ExtractDatasheetDataPresenter implements ExtractDatasheetDataViewLi
     private final DatasheetService datasheetService;
 
     private AxesViewModel axesViewModel;
-    private Map<Integer, Serie> pointSeriesMap;
     private XYGraph xyGraph;
 
     public ExtractDatasheetDataPresenter(ExtractDatasheetDataView view,
@@ -55,31 +53,26 @@ public class ExtractDatasheetDataPresenter implements ExtractDatasheetDataViewLi
     }
 
     private List<SerieViewModel> getSerieViewModels(XYGraph xyGraph) {
-        int currentSerieId = 1;
-        pointSeriesMap = new HashMap<>();
+        int displayedId = 1;
         List<SerieViewModel> serieViewModels = new ArrayList<>();
         RawPointsBuilder rawPointsBuilder = new RawPointsBuilder();
         for (Serie serie : xyGraph.getSeriesBySizeDesc()) {
             RawPoints rawPoints = rawPointsBuilder.buildRawPoints(serie);
-            SerieViewModel serieViewModel = new SerieViewModel(currentSerieId,
+            SerieViewModel serieViewModel = new SerieViewModel(serie.getUuid(), displayedId,
                     rawPoints);
             serieViewModels.add(serieViewModel);
-            pointSeriesMap.put(currentSerieId, serie);
-            currentSerieId++;
+            displayedId++;
         }
         return serieViewModels;
     }
 
     @Override
     public InputStream getExportInputStream() {
-        Collection<Integer> selectedSeriesIds = view.getSelectedSeriesIds();
+        Collection<UUID> selectedSeriesIds = view.getSelectedSeriesIds();
         Axis xAxis = toAxis(axesViewModel.getAxisX());
         Axis yAxis = toAxis(axesViewModel.getAxisY());
-        List<Serie> selectedSeries = selectedSeriesIds.stream()
-                                                      .map(pointSeriesMap::get)
-                                                      .collect(Collectors.toList());
         ExportDataExcel exportDataExcel = new ExportDataExcel(xyGraph, xAxis, yAxis,
-                selectedSeries);
+                selectedSeriesIds);
         try {
             File execute = exportDataExcel.execute();
             return new FileInputStream(execute);

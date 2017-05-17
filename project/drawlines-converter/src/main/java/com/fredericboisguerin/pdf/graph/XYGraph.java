@@ -1,6 +1,8 @@
 package com.fredericboisguerin.pdf.graph;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 import java.util.function.Function;
 
 public class XYGraph {
@@ -44,7 +46,7 @@ public class XYGraph {
         return series.getSeriesBySizeDesc();
     }
 
-    public void select(List<Serie> selectedElements) {
+    public void select(Collection<UUID> selectedElements) {
         selectedElements.forEach(series::select);
     }
 }

@@ -6,15 +6,12 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 class VaadinSeriesComponent extends HorizontalLayout {
 
     private final Chart chart = new Chart(ChartType.LINE);
-    private final Set<Integer> selectedSeriesIds = new HashSet<>();
+    private final Set<UUID> selectedSeriesIds = new HashSet<>();
 
     VaadinSeriesComponent() {
         Button unselectAllButton = new Button("Unselect all");
@@ -55,14 +52,14 @@ class VaadinSeriesComponent extends HorizontalLayout {
         }
     }
 
-    Collection<Integer> getSelectedSeriesIds() {
+    Collection<UUID> getSelectedSeriesIds() {
         return selectedSeriesIds;
     }
 
     private void setSelectedSeries(List<SerieViewModel> serieViewModels) {
         selectedSeriesIds.clear();
         serieViewModels.stream()
-                       .map(SerieViewModel::getId)
+                       .map(SerieViewModel::getUUID)
                        .forEach(selectedSeriesIds::add);
     }
 
@@ -74,16 +71,16 @@ class VaadinSeriesComponent extends HorizontalLayout {
         selectedSeriesIds.remove(getId(series));
     }
 
-    private static int getId(Series series) {
+    private static UUID getId(Series series) {
         String id = series.getId();
-        return Integer.valueOf(id);
+        return UUID.fromString(id);
     }
 
     private static DataSeries buildDataSeries(SerieViewModel serieViewModel) {
         String name = serieViewModel.toString();
         DataSeries series = new DataSeries(name);
-        int id = serieViewModel.getId();
-        String idString = Integer.toString(id);
+        UUID uuid = serieViewModel.getUUID();
+        String idString = uuid.toString();
         series.setId(idString);
         RawPoints rawPoints = serieViewModel.getRawPoints();
         for (RawPoint rawPoint : rawPoints) {

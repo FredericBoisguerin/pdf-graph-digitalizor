@@ -1,32 +1,23 @@
 package com.fredericboisguerin.pdf.ui;
 
+import com.fredericboisguerin.pdf.actions.ExportDataExcel;
+import com.fredericboisguerin.pdf.actions.extract.ExtractGraphFromPDFFile;
+import com.fredericboisguerin.pdf.graph.Axis;
+import com.fredericboisguerin.pdf.graph.Serie;
+import com.fredericboisguerin.pdf.graph.XYGraph;
+import com.fredericboisguerin.pdf.model.datasheet.PDFFile;
+import org.apache.poi.util.IOUtils;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
-import org.apache.poi.util.IOUtils;
-
-import com.fredericboisguerin.pdf.DrawingActionLogger;
-import com.fredericboisguerin.pdf.actions.ExportDataExcel;
-import com.fredericboisguerin.pdf.actions.extract.ExtractGraphFromPDFFile;
-import com.fredericboisguerin.pdf.drawlines.converter.DrawingActionsToDrawLinesConverter;
-import com.fredericboisguerin.pdf.drawlines.model.DrawLines;
-import com.fredericboisguerin.pdf.graph.Axis;
-import com.fredericboisguerin.pdf.graph.XYGraph;
-import com.fredericboisguerin.pdf.graph.Serie;
-import com.fredericboisguerin.pdf.model.datasheet.PDFFile;
-import com.fredericboisguerin.pdf.parser.PDFDrawingActionsParser;
-import com.fredericboisguerin.pdf.parser.model.DrawingAction;
-import com.fredericboisguerin.pdf.parser.model.DrawingActionVisitor;
-import com.fredericboisguerin.pdf.infrastructure.wrapper.CoordComparator;
-import com.fredericboisguerin.pdf.infrastructure.wrapper.DrawingLinesToXYGraphConverter;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class UIController {
 
@@ -50,11 +41,9 @@ public class UIController {
             GraphEditor graphEditorForm = mainUI.getGraphEditorForm();
             graphEditorForm.addGoButtonListener(() -> onGoButtonClicked(graphEditorForm, graph));
 
-            List<Serie> xyPointSeries = new ArrayList<>();
-            for (Serie series : graph.getSeriesBySizeDesc()) {
-                xyPointSeries.add(series);
-            }
-            graphEditorForm.setElements(xyPointSeries);
+            List<Serie> series = new ArrayList<>();
+            series.addAll(graph.getSeriesBySizeDesc());
+            graphEditorForm.setElements(series);
 
             String message = String.format("XYGraph imported !\n%s", graph);
             NotificationUtils.showInfo(mainUI, message);
@@ -69,8 +58,10 @@ public class UIController {
         Axis xAxis = graphEditorForm.getxAxisEditorForm().getAxis();
         Axis yAxis = graphEditorForm.getyAxisEditorForm().getAxis();
         List<Serie> selectedElements = graphEditorForm.getSelectedElements();
-
-        ExportDataExcel exportDataExcel = new ExportDataExcel(graph, xAxis, yAxis, selectedElements);
+        List<UUID> selectedIds = selectedElements.stream()
+                                                 .map(Serie::getUuid)
+                                                 .collect(Collectors.toList());
+        ExportDataExcel exportDataExcel = new ExportDataExcel(graph, xAxis, yAxis, selectedIds);
         try {
             File file = exportDataExcel.execute();
             try {

@@ -20,8 +20,7 @@ public class Series {
         series.selected.addAll(selected);
     }
 
-    public void select(Serie serie) {
-        UUID uuid = serie.getUuid();
+    public void select(UUID uuid) {
         selected.add(uuid);
     }
 
@@ -38,7 +37,7 @@ public class Series {
 
     private void addAndSelect(Serie serie) {
         add(serie);
-        select(serie);
+        select(serie.getUuid());
     }
 
     public int size() {
