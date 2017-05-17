@@ -1,12 +1,10 @@
 package com.fredericboisguerin.pdf.graph;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
 public class XYGraph {
 
-    private final List<Serie> xyPointSeries = new ArrayList<>();
     private final Series series = new Series();
 
     private final Axis xAxis;
@@ -18,7 +16,6 @@ public class XYGraph {
     }
 
     public void add(Serie serie) {
-        this.xyPointSeries.add(serie);
         this.series.add(serie);
     }
 
@@ -45,7 +42,6 @@ public class XYGraph {
 
     public List<Serie> getSeriesBySizeDesc() {
         return series.getSeriesBySizeDesc();
-
     }
 
     public void select(List<Serie> selectedElements) {
