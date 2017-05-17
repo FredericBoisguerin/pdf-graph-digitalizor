@@ -2,6 +2,8 @@ package com.fredericboisguerin.pdf.ui.graph.list;
 
 import com.fredericboisguerin.pdf.actions.ViewDatasheetGraphs;
 import com.fredericboisguerin.pdf.actions.ViewDatasheetMetaInfo;
+import com.fredericboisguerin.pdf.model.AxisName;
+import com.fredericboisguerin.pdf.model.DatasheetGraphExtraInfo;
 import com.fredericboisguerin.pdf.model.datasheet.DatasheetGraph;
 import com.fredericboisguerin.pdf.model.datasheet.DatasheetMetaInfo;
 import com.fredericboisguerin.pdf.model.datasheet.DatasheetService;
@@ -62,6 +64,9 @@ public class ReadDatasheetGraphPresenter implements ReadDatasheetGraphViewListen
     private DatasheetGraphViewModel buildDatasheetGraphViewModel(DatasheetGraph datasheetGraph) {
         String id = datasheetGraph.getId();
         String filename = datasheetGraph.getFilename();
-        return new DatasheetGraphViewModel(id, filename);
+        DatasheetGraphExtraInfo datasheetGraphExtraInfo = datasheetGraph.getDatasheetGraphExtraInfo();
+        AxisName yAxisName = datasheetGraphExtraInfo.getyAxisName();
+        AxisName xAxisName = datasheetGraphExtraInfo.getxAxisName();
+        return new DatasheetGraphViewModel(id, yAxisName, xAxisName, filename);
     }
 }

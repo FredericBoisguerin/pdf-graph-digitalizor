@@ -30,6 +30,12 @@ public class VaadinReadDatasheetGraphView extends VerticalLayout
         title.addStyleName(ValoTheme.LABEL_HUGE);
 
         grid.setSelectionMode(Grid.SelectionMode.SINGLE);
+        grid.addColumn(DatasheetGraphViewModel::getyAxisName)
+            .setId("Y")
+            .setCaption("Y axis name");
+        grid.addColumn(DatasheetGraphViewModel::getxAxisName)
+            .setId("X")
+            .setCaption("X axis name");
         grid.addColumn(DatasheetGraphViewModel::getFilename)
             .setId("Filename")
             .setCaption("Filename");
