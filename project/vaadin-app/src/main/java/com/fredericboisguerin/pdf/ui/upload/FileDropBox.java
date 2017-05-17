@@ -17,7 +17,6 @@ import com.vaadin.ui.Html5File;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.ProgressBar;
 
-@StyleSheet("dragndropexample.css")
 public class FileDropBox extends DragAndDropWrapper implements DropHandler {
 
     private static final long FILE_SIZE_LIMIT = 2 * 1024 * 1024; // 2MB
