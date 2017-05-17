@@ -1,7 +1,8 @@
 package com.fredericboisguerin.pdf.ui.datasheet.extract;
 
-import com.fredericboisguerin.pdf.actions.ExportDataExcel;
 import com.fredericboisguerin.pdf.actions.ViewDatasheetGraphPDFFile;
+import com.fredericboisguerin.pdf.actions.export.ExportDataExcel;
+import com.fredericboisguerin.pdf.actions.export.ExportGraphData;
 import com.fredericboisguerin.pdf.actions.extract.ExtractGraphFromPDFFile;
 import com.fredericboisguerin.pdf.graph.*;
 import com.fredericboisguerin.pdf.model.datasheet.DatasheetService;
@@ -23,6 +24,8 @@ public class ExtractDatasheetDataPresenter implements ExtractDatasheetDataViewLi
 
     private AxesViewModel axesViewModel;
     private XYGraph xyGraph;
+    private String datasheetId;
+    private String graphId;
 
     public ExtractDatasheetDataPresenter(ExtractDatasheetDataView view,
                                          DatasheetService datasheetService) {
@@ -36,6 +39,8 @@ public class ExtractDatasheetDataPresenter implements ExtractDatasheetDataViewLi
 
     @Override
     public void onViewEntered(String datasheetId, String graphId) {
+        this.datasheetId = datasheetId;
+        this.graphId = graphId;
         this.axesViewModel = new AxesViewModel(buildAxisViewModel(), buildAxisViewModel());
         view.setDatasheetInfo(datasheetService.getDatasheetInfo(datasheetId));
         ViewDatasheetGraphPDFFile viewDatasheetGraphPDFFile = new ViewDatasheetGraphPDFFile(
@@ -71,10 +76,12 @@ public class ExtractDatasheetDataPresenter implements ExtractDatasheetDataViewLi
         Collection<UUID> selectedSeriesIds = view.getSelectedSeriesIds();
         Axis xAxis = toAxis(axesViewModel.getAxisX());
         Axis yAxis = toAxis(axesViewModel.getAxisY());
-        ExportDataExcel exportDataExcel = new ExportDataExcel(xyGraph, xAxis, yAxis,
-                selectedSeriesIds);
+        ExportGraphData exportGraphData = new ExportGraphData(xyGraph, xAxis,
+                yAxis, selectedSeriesIds);
+        ExportDataExcel exportDataExcel = new ExportDataExcel(datasheetId,
+                graphId, exportGraphData);
         try {
-            File execute = exportDataExcel.execute();
+            File execute = exportDataExcel.execute(datasheetService);
             return new FileInputStream(execute);
         } catch (Exception e) {
             view.notifyError("An error has occured while exporting file");

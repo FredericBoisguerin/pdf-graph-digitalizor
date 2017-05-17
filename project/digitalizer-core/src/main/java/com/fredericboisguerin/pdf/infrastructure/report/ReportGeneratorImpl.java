@@ -1,9 +1,12 @@
 package com.fredericboisguerin.pdf.infrastructure.report;
 
 import com.fredericboisguerin.pdf.graph.Coord;
-import com.fredericboisguerin.pdf.graph.XYGraph;
 import com.fredericboisguerin.pdf.graph.PointCoords;
 import com.fredericboisguerin.pdf.graph.Serie;
+import com.fredericboisguerin.pdf.graph.XYGraph;
+import com.fredericboisguerin.pdf.model.AxisName;
+import com.fredericboisguerin.pdf.model.DatasheetGraphExtraInfo;
+import jxl.biff.FormatRecord;
 import org.jxls.area.Area;
 import org.jxls.builder.AreaBuilder;
 import org.jxls.builder.xml.XmlAreaBuilder;
@@ -16,9 +19,6 @@ import org.jxls.util.TransformerFactory;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import jxl.biff.FormatRecord;
 
 public class ReportGeneratorImpl implements ReportGenerator {
 
@@ -26,17 +26,19 @@ public class ReportGeneratorImpl implements ReportGenerator {
     private static final String TEMPLATE = "report_template.xls";
 
     @Override
-    public File generateReport(XYGraph graph) throws Exception {
-        ReportModel reportModel = convertGraphToReportModel(graph);
+    public File generateReport(XYGraph graph, DatasheetGraphExtraInfo graphExtraInfo) throws Exception {
+        ReportModel reportModel = convertGraphToReportModel(graph, graphExtraInfo);
         return exportModel(reportModel);
     }
 
-    private ReportModel convertGraphToReportModel(XYGraph graph) {
+    private ReportModel convertGraphToReportModel(XYGraph graph, DatasheetGraphExtraInfo graphExtraInfo) {
+        AxisName xAxis = graphExtraInfo.getxAxisName();
+        AxisName yAxis = graphExtraInfo.getyAxisName();
         int i = 0;
         ReportModel reportModel = new ReportModel();
         for (Serie series : graph.getSeriesBySizeDesc()) {
             String seriesName = String.format("Série %d", i);
-            ReportSeries reportSeries = new ReportSeries(seriesName);
+            ReportSeries reportSeries = new ReportSeries(seriesName, xAxis, yAxis);
             reportModel.add(reportSeries);
             for (PointCoords point : series) {
                 Coord x = point.getX();
@@ -50,16 +52,8 @@ public class ReportGeneratorImpl implements ReportGenerator {
     }
 
     private File exportModel(ReportModel reportModel) throws IOException {
-
-
         List<ReportSeries> reportSeriesList = reportModel.getReportSeriesList();
-        List<String> headers = reportSeriesList
-                .stream()
-                .map(ReportSeries::getName)
-                .collect(Collectors.toList());
-
         List<List<ReportPoint>> rows = new ArrayList<>();
-
         for (int i = 0; i < reportSeriesList
                 .size(); i++) {
             ReportSeries reportSeries = reportSeriesList.get(i);
@@ -87,7 +81,7 @@ public class ReportGeneratorImpl implements ReportGenerator {
                 Area xlsArea = xlsAreaList.get(0);
                 // creating context
                 Context context = PoiTransformer.createInitialContext();
-                context.putVar("headers", headers);
+                context.putVar("headers", reportSeriesList);
                 context.putVar("rows", rows);
                 // applying transformation
                 FormatRecord.logger.info("Applying area " + xlsArea.getAreaRef() + " at cell " + new CellRef("Result!A1"));
