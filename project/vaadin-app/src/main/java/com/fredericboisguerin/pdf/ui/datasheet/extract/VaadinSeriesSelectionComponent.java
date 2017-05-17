@@ -8,12 +8,12 @@ import com.vaadin.ui.HorizontalLayout;
 
 import java.util.*;
 
-class VaadinSeriesComponent extends HorizontalLayout {
+class VaadinSeriesSelectionComponent extends HorizontalLayout {
 
     private final Chart chart = new Chart(ChartType.LINE);
     private final Set<UUID> selectedSeriesIds = new HashSet<>();
 
-    VaadinSeriesComponent() {
+    VaadinSeriesSelectionComponent() {
         Button unselectAllButton = new Button("Unselect all");
         unselectAllButton.addClickListener(event -> unselectAllSeries());
 

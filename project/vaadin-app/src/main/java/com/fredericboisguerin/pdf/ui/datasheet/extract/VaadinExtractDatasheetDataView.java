@@ -27,7 +27,7 @@ public class VaadinExtractDatasheetDataView extends VerticalLayout
     private final Label title;
     private final VaadinAxisEditorView xAxisView = new VaadinAxisEditorView();
     private final VaadinAxisEditorView yAxisView = new VaadinAxisEditorView();
-    private final VaadinSeriesComponent seriesView = new VaadinSeriesComponent();
+    private final VaadinSeriesSelectionComponent seriesView = new VaadinSeriesSelectionComponent();
     private final Button exportButton;
 
     private ExtractDatasheetDataViewListener listener;
