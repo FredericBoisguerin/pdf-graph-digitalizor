@@ -1,13 +1,15 @@
 package com.fredericboisguerin.pdf.ui.graph.list;
 
+import com.fredericboisguerin.pdf.actions.ViewDatasheetGraphs;
+import com.fredericboisguerin.pdf.actions.ViewDatasheetMetaInfo;
+import com.fredericboisguerin.pdf.model.datasheet.DatasheetGraph;
+import com.fredericboisguerin.pdf.model.datasheet.DatasheetMetaInfo;
+import com.fredericboisguerin.pdf.model.datasheet.DatasheetService;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-import com.fredericboisguerin.pdf.actions.ViewDatasheetGraphs;
-import com.fredericboisguerin.pdf.model.datasheet.DatasheetGraph;
-import com.fredericboisguerin.pdf.model.datasheet.DatasheetService;
 
 public class ReadDatasheetGraphPresenter implements ReadDatasheetGraphViewListener {
     private final DatasheetService datasheetService;
@@ -16,7 +18,7 @@ public class ReadDatasheetGraphPresenter implements ReadDatasheetGraphViewListen
     private String datasheetId;
 
     public ReadDatasheetGraphPresenter(ReadDatasheetGraphView vaadinReadView,
-            DatasheetService datasheetService) {
+                                       DatasheetService datasheetService) {
         view = vaadinReadView;
         this.datasheetService = datasheetService;
     }
@@ -24,14 +26,24 @@ public class ReadDatasheetGraphPresenter implements ReadDatasheetGraphViewListen
     @Override
     public void onViewEntered(String parameter) {
         this.datasheetId = parameter;
+        setTitleToView();
+        setDatasheetsToView(parameter);
+    }
+
+    private void setTitleToView() {
+        ViewDatasheetMetaInfo viewDatasheetMetaInfo = new ViewDatasheetMetaInfo(datasheetId);
+        DatasheetMetaInfo datasheetMetaInfo = viewDatasheetMetaInfo.execute(datasheetService);
+        view.setDatasheetInfo(datasheetMetaInfo.toString());
+    }
+
+    private void setDatasheetsToView(String parameter) {
         ViewDatasheetGraphs viewDatasheetGraphs = new ViewDatasheetGraphs(parameter);
-        String datasheetInfo = datasheetService.getDatasheetInfo(parameter);
-        view.setDatasheetInfo(datasheetInfo);
         Collection<DatasheetGraph> datasheets = viewDatasheetGraphs.execute(datasheetService);
         List<DatasheetGraphViewModel> datasheetGraphViewModels = datasheets.stream()
                                                                            .map(this::buildDatasheetGraphViewModel)
                                                                            .collect(
-                                                                                   Collectors.toList());
+                                                                                   Collectors
+                                                                                           .toList());
         view.setDatasheets(datasheetGraphViewModels);
     }
 
@@ -42,7 +54,8 @@ public class ReadDatasheetGraphPresenter implements ReadDatasheetGraphViewListen
             view.notifyTray("Please select a datasheet graph to extract data from!");
             return;
         }
-        String datasheetGraphId = datasheetGraphViewModel.map(DatasheetGraphViewModel::getId).get();
+        String datasheetGraphId = datasheetGraphViewModel.map(DatasheetGraphViewModel::getId)
+                                                         .get();
         view.navigateToExtractDatasheetData(datasheetId, datasheetGraphId);
     }
 

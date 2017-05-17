@@ -15,7 +15,7 @@ public interface ExtractDatasheetDataView {
 
     void setDatasheetInfo(String datasheetInfo);
 
-    void setAxesViewModels(AxesViewModel axesViewModel);
+    void setAxesViewModel(AxesViewModel axesViewModel);
 
     Collection<UUID> getSelectedSeriesIds();
 

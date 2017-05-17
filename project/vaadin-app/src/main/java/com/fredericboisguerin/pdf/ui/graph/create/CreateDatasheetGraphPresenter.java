@@ -1,9 +1,11 @@
 package com.fredericboisguerin.pdf.ui.graph.create;
 
 import com.fredericboisguerin.pdf.actions.AddGraphToDatasheet;
+import com.fredericboisguerin.pdf.actions.ViewDatasheetMetaInfo;
 import com.fredericboisguerin.pdf.model.AxisName;
 import com.fredericboisguerin.pdf.model.DatasheetGraphExtraInfo;
 import com.fredericboisguerin.pdf.model.PhysicalParameter;
+import com.fredericboisguerin.pdf.model.datasheet.DatasheetMetaInfo;
 import com.fredericboisguerin.pdf.model.datasheet.DatasheetService;
 import com.fredericboisguerin.pdf.model.datasheet.PDFFile;
 
@@ -15,7 +17,7 @@ public class CreateDatasheetGraphPresenter implements CreateDatasheetGraphListen
     private CreateDatasheetGraphViewModel model;
 
     public CreateDatasheetGraphPresenter(CreateDatasheetGraphView view,
-            DatasheetService datasheetService) {
+                                         DatasheetService datasheetService) {
         this.view = view;
         this.datasheetService = datasheetService;
     }
@@ -23,10 +25,15 @@ public class CreateDatasheetGraphPresenter implements CreateDatasheetGraphListen
     @Override
     public void onViewEntered(String datasheetId) {
         this.datasheetId = datasheetId;
+        setTitleToView(datasheetId);
         this.model = new CreateDatasheetGraphViewModel();
-        String datasheetInfo = datasheetService.getDatasheetInfo(datasheetId);
-        view.setDatasheetInfo(datasheetInfo);
         view.setModel(model);
+    }
+
+    private void setTitleToView(String datasheetId) {
+        ViewDatasheetMetaInfo viewDatasheetMetaInfo = new ViewDatasheetMetaInfo(datasheetId);
+        DatasheetMetaInfo datasheetMetaInfo = viewDatasheetMetaInfo.execute(datasheetService);
+        view.setDatasheetInfo(datasheetMetaInfo.toString());
     }
 
     @Override

@@ -23,7 +23,8 @@ public class DatasheetService {
     }
 
     public Datasheet findById(String datasheetId) {
-        return datasheetRepository.findById(datasheetId).orElseThrow(IllegalAccessError::new);
+        return datasheetRepository.findById(datasheetId)
+                                  .orElseThrow(IllegalAccessError::new);
     }
 
     public void addGraphFromPDF(String datasheetId, DatasheetGraph datasheetGraph) {
@@ -43,8 +44,8 @@ public class DatasheetService {
                                     .orElseThrow(IllegalStateException::new);
     }
 
-    public String getDatasheetInfo(String datasheetId) {
-        return findById(datasheetId).toString();
+    public DatasheetMetaInfo getDatasheetMetaInfo(String datasheetId) {
+        return findById(datasheetId).getDatasheetMetaInfo();
     }
 
     public DatasheetGraphExtraInfo getDatasheetGraphExtraInfo(String datasheetId, String graphId) {

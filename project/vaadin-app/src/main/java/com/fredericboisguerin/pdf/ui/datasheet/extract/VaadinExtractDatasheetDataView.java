@@ -98,7 +98,7 @@ public class VaadinExtractDatasheetDataView extends VerticalLayout
     }
 
     @Override
-    public void setAxesViewModels(AxesViewModel axesViewModel) {
+    public void setAxesViewModel(AxesViewModel axesViewModel) {
         AxisViewModel xAxisModel = axesViewModel.getAxisX();
         xAxisView.setModel(xAxisModel);
         AxisViewModel yAxisModel = axesViewModel.getAxisY();
