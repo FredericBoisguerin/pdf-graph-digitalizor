@@ -8,8 +8,16 @@ import java.util.function.Function;
 
 public class Serie implements Iterable<PointCoords> {
 
-    private final UUID uuid = UUID.randomUUID();
+    private final UUID uuid;
     private final List<PointCoords> pointCoordsCoords = new ArrayList<>();
+
+    public Serie() {
+        this(UUID.randomUUID());
+    }
+
+    private Serie(UUID uuid) {
+        this.uuid = uuid;
+    }
 
     public UUID getUuid() {
         return uuid;
@@ -20,7 +28,7 @@ public class Serie implements Iterable<PointCoords> {
     }
 
     public Serie convert(Function<Coord, Coord> xTransformation, Function<Coord, Coord> yTransformation) {
-        Serie series = new Serie();
+        Serie series = new Serie(this.uuid);
         pointCoordsCoords.stream()
                          .map(pointCoords -> new PointCoords(xTransformation.apply(pointCoords
                                  .getX()), yTransformation.apply(

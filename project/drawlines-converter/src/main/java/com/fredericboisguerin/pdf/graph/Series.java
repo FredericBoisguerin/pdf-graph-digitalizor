@@ -1,44 +1,39 @@
 package com.fredericboisguerin.pdf.graph;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.Function;
 
 public class Series {
-    private final Map<UUID, Serie> serieMap = new HashMap<>();
+    private final List<Serie> serieList = new ArrayList<>();
     private final Set<UUID> selected = new HashSet<>();
 
     public void add(Serie serie) {
-        serieMap.put(serie.getUuid(), serie);
+        serieList.add(serie);
     }
 
     public void addTransposedSeriesTo(Series series, Function<Coord, Coord> xConverter,
-            Function<Coord, Coord> yConverter) {
-        serieMap.forEach((key, value) -> {
+                                      Function<Coord, Coord> yConverter) {
+        serieList.forEach(value -> {
             Serie transposedSerie = value.convert(xConverter, yConverter);
-            series.serieMap.put(key, transposedSerie);
+            series.serieList.add(transposedSerie);
         });
         series.selected.addAll(selected);
     }
 
     public void select(Serie serie) {
-        serieMap.entrySet()
-                .stream()
-                .filter(entry -> entry.getValue() == serie)
-                .map(Entry::getKey)
-                .forEach(selected::add);
+        UUID uuid = serie.getUuid();
+        selected.add(uuid);
     }
 
     public void addOnlySelectedTo(Series series) {
-        selected.stream().map(serieMap::get).forEach(series::addAndSelect);
+        serieList.stream()
+                 .filter(this::isSelected)
+                 .forEach(series::addAndSelect);
+    }
+
+    private boolean isSelected(Serie serie) {
+        UUID uuid = serie.getUuid();
+        return selected.contains(uuid);
     }
 
     private void addAndSelect(Serie serie) {
@@ -47,12 +42,13 @@ public class Series {
     }
 
     public int size() {
-        return serieMap.size();
+        return serieList.size();
     }
 
     public List<Serie> getSeriesBySizeDesc() {
-        Comparator<Serie> comparator = Comparator.comparing(Serie::size).reversed();
-        ArrayList<Serie> sorted = new ArrayList<>(serieMap.values());
+        Comparator<Serie> comparator = Comparator.comparing(Serie::size)
+                                                 .reversed();
+        ArrayList<Serie> sorted = new ArrayList<>(serieList);
         sorted.sort(comparator);
         return Collections.unmodifiableList(sorted);
     }
