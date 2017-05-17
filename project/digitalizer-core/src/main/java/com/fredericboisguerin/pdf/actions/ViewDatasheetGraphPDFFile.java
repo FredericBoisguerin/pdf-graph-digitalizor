@@ -1,7 +1,7 @@
 package com.fredericboisguerin.pdf.actions;
 
+import com.fredericboisguerin.pdf.model.datasheet.DatasheetGraph;
 import com.fredericboisguerin.pdf.model.datasheet.DatasheetService;
-import com.fredericboisguerin.pdf.model.datasheet.PDFFile;
 
 public class ViewDatasheetGraphPDFFile {
     private final String datasheetId;
@@ -12,7 +12,7 @@ public class ViewDatasheetGraphPDFFile {
         this.graphId = graphId;
     }
 
-    public PDFFile execute(DatasheetService datasheetService) {
+    public DatasheetGraph execute(DatasheetService datasheetService) {
         return datasheetService.getPDFFile(datasheetId, graphId);
     }
 }

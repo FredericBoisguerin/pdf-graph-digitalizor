@@ -47,7 +47,7 @@ public class ReadDatasheetPresenter implements ReadDatasheetViewListener {
 
     private DatasheetViewModel buildDatasheetViewModel(Datasheet datasheet) {
         DatasheetMetaInfo datasheetMetaInfo = datasheet.getDatasheetMetaInfo();
-        String reference = datasheetMetaInfo.getDatasheetReference().toString();
+        String reference = datasheetMetaInfo.getReference().toString();
         String supplier = datasheetMetaInfo.getSupplier().toString();
         return new DatasheetViewModel(datasheet.getId(), reference, supplier);
     }

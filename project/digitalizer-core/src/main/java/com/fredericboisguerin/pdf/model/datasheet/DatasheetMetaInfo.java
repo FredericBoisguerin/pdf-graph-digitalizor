@@ -9,7 +9,7 @@ public class DatasheetMetaInfo implements Comparable<DatasheetMetaInfo> {
         this.supplier = supplier;
     }
 
-    public DatasheetReference getDatasheetReference() {
+    public DatasheetReference getReference() {
         return datasheetReference;
     }
 

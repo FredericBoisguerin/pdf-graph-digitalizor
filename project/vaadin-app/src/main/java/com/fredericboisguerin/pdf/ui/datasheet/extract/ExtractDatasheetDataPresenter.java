@@ -6,9 +6,11 @@ import com.fredericboisguerin.pdf.actions.export.ExportDataExcel;
 import com.fredericboisguerin.pdf.actions.export.ExportGraphData;
 import com.fredericboisguerin.pdf.actions.extract.ExtractGraphFromPDFFile;
 import com.fredericboisguerin.pdf.graph.*;
-import com.fredericboisguerin.pdf.model.datasheet.DatasheetMetaInfo;
-import com.fredericboisguerin.pdf.model.datasheet.DatasheetService;
-import com.fredericboisguerin.pdf.model.datasheet.PDFFile;
+import com.fredericboisguerin.pdf.model.AxisName;
+import com.fredericboisguerin.pdf.model.DatasheetGraphExtraInfo;
+import com.fredericboisguerin.pdf.model.datasheet.*;
+import com.vaadin.server.Resource;
+import com.vaadin.server.StreamResource;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -43,34 +45,57 @@ public class ExtractDatasheetDataPresenter implements ExtractDatasheetDataViewLi
     public void onViewEntered(String datasheetId, String graphId) {
         this.datasheetId = datasheetId;
         this.graphId = graphId;
-        this.axesViewModel = new AxesViewModel(buildAxisViewModel(), buildAxisViewModel());
-        PDFFile pdfFile = getPdfFile(datasheetId, graphId);
+        DatasheetMetaInfo datasheetMetaInfo = getDatasheetMetaInfo(datasheetId);
+        DatasheetGraph datasheetGraph = getDatasheetGraph(datasheetId, graphId);
+        setTitleToView(datasheetMetaInfo);
+        setSeriesToView(datasheetGraph.getPDFFile());
+        setAxesViewModelToView();
+        seExportResourceToView(datasheetMetaInfo, datasheetGraph);
+    }
+
+    private void seExportResourceToView(DatasheetMetaInfo datasheetMetaInfo, DatasheetGraph datasheetGraph) {
+        DatasheetGraphExtraInfo datasheetGraphExtraInfo = datasheetGraph.getDatasheetGraphExtraInfo();
+        Resource resource = new StreamResource(this::getExportInputStream, getFilename(datasheetMetaInfo, datasheetGraphExtraInfo));
+        view.setExportResource(resource);
+    }
+
+    private DatasheetMetaInfo getDatasheetMetaInfo(String datasheetId) {
+        ViewDatasheetMetaInfo viewDatasheetMetaInfo = new ViewDatasheetMetaInfo(datasheetId);
+        return viewDatasheetMetaInfo.execute(datasheetService);
+    }
+
+    private String getFilename(DatasheetMetaInfo datasheetMetaInfo, DatasheetGraphExtraInfo datasheetGraphExtraInfo) {
+        DatasheetReference reference = datasheetMetaInfo.getReference();
+        DatasheetSupplier supplier = datasheetMetaInfo.getSupplier();
+        AxisName xAxisName = datasheetGraphExtraInfo.getxAxisName();
+        AxisName yAxisName = datasheetGraphExtraInfo.getyAxisName();
+        return String.format("%s_%s_%s_%s.xls", reference, supplier, yAxisName, xAxisName);
+    }
+
+    private void setTitleToView(DatasheetMetaInfo datasheetMetaInfo) {
+        view.setDatasheetInfo(datasheetMetaInfo.toString());
+    }
+
+    private void setSeriesToView(PDFFile pdfFile) {
         ExtractGraphFromPDFFile extractGraphFromPDFFile = new ExtractGraphFromPDFFile(pdfFile);
         try {
-            xyGraph = extractGraphFromPDFFile.execute();
-            setSeriesAndModelToView();
+            this.xyGraph = extractGraphFromPDFFile.execute();
+            List<SerieViewModel> serieViewModels = getSerieViewModels(xyGraph);
+            view.setSeries(serieViewModels);
         } catch (Exception e) {
             view.notifyError("Error during extracting data from datasheet");
         }
     }
 
-    private void setSeriesAndModelToView() {
-        setTitleToView(datasheetId);
-        List<SerieViewModel> serieViewModels = getSerieViewModels(xyGraph);
-        view.setSeries(serieViewModels);
+    private void setAxesViewModelToView() {
+        this.axesViewModel = new AxesViewModel(buildAxisViewModel(), buildAxisViewModel());
         view.setAxesViewModel(axesViewModel);
     }
 
-    private PDFFile getPdfFile(String datasheetId, String graphId) {
+    private DatasheetGraph getDatasheetGraph(String datasheetId, String graphId) {
         ViewDatasheetGraphPDFFile viewDatasheetGraphPDFFile = new ViewDatasheetGraphPDFFile(
                 datasheetId, graphId);
         return viewDatasheetGraphPDFFile.execute(datasheetService);
-    }
-
-    private void setTitleToView(String datasheetId) {
-        ViewDatasheetMetaInfo viewDatasheetMetaInfo = new ViewDatasheetMetaInfo(datasheetId);
-        DatasheetMetaInfo datasheetMetaInfo = viewDatasheetMetaInfo.execute(datasheetService);
-        view.setDatasheetInfo(datasheetMetaInfo.toString());
     }
 
     private List<SerieViewModel> getSerieViewModels(XYGraph xyGraph) {
@@ -87,8 +112,7 @@ public class ExtractDatasheetDataPresenter implements ExtractDatasheetDataViewLi
         return serieViewModels;
     }
 
-    @Override
-    public InputStream getExportInputStream() {
+    private InputStream getExportInputStream() {
         Collection<UUID> selectedSeriesIds = view.getSelectedSeriesIds();
         Axis xAxis = toAxis(axesViewModel.getAxisX());
         Axis yAxis = toAxis(axesViewModel.getAxisY());

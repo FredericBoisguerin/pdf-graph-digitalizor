@@ -1,5 +1,7 @@
 package com.fredericboisguerin.pdf.ui.datasheet.extract;
 
+import com.vaadin.server.Resource;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -19,4 +21,5 @@ public interface ExtractDatasheetDataView {
 
     Collection<UUID> getSelectedSeriesIds();
 
+    void setExportResource(Resource resource);
 }

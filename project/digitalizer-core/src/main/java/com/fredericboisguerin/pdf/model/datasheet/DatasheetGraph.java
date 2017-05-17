@@ -18,7 +18,7 @@ public class DatasheetGraph {
         return uuid.toString();
     }
 
-    PDFFile getPDFFile() {
+    public PDFFile getPDFFile() {
         return pdfFile;
     }
 

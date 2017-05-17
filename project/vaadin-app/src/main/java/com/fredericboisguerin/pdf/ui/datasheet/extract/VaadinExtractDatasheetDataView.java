@@ -1,21 +1,15 @@
 package com.fredericboisguerin.pdf.ui.datasheet.extract;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
-
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FileDownloader;
-import com.vaadin.server.StreamResource;
-import com.vaadin.server.StreamResource.StreamSource;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.server.Resource;
+import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
 
 public class VaadinExtractDatasheetDataView extends VerticalLayout
         implements View, ExtractDatasheetDataView {
@@ -55,12 +49,14 @@ public class VaadinExtractDatasheetDataView extends VerticalLayout
 
     private Button buildExportButton() {
         Button export = new Button("Export");
-        StreamResource resource = new StreamResource(
-                (StreamSource) () -> listener.getExportInputStream(), "report.xls");
-        FileDownloader fileDownloader = new FileDownloader(resource);
-        fileDownloader.extend(export);
         export.setEnabled(false);
         return export;
+    }
+
+    @Override
+    public void setExportResource(Resource resource) {
+        FileDownloader fileDownloader = new FileDownloader(resource);
+        fileDownloader.extend(exportButton);
     }
 
     private void onStatusChanged() {

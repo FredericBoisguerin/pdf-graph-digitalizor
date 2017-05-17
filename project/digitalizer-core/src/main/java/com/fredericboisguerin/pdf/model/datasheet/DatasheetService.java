@@ -38,9 +38,8 @@ public class DatasheetService {
         return datasheet.getDatasheetGraphs();
     }
 
-    public PDFFile getPDFFile(String datasheetId, String graphId) {
+    public DatasheetGraph getPDFFile(String datasheetId, String graphId) {
         return findById(datasheetId).getDatasheetGraphs(graphId)
-                                    .map(DatasheetGraph::getPDFFile)
                                     .orElseThrow(IllegalStateException::new);
     }
 
