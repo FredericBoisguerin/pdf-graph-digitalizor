@@ -9,7 +9,6 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>drawing-actions-parser</module>
-        <module>swing-app</module>
         <module>bezier-curve-sampler</module>
         <module>drawing-actions-converter</module>
         <module>drawlines-converter</module>
