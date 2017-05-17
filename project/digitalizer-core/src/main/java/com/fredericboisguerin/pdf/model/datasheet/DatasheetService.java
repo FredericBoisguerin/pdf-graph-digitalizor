@@ -1,9 +1,9 @@
 package com.fredericboisguerin.pdf.model.datasheet;
 
-import java.util.Collection;
-import java.util.UUID;
-
 import com.fredericboisguerin.pdf.infrastructure.DatasheetRepository;
+import com.fredericboisguerin.pdf.model.DatasheetGraphExtraInfo;
+
+import java.util.Collection;
 
 public class DatasheetService {
 
@@ -45,5 +45,11 @@ public class DatasheetService {
 
     public String getDatasheetInfo(String datasheetId) {
         return findById(datasheetId).toString();
+    }
+
+    public DatasheetGraphExtraInfo getDatasheetGraphExtraInfo(String datasheetId, String graphId) {
+        return findById(datasheetId).getDatasheetGraphs(graphId)
+                                    .map(DatasheetGraph::getDatasheetGraphExtraInfo)
+                                    .orElseThrow(IllegalStateException::new);
     }
 }

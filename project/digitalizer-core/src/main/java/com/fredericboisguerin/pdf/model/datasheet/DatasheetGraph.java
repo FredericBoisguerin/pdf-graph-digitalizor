@@ -25,4 +25,8 @@ public class DatasheetGraph {
     public String getFilename() {
         return pdfFile.toString();
     }
+
+    public DatasheetGraphExtraInfo getDatasheetGraphExtraInfo() {
+        return datasheetGraphExtraInfo;
+    }
 }
