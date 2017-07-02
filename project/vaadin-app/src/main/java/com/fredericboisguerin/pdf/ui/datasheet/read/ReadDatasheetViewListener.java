@@ -10,4 +10,6 @@ public interface ReadDatasheetViewListener {
     void onCreateDatasheetButtonClicked();
 
     void onDatasheetSelectedForEditNameAndSuppplier(DatasheetViewModel datasheetViewModel);
+
+    void onDatasheetSelectedForArchive(DatasheetViewModel datasheetViewModel);
 }

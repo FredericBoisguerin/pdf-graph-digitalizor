@@ -4,6 +4,7 @@ import com.fredericboisguerin.pdf.infrastructure.DatasheetRepository;
 import com.fredericboisguerin.pdf.model.DatasheetGraphExtraInfo;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 public class DatasheetService {
 
@@ -19,7 +20,8 @@ public class DatasheetService {
     }
 
     public Collection<Datasheet> getAllDatasheets() {
-        return datasheetRepository.findAll();
+        Collection<Datasheet> datasheets = datasheetRepository.findAll();
+        return datasheets.stream().filter(datasheet -> !datasheet.isArchived()).collect(Collectors.toList());
     }
 
     public Datasheet findById(String datasheetId) {

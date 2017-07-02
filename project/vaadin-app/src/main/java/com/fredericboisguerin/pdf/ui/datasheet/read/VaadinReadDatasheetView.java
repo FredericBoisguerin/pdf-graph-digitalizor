@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import com.fredericboisguerin.pdf.ui.Icons;
+import com.fredericboisguerin.pdf.ui.YesNoDialog;
 import com.fredericboisguerin.pdf.ui.datasheet.create.VaadinCreateDatasheetView;
 import com.fredericboisguerin.pdf.ui.datasheet.edit.VaadinEditDatasheetView;
 import com.fredericboisguerin.pdf.ui.graph.create.VaadinCreateDatasheetGraphView;
@@ -14,12 +16,7 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.SerializablePredicate;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Grid;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 
 public class VaadinReadDatasheetView extends VerticalLayout implements ReadDatasheetView, View {
@@ -43,19 +40,41 @@ public class VaadinReadDatasheetView extends VerticalLayout implements ReadDatas
         grid.setSizeFull();
 
         Button createDatasheetButton = new Button("Create a datasheet");
+        createDatasheetButton.setIcon(Icons.FOLDER_ADD);
+        createDatasheetButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
         createDatasheetButton.addClickListener(event -> listener.onCreateDatasheetButtonClicked());
 
         Button editNameAndSupplierButton = new Button("Edit name/supplier");
+        editNameAndSupplierButton.setIcon(Icons.PENCIL);
         editNameAndSupplierButton.addClickListener(event -> consumeOrWarn(listener::onDatasheetSelectedForEditNameAndSuppplier));
 
+        Button archiveButton = new Button("Archive");
+        archiveButton.setIcon(Icons.ARCHIVE);
+        archiveButton.addStyleName(ValoTheme.BUTTON_DANGER);
+        archiveButton.addClickListener(event -> consumeOrWarn(this::onDatasheetSelectedForArchive));
+
         Button addGraphButton = new Button("Add a graph");
+        addGraphButton.setIcon(Icons.FILE_ADD);
+        addGraphButton.addStyleName(ValoTheme.BUTTON_FRIENDLY);
         addGraphButton.addClickListener(event -> consumeOrWarn(listener::onDatasheetSelectedForAddGraph));
 
         Button viewGraphsButton = new Button("View graphs");
+        viewGraphsButton.setIcon(Icons.LIST_UL);
         viewGraphsButton.addClickListener(event -> consumeOrWarn(listener::onDatasheetSelectedForViewGraphs));
 
-        HorizontalLayout actionsLayout = new HorizontalLayout(createDatasheetButton, editNameAndSupplierButton, addGraphButton, viewGraphsButton);
-        addComponents(title, grid, actionsLayout);
+        HorizontalLayout datasheetActions = new HorizontalLayout(addGraphButton, viewGraphsButton, editNameAndSupplierButton);
+        HorizontalLayout topActionBar = new HorizontalLayout(createDatasheetButton, archiveButton);
+        topActionBar.setExpandRatio(archiveButton, 0);
+        topActionBar.setComponentAlignment(archiveButton, Alignment.MIDDLE_RIGHT);
+        topActionBar.setWidth(100, Unit.PERCENTAGE);
+        addComponents(title, topActionBar, grid, datasheetActions);
+    }
+
+    private void onDatasheetSelectedForArchive(DatasheetViewModel datasheetViewModel) {
+        String message = String.format("This will delete the datasheet %s (%s). Are you sure?",
+                datasheetViewModel.getReference(), datasheetViewModel.getSupplier());
+        YesNoDialog confirmation = new YesNoDialog("Confirmation", message, () -> listener.onDatasheetSelectedForArchive(datasheetViewModel));
+        getUI().addWindow(confirmation);
     }
 
     private void consumeOrWarn(Consumer<DatasheetViewModel> modelConsumer) {
