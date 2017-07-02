@@ -66,4 +66,10 @@ public class DatasheetService {
         datasheet.archive();
         datasheetRepository.save(datasheet);
     }
+
+    public void removeGraph(String datasheetId, String graphId) {
+        Datasheet datasheet = findById(datasheetId);
+        datasheet.removeGraph(graphId);
+        datasheetRepository.save(datasheet);
+    }
 }

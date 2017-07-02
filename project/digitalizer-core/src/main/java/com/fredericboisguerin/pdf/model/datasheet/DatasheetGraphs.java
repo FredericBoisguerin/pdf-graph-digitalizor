@@ -23,4 +23,8 @@ class DatasheetGraphs {
                               .filter(datasheetGraph -> graphId.equals(datasheetGraph.getId()))
                               .findFirst();
     }
+
+    public void remove(String graphId) {
+        datasheetGraphs.removeIf(datasheetGraph -> datasheetGraph.getId().equals(graphId));
+    }
 }
