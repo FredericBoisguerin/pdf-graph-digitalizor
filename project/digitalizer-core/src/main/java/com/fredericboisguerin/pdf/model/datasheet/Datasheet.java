@@ -8,6 +8,7 @@ public class Datasheet {
     private final UUID uuid = UUID.randomUUID();
     private final DatasheetGraphs datasheetGraphs = new DatasheetGraphs();
     private DatasheetMetaInfo datasheetMetaInfo;
+    private boolean archived = false;
 
     Datasheet(DatasheetMetaInfo datasheetMetaInfo) {
         this.datasheetMetaInfo = datasheetMetaInfo;
@@ -44,5 +45,13 @@ public class Datasheet {
 
     void setMetadata(DatasheetMetaInfo datasheetMetaInfo) {
         this.datasheetMetaInfo = datasheetMetaInfo;
+    }
+
+    boolean isArchived() {
+        return archived;
+    }
+
+    void archive() {
+        this.archived = true;
     }
 }

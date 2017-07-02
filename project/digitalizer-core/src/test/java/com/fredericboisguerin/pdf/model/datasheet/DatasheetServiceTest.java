@@ -24,4 +24,18 @@ public class DatasheetServiceTest {
         verify(datasheetRepository).save(datasheet);
         assertThat(datasheet.getDatasheetMetaInfo()).isEqualTo(expectedDatasheetMetaInfo);
     }
+
+    @Test
+    public void should_archive_datasheet_and_store() throws Exception {
+        DatasheetRepository datasheetRepository = mock(DatasheetRepository.class);
+        DatasheetService datasheetService = new DatasheetService(datasheetRepository);
+        Datasheet datasheet = new Datasheet(mock(DatasheetMetaInfo.class));
+        String datasheetId = datasheet.getId();
+        when(datasheetRepository.findById(datasheetId)).thenReturn(Optional.of(datasheet));
+
+        datasheetService.archive(datasheetId);
+
+        verify(datasheetRepository).save(datasheet);
+        assertThat(datasheet.isArchived()).isTrue();
+    }
 }
