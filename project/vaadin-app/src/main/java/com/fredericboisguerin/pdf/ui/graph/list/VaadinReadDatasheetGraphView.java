@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import com.fredericboisguerin.pdf.ui.ButtonBuilder;
 import com.fredericboisguerin.pdf.ui.Icons;
 import com.fredericboisguerin.pdf.ui.YesNoDialog;
 import com.fredericboisguerin.pdf.ui.datasheet.extract.VaadinExtractDatasheetDataView;
@@ -17,6 +18,9 @@ import com.vaadin.server.SerializablePredicate;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 
+import static com.fredericboisguerin.pdf.ui.Icons.*;
+import static com.vaadin.ui.themes.ValoTheme.*;
+
 public class VaadinReadDatasheetGraphView extends VerticalLayout
         implements ReadDatasheetGraphView, View {
     public static final String VIEW_NAME = "read-datasheet-graphs";
@@ -27,12 +31,13 @@ public class VaadinReadDatasheetGraphView extends VerticalLayout
     private final Label title = new Label();
 
     public VaadinReadDatasheetGraphView() {
-        title.addStyleName(ValoTheme.LABEL_HUGE);
+        title.addStyleName(LABEL_HUGE);
 
-        Button createGraphButton = new Button("Add a graph");
-        createGraphButton.setIcon(Icons.FILE_ADD);
-        createGraphButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
-        createGraphButton.addClickListener(this::notifyNewButtonClicked);
+        Button createGraphButton = ButtonBuilder.button()
+                                                .withCaption("Add a graph")
+                                                .withIcon(FILE_ADD)
+                                                .withStyle(BUTTON_PRIMARY)
+                                                .withListener(this::notifyNewButtonClicked).build();
 
         grid.setSelectionMode(Grid.SelectionMode.SINGLE);
         grid.addColumn(DatasheetGraphViewModel::getyAxisName)
@@ -46,15 +51,18 @@ public class VaadinReadDatasheetGraphView extends VerticalLayout
             .setCaption("Filename");
         grid.setSizeFull();
 
-        Button extractDataButton = new Button("Extract data");
-        extractDataButton.setIcon(Icons.SPLINE_CHART);
-        extractDataButton.addStyleName(ValoTheme.BUTTON_FRIENDLY);
-        extractDataButton.addClickListener(this::notifyExtractButtonClicked);
+        Button extractDataButton = ButtonBuilder.button()
+                                                .withCaption("Extract data")
+                                                .withIcon(SPLINE_CHART)
+                                                .withStyle(BUTTON_FRIENDLY)
+                                                .withListener(this::notifyExtractButtonClicked).build();
 
-        Button removeButton = new Button("Remove graph");
-        removeButton.setIcon(Icons.TRASH);
-        removeButton.addStyleName(ValoTheme.BUTTON_DANGER);
-        removeButton.addClickListener(this::onRemoveGraphButtonClicked);
+        Button removeButton = ButtonBuilder.button()
+                                           .withCaption("Remove graph")
+                                           .withStyle(BUTTON_DANGER)
+                                           .withIcon(TRASH)
+                                           .withListener(this::onRemoveGraphButtonClicked)
+                                           .build();
 
         HorizontalLayout actionsLayout = new HorizontalLayout(extractDataButton, removeButton);
         addComponents(title, createGraphButton, grid, actionsLayout);
@@ -69,8 +77,8 @@ public class VaadinReadDatasheetGraphView extends VerticalLayout
     }
 
     private void onRemoveGraph(DatasheetGraphViewModel datasheetGraphViewModel) {
-        String question = String.format("This will remove the graph '%s' vs '%s'. Are you sure?", datasheetGraphViewModel.getyAxisName(), datasheetGraphViewModel
-                .getxAxisName());
+        String question = String.format("This will remove the graph '%s' vs '%s'. Are you sure?",
+                datasheetGraphViewModel.getyAxisName(), datasheetGraphViewModel.getxAxisName());
         YesNoDialog confirmation = new YesNoDialog("Confirmation", question, () -> listener.onGraphSelectedForRemoval(datasheetGraphViewModel));
         getUI().addWindow(confirmation);
     }
