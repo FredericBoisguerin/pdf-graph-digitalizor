@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import com.fredericboisguerin.pdf.ui.ButtonBuilder;
 import com.fredericboisguerin.pdf.ui.Icons;
 import com.fredericboisguerin.pdf.ui.YesNoDialog;
 import com.fredericboisguerin.pdf.ui.datasheet.create.VaadinCreateDatasheetView;
@@ -19,6 +20,9 @@ import com.vaadin.server.SerializablePredicate;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 
+import static com.fredericboisguerin.pdf.ui.Icons.*;
+import static com.vaadin.ui.themes.ValoTheme.*;
+
 public class VaadinReadDatasheetView extends VerticalLayout implements ReadDatasheetView, View {
     public static final String VIEW_NAME = "read-datasheets";
 
@@ -28,7 +32,7 @@ public class VaadinReadDatasheetView extends VerticalLayout implements ReadDatas
 
     public VaadinReadDatasheetView() {
         Label title = new Label("All Datasheets");
-        title.addStyleName(ValoTheme.LABEL_HUGE);
+        title.addStyleName(LABEL_HUGE);
 
         grid.setSelectionMode(Grid.SelectionMode.SINGLE);
         grid.addColumn(DatasheetViewModel::getReference)
@@ -39,28 +43,38 @@ public class VaadinReadDatasheetView extends VerticalLayout implements ReadDatas
             .setCaption("Supplier");
         grid.setSizeFull();
 
-        Button createDatasheetButton = new Button("Create a datasheet");
-        createDatasheetButton.setIcon(Icons.FOLDER_ADD);
-        createDatasheetButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
-        createDatasheetButton.addClickListener(event -> listener.onCreateDatasheetButtonClicked());
+        Button createDatasheetButton = ButtonBuilder.button()
+                                                    .withCaption("Create a datasheet")
+                                                    .withIcon(FOLDER_ADD)
+                                                    .withStyle(BUTTON_PRIMARY)
+                                                    .withListener(event -> listener.onCreateDatasheetButtonClicked())
+                                                    .build();
 
-        Button editNameAndSupplierButton = new Button("Edit name/supplier");
-        editNameAndSupplierButton.setIcon(Icons.PENCIL);
-        editNameAndSupplierButton.addClickListener(event -> consumeOrWarn(listener::onDatasheetSelectedForEditNameAndSuppplier));
+        Button editNameAndSupplierButton = ButtonBuilder.button()
+                                                        .withCaption("Edit name/supplier")
+                                                        .withIcon(PENCIL)
+                                                        .withListener(event -> consumeOrWarn(listener::onDatasheetSelectedForEditNameAndSuppplier))
+                                                        .build();
 
-        Button archiveButton = new Button("Archive");
-        archiveButton.setIcon(Icons.ARCHIVE);
-        archiveButton.addStyleName(ValoTheme.BUTTON_DANGER);
-        archiveButton.addClickListener(event -> consumeOrWarn(this::onDatasheetSelectedForArchive));
+        Button archiveButton = ButtonBuilder.button()
+                                            .withCaption("Archive")
+                                            .withIcon(ARCHIVE)
+                                            .withStyle(BUTTON_DANGER)
+                                            .withListener(event -> consumeOrWarn(this::onDatasheetSelectedForArchive))
+                                            .build();
 
-        Button addGraphButton = new Button("Add a graph");
-        addGraphButton.setIcon(Icons.FILE_ADD);
-        addGraphButton.addStyleName(ValoTheme.BUTTON_FRIENDLY);
-        addGraphButton.addClickListener(event -> consumeOrWarn(listener::onDatasheetSelectedForAddGraph));
+        Button addGraphButton = ButtonBuilder.button()
+                                             .withCaption("Add a graph")
+                                             .withIcon(FILE_ADD)
+                                             .withStyle(BUTTON_FRIENDLY)
+                                             .withListener(event -> consumeOrWarn(listener::onDatasheetSelectedForAddGraph))
+                                             .build();
 
-        Button viewGraphsButton = new Button("View graphs");
-        viewGraphsButton.setIcon(Icons.LIST_UL);
-        viewGraphsButton.addClickListener(event -> consumeOrWarn(listener::onDatasheetSelectedForViewGraphs));
+        Button viewGraphsButton = ButtonBuilder.button()
+                                               .withCaption("View graphs")
+                                               .withIcon(LIST_UL)
+                                               .withListener(event -> consumeOrWarn(listener::onDatasheetSelectedForViewGraphs))
+                                               .build();
 
         HorizontalLayout datasheetActions = new HorizontalLayout(addGraphButton, viewGraphsButton, editNameAndSupplierButton);
         HorizontalLayout topActionBar = new HorizontalLayout(createDatasheetButton, archiveButton);
