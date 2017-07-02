@@ -58,4 +58,10 @@ public class DatasheetService {
         datasheet.setMetadata(datasheetMetaInfo);
         datasheetRepository.save(datasheet);
     }
+
+    public void archive(String datasheetId) {
+        Datasheet datasheet = findById(datasheetId);
+        datasheet.archive();
+        datasheetRepository.save(datasheet);
+    }
 }
