@@ -1,5 +1,7 @@
 package com.fredericboisguerin.pdf.ui.datasheet.create;
 
+import com.fredericboisguerin.pdf.ui.Title;
+import com.fredericboisguerin.pdf.ui.datasheet.DatasheetMetaInfoForm;
 import com.fredericboisguerin.pdf.ui.datasheet.read.VaadinReadDatasheetView;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
@@ -8,45 +10,36 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.themes.ValoTheme;
 
 public class VaadinCreateDatasheetView extends VerticalLayout implements CreateDatasheetView, View {
 
     public static final String VIEW_NAME = "create-datasheet";
 
-    private final TextField referenceTextField;
-    private final TextField supplierTextField;
-
     private CreateDatasheetViewListener listener;
     private Navigator navigator;
+    private final DatasheetMetaInfoForm datasheetMetaInfoForm = new DatasheetMetaInfoForm();
 
     public VaadinCreateDatasheetView() {
-        Label title = new Label("Create a new datasheet");
-        title.addStyleName(ValoTheme.LABEL_HUGE);
-
-        referenceTextField = new TextField("Reference");
-        supplierTextField = new TextField("Supplier");
+        Label title = new Title("Create a new datasheet");
 
         Button validateButton = new Button("Validate");
         validateButton.addClickListener(this::onValidateButtonClicked);
 
-        addComponents(title, referenceTextField, supplierTextField, validateButton);
+        addComponents(title, datasheetMetaInfoForm, validateButton);
     }
 
     private void onValidateButtonClicked(ClickEvent clickEvent) {
-        String reference = referenceTextField.getValue();
-        String supplierName = supplierTextField.getValue();
-
+        DatasheetMetaInfoForm.Model model = datasheetMetaInfoForm.getViewModel();
+        String reference = model.getReference();
+        String supplierName = model.getSupplier();
         listener.onValidateButtonClicked(reference, supplierName);
     }
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
         navigator = viewChangeEvent.getNavigator();
-        referenceTextField.clear();
-        supplierTextField.clear();
+        datasheetMetaInfoForm.clearFields();
     }
 
     @Override

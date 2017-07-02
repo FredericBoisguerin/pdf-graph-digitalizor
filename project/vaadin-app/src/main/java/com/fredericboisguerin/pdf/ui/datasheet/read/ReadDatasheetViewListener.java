@@ -8,4 +8,6 @@ public interface ReadDatasheetViewListener {
     void onDatasheetSelectedForAddGraph(DatasheetViewModel datasheetViewModel);
 
     void onCreateDatasheetButtonClicked();
+
+    void onDatasheetSelectedForEditNameAndSuppplier(DatasheetViewModel datasheetViewModel);
 }

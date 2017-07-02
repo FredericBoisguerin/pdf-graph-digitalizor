@@ -14,4 +14,6 @@ public interface ReadDatasheetView {
     void navigateToAddDatasheetGraph(String id);
 
     void navigateToCreateDatasheet();
+
+    void navigateToEditDatasheet(String param);
 }

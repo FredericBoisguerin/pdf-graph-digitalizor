@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 import com.fredericboisguerin.pdf.ui.datasheet.create.VaadinCreateDatasheetView;
+import com.fredericboisguerin.pdf.ui.datasheet.edit.VaadinEditDatasheetView;
 import com.fredericboisguerin.pdf.ui.graph.create.VaadinCreateDatasheetGraphView;
 import com.fredericboisguerin.pdf.ui.graph.list.VaadinReadDatasheetGraphView;
 import com.vaadin.data.provider.DataProvider;
@@ -44,13 +45,16 @@ public class VaadinReadDatasheetView extends VerticalLayout implements ReadDatas
         Button createDatasheetButton = new Button("Create a datasheet");
         createDatasheetButton.addClickListener(event -> listener.onCreateDatasheetButtonClicked());
 
+        Button editNameAndSupplierButton = new Button("Edit name/supplier");
+        editNameAndSupplierButton.addClickListener(event -> consumeOrWarn(listener::onDatasheetSelectedForEditNameAndSuppplier));
+
         Button addGraphButton = new Button("Add a graph");
         addGraphButton.addClickListener(event -> consumeOrWarn(listener::onDatasheetSelectedForAddGraph));
 
         Button viewGraphsButton = new Button("View graphs");
         viewGraphsButton.addClickListener(event -> consumeOrWarn(listener::onDatasheetSelectedForViewGraphs));
 
-        HorizontalLayout actionsLayout = new HorizontalLayout(createDatasheetButton, addGraphButton, viewGraphsButton);
+        HorizontalLayout actionsLayout = new HorizontalLayout(createDatasheetButton, editNameAndSupplierButton, addGraphButton, viewGraphsButton);
         addComponents(title, grid, actionsLayout);
     }
 
@@ -85,7 +89,7 @@ public class VaadinReadDatasheetView extends VerticalLayout implements ReadDatas
         navigateToView(VaadinReadDatasheetGraphView.VIEW_NAME, param);
     }
 
-    protected void navigateToView(String viewName, String param) {
+    private void navigateToView(String viewName, String param) {
         navigator.navigateTo(viewName + "/" + param);
     }
 
@@ -97,6 +101,11 @@ public class VaadinReadDatasheetView extends VerticalLayout implements ReadDatas
     @Override
     public void navigateToCreateDatasheet() {
         navigator.navigateTo(VaadinCreateDatasheetView.VIEW_NAME);
+    }
+
+    @Override
+    public void navigateToEditDatasheet(String param) {
+        navigateToView(VaadinEditDatasheetView.VIEW_NAME, param);
     }
 
     @Override
