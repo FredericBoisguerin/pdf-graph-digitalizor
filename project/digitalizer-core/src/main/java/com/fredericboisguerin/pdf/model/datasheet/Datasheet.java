@@ -6,8 +6,8 @@ import java.util.UUID;
 
 public class Datasheet {
     private final UUID uuid = UUID.randomUUID();
-    private final DatasheetMetaInfo datasheetMetaInfo;
     private final DatasheetGraphs datasheetGraphs = new DatasheetGraphs();
+    private DatasheetMetaInfo datasheetMetaInfo;
 
     Datasheet(DatasheetMetaInfo datasheetMetaInfo) {
         this.datasheetMetaInfo = datasheetMetaInfo;
@@ -38,7 +38,11 @@ public class Datasheet {
         return uuid;
     }
 
-    public Optional<DatasheetGraph> getDatasheetGraphs(String graphId) {
+    Optional<DatasheetGraph> getDatasheetGraphs(String graphId) {
         return datasheetGraphs.get(graphId);
+    }
+
+    void setMetadata(DatasheetMetaInfo datasheetMetaInfo) {
+        this.datasheetMetaInfo = datasheetMetaInfo;
     }
 }

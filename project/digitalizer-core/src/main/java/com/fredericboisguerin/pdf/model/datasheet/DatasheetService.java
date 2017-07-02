@@ -52,4 +52,10 @@ public class DatasheetService {
                                     .map(DatasheetGraph::getDatasheetGraphExtraInfo)
                                     .orElseThrow(IllegalStateException::new);
     }
+
+    public void setDatasheetMetaInfo(String datasheetId, DatasheetMetaInfo datasheetMetaInfo) {
+        Datasheet datasheet = findById(datasheetId);
+        datasheet.setMetadata(datasheetMetaInfo);
+        datasheetRepository.save(datasheet);
+    }
 }
