@@ -1,5 +1,6 @@
 package com.fredericboisguerin.pdf.ui.graph.list;
 
+import com.fredericboisguerin.pdf.actions.RemoveDatasheetGraph;
 import com.fredericboisguerin.pdf.actions.ViewDatasheetGraphs;
 import com.fredericboisguerin.pdf.actions.ViewDatasheetMetaInfo;
 import com.fredericboisguerin.pdf.model.AxisName;
@@ -10,7 +11,6 @@ import com.fredericboisguerin.pdf.model.datasheet.DatasheetService;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ReadDatasheetGraphPresenter implements ReadDatasheetGraphViewListener {
@@ -29,7 +29,7 @@ public class ReadDatasheetGraphPresenter implements ReadDatasheetGraphViewListen
     public void onViewEntered(String parameter) {
         this.datasheetId = parameter;
         setTitleToView();
-        setDatasheetsToView(parameter);
+        giveGraphsToView();
     }
 
     private void setTitleToView() {
@@ -38,27 +38,32 @@ public class ReadDatasheetGraphPresenter implements ReadDatasheetGraphViewListen
         view.setDatasheetInfo(datasheetMetaInfo.toString());
     }
 
-    private void setDatasheetsToView(String parameter) {
-        ViewDatasheetGraphs viewDatasheetGraphs = new ViewDatasheetGraphs(parameter);
-        Collection<DatasheetGraph> datasheets = viewDatasheetGraphs.execute(datasheetService);
-        List<DatasheetGraphViewModel> datasheetGraphViewModels = datasheets.stream()
-                                                                           .map(this::buildDatasheetGraphViewModel)
-                                                                           .collect(
-                                                                                   Collectors
-                                                                                           .toList());
+    private void giveGraphsToView() {
+        ViewDatasheetGraphs datasheetGraphs = new ViewDatasheetGraphs(datasheetId);
+        Collection<DatasheetGraph> graphs = datasheetGraphs.execute(datasheetService);
+        List<DatasheetGraphViewModel> datasheetGraphViewModels = graphs.stream()
+                                                                       .map(this::buildDatasheetGraphViewModel)
+                                                                       .collect(Collectors.toList());
         view.setDatasheets(datasheetGraphViewModels);
     }
 
     @Override
     public void onDatasheetSelectedForExtraction(
-            Optional<DatasheetGraphViewModel> datasheetGraphViewModel) {
-        if (!datasheetGraphViewModel.isPresent()) {
-            view.notifyTray("Please select a datasheet graph to extract data from!");
-            return;
-        }
-        String datasheetGraphId = datasheetGraphViewModel.map(DatasheetGraphViewModel::getId)
-                                                         .get();
+            DatasheetGraphViewModel datasheetGraphViewModel) {
+        String datasheetGraphId = datasheetGraphViewModel.getId();
         view.navigateToExtractDatasheetData(datasheetId, datasheetGraphId);
+    }
+
+    @Override
+    public void onGraphSelectedForRemoval(DatasheetGraphViewModel datasheetGraphViewModel) {
+        RemoveDatasheetGraph removeDatasheetGraph = new RemoveDatasheetGraph(datasheetId, datasheetGraphViewModel.getId());
+        removeDatasheetGraph.execute(datasheetService);
+        giveGraphsToView();
+    }
+
+    @Override
+    public void onNewGraph() {
+        view.navigateToNewGraph(datasheetId);
     }
 
     private DatasheetGraphViewModel buildDatasheetGraphViewModel(DatasheetGraph datasheetGraph) {

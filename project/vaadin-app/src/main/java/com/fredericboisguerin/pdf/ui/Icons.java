@@ -12,6 +12,8 @@ public class Icons {
     public static final Resource FOLDER_ADD = getThemeResource("folder-add.svg");
     public static final Resource LIST_UL = getThemeResource("list-ul.svg");
     public static final Resource PENCIL = getThemeResource("pencil.svg");
+    public static final Resource SPLINE_CHART = getThemeResource("spline-chart.svg");
+    public static final Resource TRASH = getThemeResource("trash.svg");
 
     private static ThemeResource getThemeResource(String fileName) {
         return new ThemeResource(BASE_DIR + fileName);
