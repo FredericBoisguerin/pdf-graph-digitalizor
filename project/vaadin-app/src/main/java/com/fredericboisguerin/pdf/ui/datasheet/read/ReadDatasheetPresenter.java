@@ -1,13 +1,14 @@
 package com.fredericboisguerin.pdf.ui.datasheet.read;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+import com.fredericboisguerin.pdf.actions.ArchiveDatasheet;
 import com.fredericboisguerin.pdf.actions.ViewAllDatasheets;
 import com.fredericboisguerin.pdf.model.datasheet.Datasheet;
 import com.fredericboisguerin.pdf.model.datasheet.DatasheetCollection;
 import com.fredericboisguerin.pdf.model.datasheet.DatasheetMetaInfo;
 import com.fredericboisguerin.pdf.model.datasheet.DatasheetService;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ReadDatasheetPresenter implements ReadDatasheetViewListener {
     private final DatasheetService datasheetService;
@@ -21,6 +22,10 @@ public class ReadDatasheetPresenter implements ReadDatasheetViewListener {
 
     @Override
     public void onViewEntered() {
+        setDatasheetsInView();
+    }
+
+    private void setDatasheetsInView() {
         DatasheetCollection datasheets = new ViewAllDatasheets().execute(datasheetService);
         List<DatasheetViewModel> datasheetViewModels = datasheets.stream()
                                                                  .map(this::buildDatasheetViewModel)
@@ -48,6 +53,14 @@ public class ReadDatasheetPresenter implements ReadDatasheetViewListener {
     @Override
     public void onDatasheetSelectedForEditNameAndSuppplier(DatasheetViewModel datasheetViewModel) {
         view.navigateToEditDatasheet(datasheetViewModel.getId());
+    }
+
+    @Override
+    public void onDatasheetSelectedForArchive(DatasheetViewModel datasheetViewModel) {
+        String datasheetId = datasheetViewModel.getId();
+        ArchiveDatasheet archiveDatasheet = new ArchiveDatasheet(datasheetId);
+        archiveDatasheet.execute(datasheetService);
+        setDatasheetsInView();
     }
 
     private DatasheetViewModel buildDatasheetViewModel(Datasheet datasheet) {
