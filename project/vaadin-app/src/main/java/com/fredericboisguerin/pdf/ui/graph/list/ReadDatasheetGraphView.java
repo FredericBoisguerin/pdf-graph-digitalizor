@@ -9,7 +9,7 @@ public interface ReadDatasheetGraphView {
 
     void setDatasheets(List<DatasheetGraphViewModel> datasheetGraphViewModelList);
 
-    void notifyTray(String message);
-
     void navigateToExtractDatasheetData(String datasheetId, String graphId);
+
+    void navigateToNewGraph(String params);
 }
