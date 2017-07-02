@@ -54,4 +54,8 @@ public class Datasheet {
     void archive() {
         this.archived = true;
     }
+
+    void removeGraph(String graphId) {
+            datasheetGraphs.remove(graphId);
+    }
 }
