@@ -45,6 +45,11 @@ public class ReadDatasheetPresenter implements ReadDatasheetViewListener {
         view.navigateToCreateDatasheet();
     }
 
+    @Override
+    public void onDatasheetSelectedForEditNameAndSuppplier(DatasheetViewModel datasheetViewModel) {
+        view.navigateToEditDatasheet(datasheetViewModel.getId());
+    }
+
     private DatasheetViewModel buildDatasheetViewModel(Datasheet datasheet) {
         DatasheetMetaInfo datasheetMetaInfo = datasheet.getDatasheetMetaInfo();
         String reference = datasheetMetaInfo.getReference().toString();

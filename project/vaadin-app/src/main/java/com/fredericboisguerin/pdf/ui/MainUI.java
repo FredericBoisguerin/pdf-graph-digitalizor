@@ -6,6 +6,8 @@ import com.fredericboisguerin.pdf.infrastructure.InMemoryDatasheetRepository;
 import com.fredericboisguerin.pdf.model.datasheet.DatasheetService;
 import com.fredericboisguerin.pdf.ui.datasheet.create.CreateDatasheetPresenter;
 import com.fredericboisguerin.pdf.ui.datasheet.create.VaadinCreateDatasheetView;
+import com.fredericboisguerin.pdf.ui.datasheet.edit.EditDatasheetPresenter;
+import com.fredericboisguerin.pdf.ui.datasheet.edit.VaadinEditDatasheetView;
 import com.fredericboisguerin.pdf.ui.datasheet.extract.ExtractDatasheetDataPresenter;
 import com.fredericboisguerin.pdf.ui.datasheet.extract.VaadinExtractDatasheetDataView;
 import com.fredericboisguerin.pdf.ui.datasheet.read.ReadDatasheetPresenter;
@@ -46,10 +48,18 @@ public class MainUI extends UI {
         // 2. DATASHEET
         DatasheetService datasheetService = new DatasheetService(datasheetRepository);
         addCreateDatasheetView(datasheetService);
+        addEditDatasheetView(datasheetService);
         addReadDatasheetView(datasheetService);
         addReadDatasheetGraphView(datasheetService);
         addExtractInformationsView(datasheetService);
         addCreateDatasheetGraphView(datasheetService);
+    }
+
+    private void addEditDatasheetView(DatasheetService datasheetService) {
+        VaadinEditDatasheetView view = new VaadinEditDatasheetView();
+        EditDatasheetPresenter editDatasheetPresenter = new EditDatasheetPresenter(datasheetService, view);
+        view.setListener(editDatasheetPresenter);
+        navigator.addView(VaadinEditDatasheetView.VIEW_NAME, view);
     }
 
     private void addCreateDatasheetGraphView(DatasheetService datasheetService) {
