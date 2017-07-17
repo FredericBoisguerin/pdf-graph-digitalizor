@@ -6,7 +6,6 @@ import com.fredericboisguerin.pdf.graph.XYGraph;
 import com.fredericboisguerin.pdf.infrastructure.wrapper.CoordComparator;
 import com.fredericboisguerin.pdf.infrastructure.wrapper.DrawingLinesToXYGraphConverter;
 import com.fredericboisguerin.pdf.model.datasheet.PDFFile;
-import com.fredericboisguerin.pdf.parser.PDFDrawingActionsParser;
 import com.fredericboisguerin.pdf.parser.model.DrawingAction;
 import java.io.IOException;
 import java.util.List;
@@ -20,12 +19,11 @@ public class ExtractGraphFromPDFFile {
     }
 
     public XYGraph execute() throws IOException {
-        PDFDrawingActionsParser pdfDrawingActionsParser = new PDFDrawingActionsParser();
-        List<DrawingAction> drawingActions = pdfDrawingActionsParser.parseDrawingActions(pdfFile
-                .getBytes());
+        List<DrawingAction> drawingActions = pdfFile.getDrawingActions();
         DrawingActionsToDrawLinesConverter linesConverter = new DrawingActionsToDrawLinesConverter();
         DrawLines drawLines = linesConverter.convert(drawingActions);
         DrawingLinesToXYGraphConverter graphConverter = new DrawingLinesToXYGraphConverter(new CoordComparator());
         return graphConverter.convert(drawLines);
     }
+
 }
