@@ -9,6 +9,7 @@ import com.fredericboisguerin.pdf.graph.*;
 import com.fredericboisguerin.pdf.model.AxisName;
 import com.fredericboisguerin.pdf.model.DatasheetGraphExtraInfo;
 import com.fredericboisguerin.pdf.model.datasheet.*;
+import com.fredericboisguerin.pdf.model.datasheet.pdf.PDFFile;
 import com.vaadin.server.Resource;
 import com.vaadin.server.StreamResource;
 

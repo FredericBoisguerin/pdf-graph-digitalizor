@@ -3,6 +3,7 @@ package com.fredericboisguerin.pdf.model.datasheet;
 import java.util.UUID;
 
 import com.fredericboisguerin.pdf.model.DatasheetGraphExtraInfo;
+import com.fredericboisguerin.pdf.model.datasheet.pdf.PDFFile;
 
 public class DatasheetGraph {
     private final UUID uuid = UUID.randomUUID();

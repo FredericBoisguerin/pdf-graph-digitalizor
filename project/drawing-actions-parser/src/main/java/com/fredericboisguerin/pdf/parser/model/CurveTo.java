@@ -1,5 +1,7 @@
 package com.fredericboisguerin.pdf.parser.model;
 
+import com.fredericboisguerin.pdf.parser.BorderPoints;
+
 public class CurveTo implements DrawingAction {
 
     private final DrawingPoint p1;
@@ -27,5 +29,10 @@ public class CurveTo implements DrawingAction {
     @Override
     public void accept(DrawingActionVisitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public boolean isContainedIn(BorderPoints borderPoints) {
+        return borderPoints.contains(p1) && borderPoints.contains(p2) && borderPoints.contains(p3);
     }
 }

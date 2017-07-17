@@ -16,25 +16,28 @@ import java.util.List;
 
 public class PDFDrawingActionsParser {
 
-    public List<DrawingAction> parseDrawingActions(byte[] bytes) throws IOException {
-        PDDocument doc = PDDocument.load(bytes);
-        ParsedPDFDocument parsedPDFDocument = parsePDFDocumentPage(doc);
-        return parsedPDFDocument.getDrawingActions();
+    private PDFDrawingActionsParser() {
+        // This is static
     }
 
-    List<DrawingAction> parseDrawingActions(InputStream inputStream) throws IOException {
+    static DrawingActionsWithImage parseDrawingActions(InputStream inputStream) throws IOException {
         PDDocument doc = PDDocument.load(inputStream);
-        return parsePDFDocumentPage(doc).getDrawingActions();
+        return renderPDFDocumentPage(doc, 0);
     }
 
-    private static ParsedPDFDocument parsePDFDocumentPage(PDDocument doc) throws IOException {
-        int pageIndex = 0;
+    private static ParsedPDFDocument parsePDFDocumentPage(PDDocument doc, int pageIndex) throws IOException {
         BorderPoints borderPoints = getBorderPoints(doc, pageIndex);
-        DrawingActionsWithImage drawingActionsWithImage = getDrawingActionsWithImage(doc, pageIndex);
+        DrawingActionsWithImage drawingActionsWithImage = renderPDFDocumentPage(doc, pageIndex);
         return new ParsedPDFDocument(drawingActionsWithImage, borderPoints);
     }
 
-    private static DrawingActionsWithImage getDrawingActionsWithImage(PDDocument doc, int pageIndex) throws IOException {
+    // Being used soon by CreateDatasheetGraphPresenter!
+    public static BufferedImage getBufferedImage(byte[] bytes) throws IOException {
+        PDDocument doc = PDDocument.load(bytes);
+        return renderPDFDocumentPage(doc, 0).getBufferedImage();
+    }
+
+    private static DrawingActionsWithImage renderPDFDocumentPage(PDDocument doc, int pageIndex) throws IOException {
         MyPDFRenderer renderer = new MyPDFRenderer(doc);
         BufferedImage bufferedImage = renderer.renderImage(pageIndex);
         doc.close();
@@ -47,6 +50,10 @@ public class PDFDrawingActionsParser {
         DrawingPoint lowerLeft = new DrawingPoint(cropBox.getLowerLeftX(), cropBox.getLowerLeftY());
         DrawingPoint upperRight = new DrawingPoint(cropBox.getUpperRightX(), cropBox.getUpperRightY());
         return new BorderPoints(lowerLeft, upperRight);
+    }
+
+    public static ParsedPDFDocument parseDocument(byte[] file) throws IOException {
+        return parsePDFDocumentPage(PDDocument.load(file), 0);
     }
 
     private static class MyPDFRenderer extends PDFRenderer {

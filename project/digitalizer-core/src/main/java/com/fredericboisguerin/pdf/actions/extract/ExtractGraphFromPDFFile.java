@@ -5,7 +5,7 @@ import com.fredericboisguerin.pdf.drawlines.model.DrawLines;
 import com.fredericboisguerin.pdf.graph.XYGraph;
 import com.fredericboisguerin.pdf.infrastructure.wrapper.CoordComparator;
 import com.fredericboisguerin.pdf.infrastructure.wrapper.DrawingLinesToXYGraphConverter;
-import com.fredericboisguerin.pdf.model.datasheet.PDFFile;
+import com.fredericboisguerin.pdf.model.datasheet.pdf.PDFFile;
 import com.fredericboisguerin.pdf.parser.model.DrawingAction;
 import java.io.IOException;
 import java.util.List;

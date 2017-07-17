@@ -1,46 +1,30 @@
 package com.fredericboisguerin.pdf.parser;
 
 import com.fredericboisguerin.pdf.parser.model.*;
-import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class PDFDrawingActionsParserTest {
 
     @Test
-    public void should_ParseDrawingActions() throws IOException {
-        PDFDrawingActionsParser pdfDrawingActionsParser = new PDFDrawingActionsParser();
+    public void should_extract_each_of_the_two_graphs() throws IOException {
         InputStream resourceAsStream = getClass().getResourceAsStream("/two_graphs.pdf");
+        DrawingActionsWithImage drawingActionsWithImage = PDFDrawingActionsParser.parseDrawingActions(resourceAsStream);
+        int lowestX = 0;
+        int middleX = 240;
+        int uppestX = 500;
+        int lowestY = 0;
+        int uppestY = 500;
 
-        List<DrawingAction> drawingActions = pdfDrawingActionsParser.parseDrawingActions(resourceAsStream);
+        List<DrawingAction> graphLeft = drawingActionsWithImage.getActionsIn(new BorderPoints(new DrawingPoint(lowestX, lowestY), new DrawingPoint(middleX, uppestY)));
+        List<DrawingAction> graphRight = drawingActionsWithImage.getActionsIn(new BorderPoints(new DrawingPoint(middleX, lowestY), new DrawingPoint(uppestX, uppestY)));
 
-        drawingActions.forEach(drawingAction -> drawingAction.accept(new Printer()));
+        assertEquals(85, graphLeft.size());
+        assertEquals(125, graphRight.size());
     }
-
-    static class Printer implements DrawingActionVisitor {
-
-        @Override
-        public void visit(LineTo lineTo) {
-            System.out.println("lineTo " + lineTo.getDestination());
-        }
-
-        @Override
-        public void visit(MoveTo moveTo) {
-            System.out.println();
-            System.out.println("moveTo " + moveTo.getDestination());
-        }
-
-        @Override
-        public void visit(CurveTo curveTo) {
-            System.out.println("curveTo " + curveTo.getP1() + "-->" + curveTo.getP3());
-        }
-    }
-
 }

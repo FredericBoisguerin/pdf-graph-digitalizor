@@ -7,7 +7,7 @@ import com.fredericboisguerin.pdf.model.DatasheetGraphExtraInfo;
 import com.fredericboisguerin.pdf.model.PhysicalParameter;
 import com.fredericboisguerin.pdf.model.datasheet.DatasheetMetaInfo;
 import com.fredericboisguerin.pdf.model.datasheet.DatasheetService;
-import com.fredericboisguerin.pdf.model.datasheet.PDFFile;
+import com.fredericboisguerin.pdf.model.datasheet.pdf.PDFFile;
 
 public class CreateDatasheetGraphPresenter implements CreateDatasheetGraphListener {
     private final CreateDatasheetGraphView view;
