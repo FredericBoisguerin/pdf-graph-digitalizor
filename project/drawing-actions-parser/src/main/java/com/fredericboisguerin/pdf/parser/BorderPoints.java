@@ -18,4 +18,8 @@ public class BorderPoints {
     public DrawingPoint getUpperRight() {
         return upperRight;
     }
+
+    public boolean contains(DrawingPoint drawingPoint) {
+        return lowerLeft.compareTo(drawingPoint) <= 0 && drawingPoint.compareTo(upperRight) <= 0;
+    }
 }

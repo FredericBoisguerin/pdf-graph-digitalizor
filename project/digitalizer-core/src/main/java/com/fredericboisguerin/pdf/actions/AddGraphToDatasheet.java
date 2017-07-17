@@ -3,7 +3,7 @@ package com.fredericboisguerin.pdf.actions;
 import com.fredericboisguerin.pdf.model.DatasheetGraphExtraInfo;
 import com.fredericboisguerin.pdf.model.datasheet.DatasheetGraph;
 import com.fredericboisguerin.pdf.model.datasheet.DatasheetService;
-import com.fredericboisguerin.pdf.model.datasheet.PDFFile;
+import com.fredericboisguerin.pdf.model.datasheet.pdf.PDFFile;
 
 public class AddGraphToDatasheet {
 
