@@ -2,12 +2,15 @@ package com.fredericboisguerin.pdf.parser;
 
 import com.fredericboisguerin.pdf.parser.model.*;
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.rendering.PDFRenderer;
 import org.apache.pdfbox.rendering.PageDrawer;
 import org.apache.pdfbox.rendering.PageDrawerParameters;
 
-import java.io.File;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,19 +18,35 @@ public class PDFDrawingActionsParser {
 
     public List<DrawingAction> parseDrawingActions(byte[] bytes) throws IOException {
         PDDocument doc = PDDocument.load(bytes);
-        return getDrawingActionsFromPDFDocument(doc);
+        ParsedPDFDocument parsedPDFDocument = parsePDFDocumentPage(doc);
+        return parsedPDFDocument.getDrawingActions();
     }
 
-    public List<DrawingAction> parseDrawingActions(File file) throws IOException {
-        PDDocument doc = PDDocument.load(file);
-        return getDrawingActionsFromPDFDocument(doc);
+    List<DrawingAction> parseDrawingActions(InputStream inputStream) throws IOException {
+        PDDocument doc = PDDocument.load(inputStream);
+        return parsePDFDocumentPage(doc).getDrawingActions();
     }
 
-    private List<DrawingAction> getDrawingActionsFromPDFDocument(PDDocument doc) throws IOException {
+    private static ParsedPDFDocument parsePDFDocumentPage(PDDocument doc) throws IOException {
+        int pageIndex = 0;
+        BorderPoints borderPoints = getBorderPoints(doc, pageIndex);
+        DrawingActionsWithImage drawingActionsWithImage = getDrawingActionsWithImage(doc, pageIndex);
+        return new ParsedPDFDocument(drawingActionsWithImage, borderPoints);
+    }
+
+    private static DrawingActionsWithImage getDrawingActionsWithImage(PDDocument doc, int pageIndex) throws IOException {
         MyPDFRenderer renderer = new MyPDFRenderer(doc);
-        renderer.renderImage(0);
+        BufferedImage bufferedImage = renderer.renderImage(pageIndex);
         doc.close();
-        return renderer.actionList;
+        return new DrawingActionsWithImage(renderer.actionList, bufferedImage);
+    }
+
+    private static BorderPoints getBorderPoints(PDDocument doc, int pageIndex) {
+        PDPage page = doc.getPage(pageIndex);
+        PDRectangle cropBox = page.getCropBox();
+        DrawingPoint lowerLeft = new DrawingPoint(cropBox.getLowerLeftX(), cropBox.getLowerLeftY());
+        DrawingPoint upperRight = new DrawingPoint(cropBox.getUpperRightX(), cropBox.getUpperRightY());
+        return new BorderPoints(lowerLeft, upperRight);
     }
 
     private static class MyPDFRenderer extends PDFRenderer {
