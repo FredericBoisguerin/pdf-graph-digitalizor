@@ -23,4 +23,9 @@ public class ImageCropPointCoord {
     public float applyTo(float coord) {
         return coord * ratio;
     }
+
+    @Override
+    public String toString() {
+        return ratio * 100 + "%";
+    }
 }

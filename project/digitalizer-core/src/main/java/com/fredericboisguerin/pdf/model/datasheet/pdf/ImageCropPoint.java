@@ -1,5 +1,6 @@
 package com.fredericboisguerin.pdf.model.datasheet.pdf;
 
+import com.fredericboisguerin.pdf.parser.BorderPoints;
 import com.fredericboisguerin.pdf.parser.model.DrawingPoint;
 
 public class ImageCropPoint {
@@ -11,7 +12,7 @@ public class ImageCropPoint {
         this.yRatio = yRatio;
     }
 
-     public static ImageCropPoint uppestRight() {
+    public static ImageCropPoint uppestRight() {
         return new ImageCropPoint(ImageCropPointCoord.biggestRatio(), ImageCropPointCoord.biggestRatio());
     }
 
@@ -19,10 +20,17 @@ public class ImageCropPoint {
         return new ImageCropPoint(ImageCropPointCoord.lowestRatio(), ImageCropPointCoord.lowestRatio());
     }
 
-    public DrawingPoint applyTo(DrawingPoint drawingPoint) {
-        float x = xRatio.applyTo(drawingPoint.getX());
-        float y = yRatio.applyTo(drawingPoint.getY());
+    public DrawingPoint applyTo(BorderPoints drawingPoint) {
+        DrawingPoint lowerLeft = drawingPoint.getLowerLeft();
+        DrawingPoint upperRight = drawingPoint.getUpperRight();
+        float x = xRatio.applyTo(upperRight.getX() - lowerLeft.getX());
+        float y = yRatio.applyTo(upperRight.getY() - lowerLeft.getY());
         return new DrawingPoint(x, y);
+    }
+
+    @Override
+    public String toString() {
+        return "[" + xRatio + "," + yRatio + "]";
     }
 }
 

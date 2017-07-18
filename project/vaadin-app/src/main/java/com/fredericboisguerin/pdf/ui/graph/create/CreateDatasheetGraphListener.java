@@ -1,7 +1,7 @@
 package com.fredericboisguerin.pdf.ui.graph.create;
 
-public interface CreateDatasheetGraphListener {
+public interface CreateDatasheetGraphListener extends PDFDocumentEditorListener {
     void onViewEntered(String datasheetId);
 
-    void onValidateButtonClicked(String filename, byte[] bytes);
+    void onValidateButtonClicked();
 }
