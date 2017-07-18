@@ -82,6 +82,11 @@
             <artifactId>vaadin-charts</artifactId>
             <version>4.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>vaadin-jcrop</artifactId>
+            <version>1.2.0</version>
+        </dependency>
     </dependencies>
 
     <build>

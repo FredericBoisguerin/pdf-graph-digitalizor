@@ -17,8 +17,13 @@ public class ImageCrop {
     }
 
     public BorderPoints applyTo(BorderPoints borderPoints) {
-        DrawingPoint lowerLeft = this.lowerLeft.applyTo(borderPoints.getLowerLeft());
-        DrawingPoint upperRight = this.upperRight.applyTo(borderPoints.getUpperRight());
+        DrawingPoint lowerLeft = this.lowerLeft.applyTo(borderPoints);
+        DrawingPoint upperRight = this.upperRight.applyTo(borderPoints);
         return new BorderPoints(lowerLeft, upperRight);
+    }
+
+    @Override
+    public String toString() {
+        return "lowerLeft=" + lowerLeft + ", upperRight=" + upperRight;
     }
 }

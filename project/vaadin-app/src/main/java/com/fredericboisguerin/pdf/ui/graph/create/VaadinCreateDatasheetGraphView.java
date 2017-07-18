@@ -1,18 +1,13 @@
 package com.fredericboisguerin.pdf.ui.graph.create;
 
+import com.fredericboisguerin.pdf.model.datasheet.pdf.PDFImage;
 import com.fredericboisguerin.pdf.ui.graph.list.VaadinReadDatasheetGraphView;
-import com.fredericboisguerin.pdf.ui.upload.FileDropBox;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
+import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.themes.ValoTheme;
 
 public class VaadinCreateDatasheetGraphView extends VerticalLayout
@@ -20,64 +15,39 @@ public class VaadinCreateDatasheetGraphView extends VerticalLayout
     public static final String VIEW_NAME = "create-datasheet-graph";
 
     private final Label title = new Label();
-    private final Label filenameLabel = new Label();
+    private final PDFDocumentEditor pdfDocumentEditor = new PDFDocumentEditor();
     private final DatasheetGraphInfoEditor graphInfoEditor = new DatasheetGraphInfoEditor();
 
     private CreateDatasheetGraphListener listener;
-    private String lastFileNameUpdated;
-    private byte[] lastFileUpdated;
     private Navigator navigator;
 
     public VaadinCreateDatasheetGraphView() {
         title.addStyleName(ValoTheme.LABEL_HUGE);
 
-        FileDropBox components = (FileDropBox) buildDropPane();
-        Component fileUpdatedLayout = buildFileUpdatedLayout();
+        pdfDocumentEditor.setSizeFull();
 
         Button validateButton = new Button("Validate");
         validateButton.addClickListener(this::onValidateButtonClicked);
+        VerticalLayout form = new VerticalLayout(graphInfoEditor, validateButton);
+        form.setSizeUndefined();
 
-        addComponents(title, components, fileUpdatedLayout, graphInfoEditor, validateButton);
+        HorizontalLayout mainLayout = new HorizontalLayout(form, pdfDocumentEditor);
+        mainLayout.setExpandRatio(pdfDocumentEditor, 1);
+        mainLayout.setSizeFull();
+
+        addComponents(title, mainLayout);
     }
 
     private void onValidateButtonClicked(ClickEvent clickEvent) {
         if (graphInfoEditor.valid()) {
-            listener.onValidateButtonClicked(lastFileNameUpdated, lastFileUpdated);
+            listener.onValidateButtonClicked();
         }
-    }
-
-    private Component buildDropPane() {
-        Label infoLabel = new Label("Drop your file here");
-        infoLabel.setWidth(240.0f, Unit.PIXELS);
-
-        VerticalLayout dropPane = new VerticalLayout(infoLabel);
-        dropPane.setComponentAlignment(infoLabel, Alignment.MIDDLE_CENTER);
-        dropPane.setWidth(280.0f, Unit.PIXELS);
-        dropPane.setHeight(200.0f, Unit.PIXELS);
-        dropPane.addStyleName("drop-area");
-
-        FileDropBox dropBox = new FileDropBox(dropPane);
-        dropBox.setFileUpdateListener(this::setLastFileUpdated);
-        dropBox.setSizeUndefined();
-        return dropBox;
-    }
-
-    private Component buildFileUpdatedLayout() {
-        HorizontalLayout fileupdatedLayout = new HorizontalLayout(new Label("File updated:"),
-                filenameLabel);
-        fileupdatedLayout.setSpacing(true);
-        return fileupdatedLayout;
-    }
-
-    private void setLastFileUpdated(String filename, byte[] bytes) {
-        this.lastFileNameUpdated = filename;
-        filenameLabel.setValue(filename);
-        this.lastFileUpdated = bytes;
     }
 
     @Override
     public void setListener(CreateDatasheetGraphListener listener) {
         this.listener = listener;
+        pdfDocumentEditor.setListener(listener);
     }
 
     @Override
@@ -101,15 +71,29 @@ public class VaadinCreateDatasheetGraphView extends VerticalLayout
     }
 
     @Override
+    public void displayErrorImpossibleToCropFile() {
+        displayError("Impossible to crop PDF file");
+    }
+
+    private void displayError(String errorMessage) {
+        Notification.show(errorMessage, Type.ERROR_MESSAGE);
+    }
+
+    @Override
+    public void setImageToCrop(PDFImage pdfImage) {
+        pdfDocumentEditor.setImageToCrop(pdfImage);
+    }
+
+    @Override
+    public void displayPleaseCropFirst() {
+        displayError("Please select an area of the PDF");
+    }
+
+    @Override
     public void enter(ViewChangeEvent event) {
         navigator = event.getNavigator();
-        init();
+        pdfDocumentEditor.init();
         listener.onViewEntered(event.getParameters());
     }
 
-    private void init() {
-        filenameLabel.setValue("");
-        lastFileUpdated = null;
-        lastFileNameUpdated = "";
-    }
 }
