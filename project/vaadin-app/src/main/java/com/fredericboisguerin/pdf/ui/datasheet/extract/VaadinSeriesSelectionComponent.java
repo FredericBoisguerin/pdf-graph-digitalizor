@@ -10,35 +10,41 @@ import java.util.*;
 
 class VaadinSeriesSelectionComponent extends HorizontalLayout {
 
-    private final Chart chart = new Chart(ChartType.LINE);
+    private Chart chart;
     private final Set<UUID> selectedSeriesIds = new HashSet<>();
 
     VaadinSeriesSelectionComponent() {
         Button unselectAllButton = new Button("Unselect all");
         unselectAllButton.addClickListener(event -> unselectAllSeries());
 
+        this.chart = buildChart();
+
+        setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
+        addComponents(this.chart, unselectAllButton);
+        setExpandRatio(this.chart, 1);
+        setExpandRatio(unselectAllButton, 0);
+    }
+
+    private Chart buildChart() {
+        Chart chart = new Chart(ChartType.LINE);
         Configuration configuration = chart.getConfiguration();
         configuration.setTitle("");
         configuration.setSubTitle("Select / unselect the series by clicking on the legend items");
         chart.addSeriesHideListener(event -> onSeriesHiden(event.getSeries()));
         chart.addSeriesShowListener(event -> onSeriesShown(event.getSeries()));
-
-        setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
-        addComponents(chart, unselectAllButton);
-        setExpandRatio(chart, 1);
-        setExpandRatio(unselectAllButton, 0);
+        return chart;
     }
 
     private void unselectAllSeries() {
         selectedSeriesIds.clear();
-        setSeriesSelection(false);
+        hideAllSeriesInChart();
     }
 
-    private void setSeriesSelection(boolean visible) {
+    private void hideAllSeriesInChart() {
         List<Series> seriesList = chart.getConfiguration().getSeries();
         for (Series series : seriesList) {
             AbstractSeries dataSeries = (AbstractSeries) series;
-            dataSeries.setVisible(visible);
+            dataSeries.setVisible(false);
         }
         chart.drawChart();
     }
@@ -50,6 +56,12 @@ class VaadinSeriesSelectionComponent extends HorizontalLayout {
             DataSeries series = buildDataSeries(serieViewModel);
             configuration.addSeries(series);
         }
+    }
+
+    void removeAllSeries() {
+        Chart newChart = buildChart();
+        replaceComponent(chart, newChart);
+        this.chart = newChart;
     }
 
     Collection<UUID> getSelectedSeriesIds() {
