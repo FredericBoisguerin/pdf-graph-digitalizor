@@ -14,6 +14,7 @@ class DatasheetGraphParameterEditor extends VerticalLayout {
               .bind(ParameterViewModel::getName, ParameterViewModel::setName);
 
         addComponent(nameTextField);
+        setMargin(false);
     }
 
     public void setModel(ParameterViewModel model) {
