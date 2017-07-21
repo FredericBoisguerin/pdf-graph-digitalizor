@@ -12,6 +12,7 @@ class DatasheetGraphInfoEditor extends VerticalLayout {
 
     public DatasheetGraphInfoEditor() {
         addComponents(xAxisEditor, yAxisEditor, parameterEditor);
+        setMargin(false);
     }
 
     public void setModel(CreateDatasheetGraphViewModel model) {

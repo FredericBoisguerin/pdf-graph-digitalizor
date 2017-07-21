@@ -14,6 +14,7 @@ class DatasheetGraphAxisEditor extends VerticalLayout {
               .bind(AxisViewModel::getName, AxisViewModel::setName);
 
         addComponent(nameTextField);
+        setMargin(false);
     }
 
     public void setModel(AxisViewModel model) {
