@@ -1,6 +1,6 @@
-package com.fredericboisguerin.pdf.ui.graph.create;
+package com.fredericboisguerin.pdf.ui.graph.create.model.graphinfo;
 
-class CreateDatasheetGraphViewModel {
+public class DatasheetGraphInfoViewModel {
 
     private final AxisViewModel xAxis = new AxisViewModel();
     private final AxisViewModel yAxis = new AxisViewModel();

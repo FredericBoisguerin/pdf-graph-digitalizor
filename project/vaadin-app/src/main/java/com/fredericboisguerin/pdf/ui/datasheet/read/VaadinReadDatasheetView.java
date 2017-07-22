@@ -5,11 +5,10 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 import com.fredericboisguerin.pdf.ui.ButtonBuilder;
-import com.fredericboisguerin.pdf.ui.Icons;
 import com.fredericboisguerin.pdf.ui.YesNoDialog;
 import com.fredericboisguerin.pdf.ui.datasheet.create.VaadinCreateDatasheetView;
 import com.fredericboisguerin.pdf.ui.datasheet.edit.VaadinEditDatasheetView;
-import com.fredericboisguerin.pdf.ui.graph.create.VaadinCreateDatasheetGraphView;
+import com.fredericboisguerin.pdf.ui.graph.create.vaadin.VaadinCreateDatasheetGraphView;
 import com.fredericboisguerin.pdf.ui.graph.list.VaadinReadDatasheetGraphView;
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.ListDataProvider;
@@ -18,7 +17,6 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.SerializablePredicate;
 import com.vaadin.ui.*;
-import com.vaadin.ui.themes.ValoTheme;
 
 import static com.fredericboisguerin.pdf.ui.Icons.*;
 import static com.vaadin.ui.themes.ValoTheme.*;

@@ -1,6 +1,6 @@
-package com.fredericboisguerin.pdf.ui.graph.create;
+package com.fredericboisguerin.pdf.ui.graph.create.model.graphinfo;
 
-class AxisViewModel {
+public class ParameterViewModel {
     private String name;
 
     public String getName() {

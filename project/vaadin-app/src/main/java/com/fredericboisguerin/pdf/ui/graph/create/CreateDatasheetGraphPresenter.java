@@ -12,6 +12,9 @@ import com.fredericboisguerin.pdf.model.datasheet.DatasheetService;
 import com.fredericboisguerin.pdf.model.datasheet.pdf.ImageCrop;
 import com.fredericboisguerin.pdf.model.datasheet.pdf.PDFFile;
 import com.fredericboisguerin.pdf.model.datasheet.pdf.PDFImage;
+import com.fredericboisguerin.pdf.ui.graph.create.model.graphinfo.AxisViewModel;
+import com.fredericboisguerin.pdf.ui.graph.create.model.graphinfo.DatasheetGraphInfoViewModel;
+import com.fredericboisguerin.pdf.ui.graph.create.model.graphinfo.ParameterViewModel;
 
 public class CreateDatasheetGraphPresenter implements CreateDatasheetGraphListener {
     private static final String PNG_FORMAT_NAME = "png";
@@ -21,7 +24,7 @@ public class CreateDatasheetGraphPresenter implements CreateDatasheetGraphListen
     private String datasheetId;
     private PDFFile pdfFile;
     private boolean cropDone;
-    private CreateDatasheetGraphViewModel model;
+    private DatasheetGraphInfoViewModel model;
 
     public CreateDatasheetGraphPresenter(CreateDatasheetGraphView view,
             DatasheetService datasheetService) {
@@ -33,7 +36,7 @@ public class CreateDatasheetGraphPresenter implements CreateDatasheetGraphListen
     public void onViewEntered(String datasheetId) {
         this.datasheetId = datasheetId;
         setTitleToView(datasheetId);
-        this.model = new CreateDatasheetGraphViewModel();
+        this.model = new DatasheetGraphInfoViewModel();
         cropDone = false;
         view.setModel(model);
     }
