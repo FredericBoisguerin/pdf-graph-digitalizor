@@ -1,13 +1,14 @@
-package com.fredericboisguerin.pdf.ui.graph.create;
+package com.fredericboisguerin.pdf.ui.graph.create.vaadin;
 
+import com.fredericboisguerin.pdf.ui.graph.create.FileUpdaterListener;
 import com.fredericboisguerin.pdf.ui.upload.FileDropBox;
 import com.vaadin.ui.*;
 
-public class FileUpdater extends VerticalLayout {
-    public final Label filenameLabel = new Label();
-    public FileUpdaterListener listener;
+class FileUpdater extends VerticalLayout {
+    private final Label filenameLabel = new Label();
+    private FileUpdaterListener listener;
 
-    public FileUpdater() {
+    FileUpdater() {
         setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         Component fileDropBox = buildDropPane();
         Component fileUpdatedLayout = buildFileUpdatedLayout();
@@ -19,7 +20,7 @@ public class FileUpdater extends VerticalLayout {
         this.listener = listener;
     }
 
-    Component buildFileUpdatedLayout() {
+    private Component buildFileUpdatedLayout() {
         HorizontalLayout fileupdatedLayout = new HorizontalLayout(new Label("File updated:"),
                 filenameLabel);
         fileupdatedLayout.setSpacing(true);
@@ -31,7 +32,7 @@ public class FileUpdater extends VerticalLayout {
         listener.onFileUpdated(filename, bytes);
     }
 
-    Component buildDropPane() {
+    private Component buildDropPane() {
         Label infoLabel = new Label("Drop your file here");
 
         VerticalLayout dropPane = new VerticalLayout(infoLabel);

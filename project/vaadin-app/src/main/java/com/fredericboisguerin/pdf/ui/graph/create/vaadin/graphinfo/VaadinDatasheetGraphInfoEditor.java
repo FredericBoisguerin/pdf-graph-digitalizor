@@ -1,8 +1,9 @@
-package com.fredericboisguerin.pdf.ui.graph.create;
+package com.fredericboisguerin.pdf.ui.graph.create.vaadin.graphinfo;
 
+import com.fredericboisguerin.pdf.ui.graph.create.model.graphinfo.DatasheetGraphInfoViewModel;
 import com.vaadin.ui.VerticalLayout;
 
-class DatasheetGraphInfoEditor extends VerticalLayout {
+public class VaadinDatasheetGraphInfoEditor extends VerticalLayout {
 
     private final DatasheetGraphAxisEditor xAxisEditor = new DatasheetGraphAxisEditor(
             "X");
@@ -10,12 +11,12 @@ class DatasheetGraphInfoEditor extends VerticalLayout {
             "Y");
     private final DatasheetGraphParameterEditor parameterEditor = new DatasheetGraphParameterEditor();
 
-    public DatasheetGraphInfoEditor() {
+    public VaadinDatasheetGraphInfoEditor() {
         addComponents(xAxisEditor, yAxisEditor, parameterEditor);
         setMargin(false);
     }
 
-    public void setModel(CreateDatasheetGraphViewModel model) {
+    public void setModel(DatasheetGraphInfoViewModel model) {
         xAxisEditor.setModel(model.getxAxis());
         yAxisEditor.setModel(model.getyAxis());
         parameterEditor.setModel(model.getParameter());

@@ -1,6 +1,10 @@
-package com.fredericboisguerin.pdf.ui.graph.create;
+package com.fredericboisguerin.pdf.ui.graph.create.vaadin;
 
 import com.fredericboisguerin.pdf.model.datasheet.pdf.PDFImage;
+import com.fredericboisguerin.pdf.ui.graph.create.CreateDatasheetGraphListener;
+import com.fredericboisguerin.pdf.ui.graph.create.CreateDatasheetGraphView;
+import com.fredericboisguerin.pdf.ui.graph.create.model.graphinfo.DatasheetGraphInfoViewModel;
+import com.fredericboisguerin.pdf.ui.graph.create.vaadin.graphinfo.VaadinDatasheetGraphInfoEditor;
 import com.fredericboisguerin.pdf.ui.graph.list.VaadinReadDatasheetGraphView;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
@@ -17,7 +21,7 @@ public class VaadinCreateDatasheetGraphView extends VerticalLayout
     private final Label title = new Label();
     private final FileUpdater fileUpdater = new FileUpdater();
     private final PDFDocumentEditor pdfDocumentEditor = new PDFDocumentEditor();
-    private final DatasheetGraphInfoEditor graphInfoEditor = new DatasheetGraphInfoEditor();
+    private final VaadinDatasheetGraphInfoEditor graphInfoEditor = new VaadinDatasheetGraphInfoEditor();
 
     private CreateDatasheetGraphListener listener;
     private Navigator navigator;
@@ -72,7 +76,7 @@ public class VaadinCreateDatasheetGraphView extends VerticalLayout
     }
 
     @Override
-    public void setModel(CreateDatasheetGraphViewModel model) {
+    public void setModel(DatasheetGraphInfoViewModel model) {
         graphInfoEditor.setModel(model);
     }
 

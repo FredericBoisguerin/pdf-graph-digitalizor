@@ -1,5 +1,6 @@
-package com.fredericboisguerin.pdf.ui.graph.create;
+package com.fredericboisguerin.pdf.ui.graph.create.vaadin.graphinfo;
 
+import com.fredericboisguerin.pdf.ui.graph.create.model.graphinfo.ParameterViewModel;
 import com.vaadin.data.Binder;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
@@ -7,7 +8,7 @@ import com.vaadin.ui.VerticalLayout;
 class DatasheetGraphParameterEditor extends VerticalLayout {
     private final Binder<ParameterViewModel> binder = new Binder<>();
 
-    public DatasheetGraphParameterEditor() {
+    DatasheetGraphParameterEditor() {
         TextField nameTextField = new TextField("Variable parameter");
         binder.forField(nameTextField)
               .asRequired("Variable parameter name required")
@@ -21,7 +22,7 @@ class DatasheetGraphParameterEditor extends VerticalLayout {
         binder.setBean(model);
     }
 
-    public boolean validate() {
+    boolean validate() {
         return binder.validate().isOk();
     }
 }

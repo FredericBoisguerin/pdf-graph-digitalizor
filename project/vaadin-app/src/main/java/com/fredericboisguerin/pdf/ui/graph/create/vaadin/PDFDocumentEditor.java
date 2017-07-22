@@ -1,9 +1,10 @@
-package com.fredericboisguerin.pdf.ui.graph.create;
+package com.fredericboisguerin.pdf.ui.graph.create.vaadin;
 
 import com.fredericboisguerin.pdf.model.datasheet.pdf.ImageCrop;
 import com.fredericboisguerin.pdf.model.datasheet.pdf.ImageCropPoint;
 import com.fredericboisguerin.pdf.model.datasheet.pdf.ImageCropPointCoord;
 import com.fredericboisguerin.pdf.model.datasheet.pdf.PDFImage;
+import com.fredericboisguerin.pdf.ui.graph.create.PDFDocumentEditorListener;
 import com.vaadin.server.StreamResource;
 import com.vaadin.ui.*;
 import org.vaadin.jcrop.Jcrop;

@@ -1,5 +1,6 @@
-package com.fredericboisguerin.pdf.ui.graph.create;
+package com.fredericboisguerin.pdf.ui.graph.create.vaadin.graphinfo;
 
+import com.fredericboisguerin.pdf.ui.graph.create.model.graphinfo.AxisViewModel;
 import com.vaadin.data.Binder;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
@@ -7,7 +8,7 @@ import com.vaadin.ui.VerticalLayout;
 class DatasheetGraphAxisEditor extends VerticalLayout {
     private final Binder<AxisViewModel> binder = new Binder<>();
 
-    public DatasheetGraphAxisEditor(String captionPrefix) {
+    DatasheetGraphAxisEditor(String captionPrefix) {
         TextField nameTextField = new TextField(captionPrefix + " axis");
         binder.forField(nameTextField)
               .asRequired("Axis name required")
@@ -21,7 +22,7 @@ class DatasheetGraphAxisEditor extends VerticalLayout {
         binder.setBean(model);
     }
 
-    public boolean validate() {
+    boolean validate() {
         return binder.validate().isOk();
     }
 }

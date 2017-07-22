@@ -13,7 +13,7 @@ import com.fredericboisguerin.pdf.ui.datasheet.extract.VaadinExtractDatasheetDat
 import com.fredericboisguerin.pdf.ui.datasheet.read.ReadDatasheetPresenter;
 import com.fredericboisguerin.pdf.ui.datasheet.read.VaadinReadDatasheetView;
 import com.fredericboisguerin.pdf.ui.graph.create.CreateDatasheetGraphPresenter;
-import com.fredericboisguerin.pdf.ui.graph.create.VaadinCreateDatasheetGraphView;
+import com.fredericboisguerin.pdf.ui.graph.create.vaadin.VaadinCreateDatasheetGraphView;
 import com.fredericboisguerin.pdf.ui.graph.list.ReadDatasheetGraphPresenter;
 import com.fredericboisguerin.pdf.ui.graph.list.VaadinReadDatasheetGraphView;
 import com.vaadin.annotations.Theme;
