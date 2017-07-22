@@ -4,7 +4,6 @@ import com.fredericboisguerin.pdf.model.datasheet.pdf.ImageCrop;
 import com.fredericboisguerin.pdf.model.datasheet.pdf.ImageCropPoint;
 import com.fredericboisguerin.pdf.model.datasheet.pdf.ImageCropPointCoord;
 import com.fredericboisguerin.pdf.model.datasheet.pdf.PDFImage;
-import com.fredericboisguerin.pdf.ui.upload.FileDropBox;
 import com.vaadin.server.StreamResource;
 import com.vaadin.ui.*;
 import org.vaadin.jcrop.Jcrop;
@@ -14,23 +13,16 @@ import java.util.UUID;
 
 class PDFDocumentEditor extends VerticalLayout {
     private final Jcrop jcrop = new Jcrop();
-    private final Label filenameLabel = new Label();
 
     private PDFDocumentEditorListener listener;
     private PDFImage pdfImage;
 
     PDFDocumentEditor() {
-        Component fileDropBox = buildDropPane();
-        Component fileUpdatedLayout = buildFileUpdatedLayout();
-        VerticalLayout left = new VerticalLayout(fileDropBox, fileUpdatedLayout);
-        left.setMargin(false);
+        setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
 
         jcrop.addListener(this::onCropChanged);
         Button clearCropButton = new Button("Clear selection", this::onClearSelectionClicked);
-        VerticalLayout right = new VerticalLayout(jcrop, clearCropButton);
-        right.setMargin(false);
-
-        addComponents(left, right);
+        addComponents(jcrop, clearCropButton);
 
         init();
         setMargin(false);
@@ -52,14 +44,8 @@ class PDFDocumentEditor extends VerticalLayout {
     }
 
     void init() {
-        filenameLabel.setValue("");
         pdfImage = null;
         jcrop.setVisible(false);
-    }
-
-    private void setLastFileUpdated(String filename, byte[] bytes) {
-        filenameLabel.setValue(filename);
-        listener.onFileUpdated(filename, bytes);
     }
 
     private void onClearSelectionClicked(Button.ClickEvent clickEvent) {
@@ -83,27 +69,6 @@ class PDFDocumentEditor extends VerticalLayout {
         ImageCrop imageCrop = new ImageCrop(lowerLeft, upperRight);
         System.out.println(imageCrop);
         listener.onCropSelection(imageCrop);
-    }
-
-    private Component buildDropPane() {
-        Label infoLabel = new Label("Drop your file here");
-
-        VerticalLayout dropPane = new VerticalLayout(infoLabel);
-        dropPane.setComponentAlignment(infoLabel, Alignment.MIDDLE_CENTER);
-        dropPane.setWidth(100, Unit.PERCENTAGE);
-        dropPane.addStyleName("drop-area");
-
-        FileDropBox dropBox = new FileDropBox(dropPane);
-        dropBox.setFileUpdateListener(this::setLastFileUpdated);
-        dropBox.setSizeUndefined();
-        return dropBox;
-    }
-
-    private Component buildFileUpdatedLayout() {
-        HorizontalLayout fileupdatedLayout = new HorizontalLayout(new Label("File updated:"),
-                filenameLabel);
-        fileupdatedLayout.setSpacing(true);
-        return fileupdatedLayout;
     }
 
     void setListener(PDFDocumentEditorListener listener) {

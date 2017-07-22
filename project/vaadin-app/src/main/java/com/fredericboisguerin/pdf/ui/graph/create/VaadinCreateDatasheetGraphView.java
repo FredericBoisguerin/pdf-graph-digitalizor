@@ -15,6 +15,7 @@ public class VaadinCreateDatasheetGraphView extends VerticalLayout
     public static final String VIEW_NAME = "create-datasheet-graph";
 
     private final Label title = new Label();
+    private final FileUpdater fileUpdater = new FileUpdater();
     private final PDFDocumentEditor pdfDocumentEditor = new PDFDocumentEditor();
     private final DatasheetGraphInfoEditor graphInfoEditor = new DatasheetGraphInfoEditor();
 
@@ -31,8 +32,12 @@ public class VaadinCreateDatasheetGraphView extends VerticalLayout
         VerticalLayout form = new VerticalLayout(graphInfoEditor, validateButton);
         form.setSizeUndefined();
 
-        HorizontalLayout mainLayout = new HorizontalLayout(form, pdfDocumentEditor);
+        HorizontalLayout mainLayout = new HorizontalLayout();
+        mainLayout.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
+        mainLayout.addComponents(fileUpdater, pdfDocumentEditor, form);
+        mainLayout.setExpandRatio(fileUpdater, 1);
         mainLayout.setExpandRatio(pdfDocumentEditor, 1);
+        mainLayout.setExpandRatio(form, 1);
         mainLayout.setSizeFull();
 
         addComponents(title, mainLayout);
@@ -47,6 +52,7 @@ public class VaadinCreateDatasheetGraphView extends VerticalLayout
     @Override
     public void setListener(CreateDatasheetGraphListener listener) {
         this.listener = listener;
+        fileUpdater.setFileUpdateListener(listener);
         pdfDocumentEditor.setListener(listener);
     }
 
@@ -92,6 +98,7 @@ public class VaadinCreateDatasheetGraphView extends VerticalLayout
     @Override
     public void enter(ViewChangeEvent event) {
         navigator = event.getNavigator();
+        fileUpdater.init();
         pdfDocumentEditor.init();
         listener.onViewEntered(event.getParameters());
     }
