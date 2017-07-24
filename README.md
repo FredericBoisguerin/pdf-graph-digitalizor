@@ -1,17 +1,14 @@
 # Datasheet graph digitalizor
 A digitalizor for vectorial graphs included in a Datasheet PDF file.
 
-![alt tag](https://github.com/freddyb2/datasheet-graph-digitalizor/blob/master/screenshot.png)
+![alt tag](https://github.com/freddyb2/datasheet-graph-digitalizor/blob/master/screenshots/screenshot-extract.png)
 
 ### Note: PDF crop
-In this first version, the application only manages PDF with one graph, as shown in the samples.
 
-If you need to crop your graph, you can use **[gpdfx](https://github.com/lehner/gpdfx)** (UNIX environment required).
+From now, you don't have to use `gpdfx` anymore, since we added a crop feature inside the application!
 
-_Note 1: don't forget to add the executable **clipdfx** to your PATH variable environment._
+![alt tag](https://github.com/freddyb2/datasheet-graph-digitalizor/blob/master/screenshots/screenshot-crop.png)
 
-_Note 2: You may need to install some dependencies before launching gpdfx :_
-> `sudo apt-get install python-poppler python texlive-extra-utils texlive`
 
 ## Getting started
 
