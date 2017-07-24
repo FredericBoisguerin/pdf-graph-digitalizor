@@ -5,11 +5,13 @@ import com.fredericboisguerin.pdf.model.datasheet.pdf.ImageCropPoint;
 import com.fredericboisguerin.pdf.model.datasheet.pdf.ImageCropPointCoord;
 import com.fredericboisguerin.pdf.model.datasheet.pdf.PDFImage;
 import com.fredericboisguerin.pdf.ui.graph.create.PDFDocumentEditorListener;
+import com.vaadin.server.Sizeable;
 import com.vaadin.server.StreamResource;
 import com.vaadin.ui.*;
 import org.vaadin.jcrop.Jcrop;
 import org.vaadin.jcrop.selection.JcropSelection;
 
+import java.io.InputStream;
 import java.util.UUID;
 
 class PDFDocumentEditor extends VerticalLayout {
@@ -33,8 +35,7 @@ class PDFDocumentEditor extends VerticalLayout {
         this.pdfImage = pdfImage;
         setPdfImageResource();
         jcrop.setVisible(true);
-        jcrop.setWidth(pdfImage.getWidth().inPixels(), Unit.PIXELS);
-        jcrop.setHeight(pdfImage.getHeight().inPixels(), Unit.PIXELS);
+        setCropDimensions(pdfImage.getWidth().inPixels(), pdfImage.getHeight().inPixels());
 
     }
 
@@ -46,7 +47,21 @@ class PDFDocumentEditor extends VerticalLayout {
 
     void init() {
         pdfImage = null;
-        jcrop.setVisible(false);
+        setDefaultImageToCrop();
+    }
+
+    private void setDefaultImageToCrop() {
+        jcrop.setResource(new StreamResource(this::getDefaultImageStream, UUID.randomUUID().toString()));
+        setCropDimensions(454, 340);
+    }
+
+    private void setCropDimensions(int width, int height) {
+        jcrop.setWidth(width, Unit.PIXELS);
+        jcrop.setHeight(height, Unit.PIXELS);
+    }
+
+    private InputStream getDefaultImageStream() {
+        return getClass().getResourceAsStream("/upload_file_to_start.png");
     }
 
     private void onClearSelectionClicked(Button.ClickEvent clickEvent) {
