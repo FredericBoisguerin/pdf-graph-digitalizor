@@ -4,7 +4,6 @@ import com.fredericboisguerin.pdf.parser.model.*;
 import org.junit.Test;
 
 import java.io.*;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -19,7 +18,7 @@ public class PDFDrawingActionsParserTest {
         URL resourceURL = getClass().getResource("/two_graphs.pdf");
         File twoGraphs = new File(resourceURL.toURI());
         byte[] bytes = Files.readAllBytes(twoGraphs.toPath());
-        ParsedPage parsedPage = PDFDrawingActionsParser.parseDocument(bytes, 0);
+        ParsedPage parsedPage = PDFDrawingActionsParser.parseDocument(0, PDFDrawingActionsParser.loadDocument(bytes));
         int lowestX = 0;
         int middleX = 240;
         int uppestX = 500;

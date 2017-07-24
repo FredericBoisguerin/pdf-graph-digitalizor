@@ -3,6 +3,7 @@ package com.fredericboisguerin.pdf.ui.graph.create.vaadin;
 import com.fredericboisguerin.pdf.model.datasheet.pdf.PDFImage;
 import com.fredericboisguerin.pdf.ui.graph.create.CreateDatasheetGraphListener;
 import com.fredericboisguerin.pdf.ui.graph.create.CreateDatasheetGraphView;
+import com.fredericboisguerin.pdf.ui.graph.create.model.PageSelectionModel;
 import com.fredericboisguerin.pdf.ui.graph.create.model.graphinfo.DatasheetGraphInfoViewModel;
 import com.fredericboisguerin.pdf.ui.graph.create.vaadin.graphinfo.VaadinDatasheetGraphInfoEditor;
 import com.fredericboisguerin.pdf.ui.graph.list.VaadinReadDatasheetGraphView;
@@ -20,6 +21,7 @@ public class VaadinCreateDatasheetGraphView extends VerticalLayout
 
     private final Label title = new Label();
     private final FileUpdater fileUpdater = new FileUpdater();
+    private final PageSelector pageSelector = new PageSelector();
     private final PDFDocumentEditor pdfDocumentEditor = new PDFDocumentEditor();
     private final VaadinDatasheetGraphInfoEditor graphInfoEditor = new VaadinDatasheetGraphInfoEditor();
 
@@ -32,15 +34,17 @@ public class VaadinCreateDatasheetGraphView extends VerticalLayout
         pdfDocumentEditor.setSizeFull();
 
         Button validateButton = new Button("Validate");
+        validateButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
         validateButton.addClickListener(this::onValidateButtonClicked);
         VerticalLayout form = new VerticalLayout(graphInfoEditor, validateButton);
         form.setSizeUndefined();
 
         HorizontalLayout mainLayout = new HorizontalLayout();
         mainLayout.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
-        mainLayout.addComponents(fileUpdater, pdfDocumentEditor, form);
+        VerticalLayout middleSection = new VerticalLayout(pageSelector, pdfDocumentEditor);
+        mainLayout.addComponents(fileUpdater, middleSection, form);
         mainLayout.setExpandRatio(fileUpdater, 1);
-        mainLayout.setExpandRatio(pdfDocumentEditor, 1);
+        mainLayout.setExpandRatio(middleSection, 1);
         mainLayout.setExpandRatio(form, 1);
         mainLayout.setSizeFull();
 
@@ -58,6 +62,7 @@ public class VaadinCreateDatasheetGraphView extends VerticalLayout
         this.listener = listener;
         fileUpdater.setFileUpdateListener(listener);
         pdfDocumentEditor.setListener(listener);
+        pageSelector.setListener(listener);
     }
 
     @Override
@@ -92,6 +97,11 @@ public class VaadinCreateDatasheetGraphView extends VerticalLayout
     @Override
     public void setImageToCrop(PDFImage pdfImage) {
         pdfDocumentEditor.setImageToCrop(pdfImage);
+    }
+
+    @Override
+    public void setNbOfPages(int nbPages) {
+        pageSelector.setModel(new PageSelectionModel(nbPages));
     }
 
     @Override

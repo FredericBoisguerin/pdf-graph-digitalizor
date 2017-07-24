@@ -10,7 +10,6 @@ import org.apache.pdfbox.rendering.PageDrawerParameters;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,8 +40,12 @@ public class PDFDrawingActionsParser {
         return new BorderPoints(lowerLeft, upperRight);
     }
 
-    public static ParsedPage parseDocument(byte[] file, int pageIndex) throws IOException {
-        return parsePDFDocumentPage(PDDocument.load(file), pageIndex);
+    public static ParsedPage parseDocument(int pageIndex, PDDocument document) throws IOException {
+        return parsePDFDocumentPage(document, pageIndex);
+    }
+
+    public static PDDocument loadDocument(byte[] file) throws IOException {
+        return PDDocument.load(file);
     }
 
     private static class MyPDFRenderer extends PDFRenderer {

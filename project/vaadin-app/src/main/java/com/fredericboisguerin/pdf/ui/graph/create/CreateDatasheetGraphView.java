@@ -17,4 +17,6 @@ public interface CreateDatasheetGraphView {
     void displayErrorImpossibleToCropFile();
 
     void setImageToCrop(PDFImage pdfImage);
+
+    void setNbOfPages(int nbPages);
 }

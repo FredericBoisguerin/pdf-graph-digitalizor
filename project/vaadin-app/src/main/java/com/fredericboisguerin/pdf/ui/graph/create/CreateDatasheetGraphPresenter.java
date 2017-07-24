@@ -37,6 +37,7 @@ public class CreateDatasheetGraphPresenter implements CreateDatasheetGraphListen
         setTitleToView(datasheetId);
         this.model = new DatasheetGraphInfoViewModel();
         view.setModel(model);
+        view.setNbOfPages(0);
     }
 
     private void setTitleToView(String datasheetId) {
@@ -59,13 +60,9 @@ public class CreateDatasheetGraphPresenter implements CreateDatasheetGraphListen
     @Override
     public void onFileUpdated(String filename, byte[] bytes) {
         pdfFile = new PDFFile(filename, bytes);
-        try {
-            selectedPageIndex = 0;
-            PDFImage inputStream = pdfFile.getPage(selectedPageIndex).asPDFImage(PNG_FORMAT_NAME);
-            view.setImageToCrop(inputStream);
-        } catch (IOException e) {
-            view.displayErrorImpossibleToCropFile();
-        }
+        view.setNbOfPages(pdfFile.getNbPages());
+        onPageSelected(0);
+        onCropReset();
     }
 
     @Override
@@ -91,5 +88,17 @@ public class CreateDatasheetGraphPresenter implements CreateDatasheetGraphListen
 
     private AxisName buildAxisName(AxisViewModel axisViewModel) {
         return new AxisName(axisViewModel.getName());
+    }
+
+    @Override
+    public void onPageSelected(int page) {
+        try {
+            this.selectedPageIndex = page;
+            PDFPage pdfPage = pdfFile.getPage(selectedPageIndex);
+            PDFImage inputStream = pdfPage.asPDFImage(PNG_FORMAT_NAME);
+            view.setImageToCrop(inputStream);
+        } catch (IOException e) {
+            view.displayErrorImpossibleToCropFile();
+        }
     }
 }
