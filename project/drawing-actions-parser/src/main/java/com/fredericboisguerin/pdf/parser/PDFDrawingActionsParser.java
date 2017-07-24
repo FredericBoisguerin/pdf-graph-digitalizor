@@ -20,21 +20,10 @@ public class PDFDrawingActionsParser {
         // This is static
     }
 
-    static DrawingActionsWithImage parseDrawingActions(InputStream inputStream) throws IOException {
-        PDDocument doc = PDDocument.load(inputStream);
-        return renderPDFDocumentPage(doc, 0);
-    }
-
-    private static ParsedPDFDocument parsePDFDocumentPage(PDDocument doc, int pageIndex) throws IOException {
+    private static ParsedPage parsePDFDocumentPage(PDDocument doc, int pageIndex) throws IOException {
         BorderPoints borderPoints = getBorderPoints(doc, pageIndex);
         DrawingActionsWithImage drawingActionsWithImage = renderPDFDocumentPage(doc, pageIndex);
-        return new ParsedPDFDocument(drawingActionsWithImage, borderPoints);
-    }
-
-    // Being used soon by CreateDatasheetGraphPresenter!
-    public static BufferedImage getBufferedImage(byte[] bytes) throws IOException {
-        PDDocument doc = PDDocument.load(bytes);
-        return renderPDFDocumentPage(doc, 0).getBufferedImage();
+        return new ParsedPage(drawingActionsWithImage, borderPoints);
     }
 
     private static DrawingActionsWithImage renderPDFDocumentPage(PDDocument doc, int pageIndex) throws IOException {
@@ -52,8 +41,8 @@ public class PDFDrawingActionsParser {
         return new BorderPoints(lowerLeft, upperRight);
     }
 
-    public static ParsedPDFDocument parseDocument(byte[] file) throws IOException {
-        return parsePDFDocumentPage(PDDocument.load(file), 0);
+    public static ParsedPage parseDocument(byte[] file, int pageIndex) throws IOException {
+        return parsePDFDocumentPage(PDDocument.load(file), pageIndex);
     }
 
     private static class MyPDFRenderer extends PDFRenderer {

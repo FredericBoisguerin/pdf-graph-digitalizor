@@ -5,11 +5,11 @@ import com.fredericboisguerin.pdf.parser.model.DrawingAction;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
-public class ParsedPDFDocument {
+public class ParsedPage {
     private final DrawingActionsWithImage drawingActionsWithImage;
     private final BorderPoints borderPoints;
 
-    ParsedPDFDocument(DrawingActionsWithImage drawingActionsWithImage, BorderPoints borderPoints) {
+    ParsedPage(DrawingActionsWithImage drawingActionsWithImage, BorderPoints borderPoints) {
         this.drawingActionsWithImage = drawingActionsWithImage;
         this.borderPoints = borderPoints;
     }

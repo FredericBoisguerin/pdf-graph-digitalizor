@@ -9,7 +9,7 @@ import com.fredericboisguerin.pdf.graph.*;
 import com.fredericboisguerin.pdf.model.AxisName;
 import com.fredericboisguerin.pdf.model.DatasheetGraphExtraInfo;
 import com.fredericboisguerin.pdf.model.datasheet.*;
-import com.fredericboisguerin.pdf.model.datasheet.pdf.PDFFile;
+import com.fredericboisguerin.pdf.model.datasheet.pdf.DatasheetGraphPDF;
 import com.vaadin.server.Resource;
 import com.vaadin.server.StreamResource;
 
@@ -77,8 +77,8 @@ public class ExtractDatasheetDataPresenter implements ExtractDatasheetDataViewLi
         view.setDatasheetInfo(datasheetMetaInfo.toString());
     }
 
-    private void setSeriesToView(PDFFile pdfFile) {
-        ExtractGraphFromPDFFile extractGraphFromPDFFile = new ExtractGraphFromPDFFile(pdfFile);
+    private void setSeriesToView(DatasheetGraphPDF datasheetPdf) {
+        ExtractGraphFromPDFFile extractGraphFromPDFFile = new ExtractGraphFromPDFFile(datasheetPdf);
         try {
             this.xyGraph = extractGraphFromPDFFile.execute();
             List<SerieViewModel> serieViewModels = getSerieViewModels(xyGraph);
