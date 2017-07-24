@@ -95,11 +95,6 @@ public class VaadinCreateDatasheetGraphView extends VerticalLayout
     }
 
     @Override
-    public void displayPleaseCropFirst() {
-        displayError("Please select an area of the PDF");
-    }
-
-    @Override
     public void enter(ViewChangeEvent event) {
         navigator = event.getNavigator();
         fileUpdater.init();
