@@ -40,13 +40,9 @@ public class VaadinCreateDatasheetGraphView extends VerticalLayout
         form.setSizeUndefined();
 
         HorizontalLayout mainLayout = new HorizontalLayout();
-        mainLayout.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
-        VerticalLayout middleSection = new VerticalLayout(pageSelector, pdfDocumentEditor);
-        mainLayout.addComponents(fileUpdater, middleSection, form);
-        mainLayout.setExpandRatio(fileUpdater, 1);
-        mainLayout.setExpandRatio(middleSection, 1);
-        mainLayout.setExpandRatio(form, 1);
-        mainLayout.setSizeFull();
+        VerticalLayout croppingArea = new VerticalLayout(pageSelector, pdfDocumentEditor);
+        VerticalLayout updloadAndForm = new VerticalLayout(fileUpdater, form);
+        mainLayout.addComponents(updloadAndForm, croppingArea);
 
         addComponents(title, mainLayout);
     }
