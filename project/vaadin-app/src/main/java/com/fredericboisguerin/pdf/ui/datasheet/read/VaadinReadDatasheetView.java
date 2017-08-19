@@ -12,13 +12,13 @@ import com.fredericboisguerin.pdf.ui.graph.create.vaadin.VaadinCreateDatasheetGr
 import com.fredericboisguerin.pdf.ui.graph.list.VaadinReadDatasheetGraphView;
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.ListDataProvider;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.SerializablePredicate;
 import com.vaadin.ui.*;
 
-import static com.fredericboisguerin.pdf.ui.Icons.*;
 import static com.vaadin.ui.themes.ValoTheme.*;
 
 public class VaadinReadDatasheetView extends VerticalLayout implements ReadDatasheetView, View {
@@ -43,34 +43,34 @@ public class VaadinReadDatasheetView extends VerticalLayout implements ReadDatas
 
         Button createDatasheetButton = ButtonBuilder.button()
                                                     .withCaption("Create a datasheet")
-                                                    .withIcon(FOLDER_ADD)
+                                                    .withIcon(VaadinIcons.FOLDER_ADD)
                                                     .withStyle(BUTTON_PRIMARY)
                                                     .withListener(event -> listener.onCreateDatasheetButtonClicked())
                                                     .build();
 
         Button editNameAndSupplierButton = ButtonBuilder.button()
                                                         .withCaption("Edit name/supplier")
-                                                        .withIcon(PENCIL)
+                                                        .withIcon(VaadinIcons.PENCIL)
                                                         .withListener(event -> consumeOrWarn(listener::onDatasheetSelectedForEditNameAndSuppplier))
                                                         .build();
 
         Button archiveButton = ButtonBuilder.button()
                                             .withCaption("Archive")
-                                            .withIcon(ARCHIVE)
+                                            .withIcon(VaadinIcons.ARCHIVE)
                                             .withStyle(BUTTON_DANGER)
                                             .withListener(event -> consumeOrWarn(this::onDatasheetSelectedForArchive))
                                             .build();
 
         Button addGraphButton = ButtonBuilder.button()
                                              .withCaption("Add a graph")
-                                             .withIcon(FILE_ADD)
+                                             .withIcon(VaadinIcons.FILE_ADD)
                                              .withStyle(BUTTON_FRIENDLY)
                                              .withListener(event -> consumeOrWarn(listener::onDatasheetSelectedForAddGraph))
                                              .build();
 
         Button viewGraphsButton = ButtonBuilder.button()
                                                .withCaption("View graphs")
-                                               .withIcon(LIST_UL)
+                                               .withIcon(VaadinIcons.LIST_UL)
                                                .withListener(event -> consumeOrWarn(listener::onDatasheetSelectedForViewGraphs))
                                                .build();
 

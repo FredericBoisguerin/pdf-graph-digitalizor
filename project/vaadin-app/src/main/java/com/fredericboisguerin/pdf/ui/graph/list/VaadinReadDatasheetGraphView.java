@@ -10,13 +10,13 @@ import com.fredericboisguerin.pdf.ui.datasheet.extract.VaadinExtractDatasheetDat
 import com.fredericboisguerin.pdf.ui.graph.create.vaadin.VaadinCreateDatasheetGraphView;
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.ListDataProvider;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.SerializablePredicate;
 import com.vaadin.ui.*;
 
-import static com.fredericboisguerin.pdf.ui.Icons.*;
 import static com.vaadin.ui.themes.ValoTheme.*;
 
 public class VaadinReadDatasheetGraphView extends VerticalLayout
@@ -33,7 +33,7 @@ public class VaadinReadDatasheetGraphView extends VerticalLayout
 
         Button createGraphButton = ButtonBuilder.button()
                                                 .withCaption("Add a graph")
-                                                .withIcon(FILE_ADD)
+                                                .withIcon(VaadinIcons.FILE_ADD)
                                                 .withStyle(BUTTON_PRIMARY)
                                                 .withListener(this::notifyNewButtonClicked).build();
 
@@ -51,14 +51,14 @@ public class VaadinReadDatasheetGraphView extends VerticalLayout
 
         Button extractDataButton = ButtonBuilder.button()
                                                 .withCaption("Extract data")
-                                                .withIcon(SPLINE_CHART)
+                                                .withIcon(VaadinIcons.SPLINE_CHART)
                                                 .withStyle(BUTTON_FRIENDLY)
                                                 .withListener(this::notifyExtractButtonClicked).build();
 
         Button removeButton = ButtonBuilder.button()
                                            .withCaption("Remove graph")
                                            .withStyle(BUTTON_DANGER)
-                                           .withIcon(TRASH)
+                                           .withIcon(VaadinIcons.TRASH)
                                            .withListener(this::onRemoveGraphButtonClicked)
                                            .build();
 
