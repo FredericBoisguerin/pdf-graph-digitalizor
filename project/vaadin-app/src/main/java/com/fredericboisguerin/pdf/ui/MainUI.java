@@ -36,6 +36,11 @@ public class MainUI extends UI {
     private static final InMemoryDatasheetRepository datasheetRepository = new InMemoryDatasheetRepository();
     private Navigator navigator;
 
+    @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
+    @VaadinServletConfiguration(ui = MainUI.class, productionMode = false)
+    public static class MyUIServlet extends VaadinServlet {
+    }
+
     @Override
     protected void init(VaadinRequest vaadinRequest) {
         getPage().setTitle("PDF Digitalizer");
@@ -56,14 +61,14 @@ public class MainUI extends UI {
     }
 
     private void addEditDatasheetView(DatasheetService datasheetService) {
-        VaadinEditDatasheetView view = new VaadinEditDatasheetView();
+        VaadinEditDatasheetView view = new VaadinEditDatasheetView(navigationBar());
         EditDatasheetPresenter editDatasheetPresenter = new EditDatasheetPresenter(datasheetService, view);
         view.setListener(editDatasheetPresenter);
         navigator.addView(VaadinEditDatasheetView.VIEW_NAME, view);
     }
 
     private void addCreateDatasheetGraphView(DatasheetService datasheetService) {
-        VaadinCreateDatasheetGraphView view = new VaadinCreateDatasheetGraphView();
+        VaadinCreateDatasheetGraphView view = new VaadinCreateDatasheetGraphView(navigationBar());
         CreateDatasheetGraphPresenter presenter = new CreateDatasheetGraphPresenter(view,
                 datasheetService);
         view.setListener(presenter);
@@ -71,7 +76,7 @@ public class MainUI extends UI {
     }
 
     private void addReadDatasheetGraphView(DatasheetService datasheetService) {
-        VaadinReadDatasheetGraphView vaadinReadDatasheetGraphView = new VaadinReadDatasheetGraphView();
+        VaadinReadDatasheetGraphView vaadinReadDatasheetGraphView = new VaadinReadDatasheetGraphView(navigationBar());
         ReadDatasheetGraphPresenter readDatasheetGraphPresenter = new ReadDatasheetGraphPresenter(
                 vaadinReadDatasheetGraphView, datasheetService);
         vaadinReadDatasheetGraphView.setListener(readDatasheetGraphPresenter);
@@ -79,14 +84,15 @@ public class MainUI extends UI {
     }
 
     private void addExtractInformationsView(DatasheetService datasheetService) {
-        VaadinExtractDatasheetDataView extractDatasheetDataView = new VaadinExtractDatasheetDataView();
+        VaadinExtractDatasheetDataView extractDatasheetDataView = new VaadinExtractDatasheetDataView(navigationBar());
         extractDatasheetDataView.setListener(
                 new ExtractDatasheetDataPresenter(extractDatasheetDataView, datasheetService));
         navigator.addView(VaadinExtractDatasheetDataView.VIEW_NAME, extractDatasheetDataView);
     }
 
     private void addCreateDatasheetView(DatasheetService datasheetService) {
-        VaadinCreateDatasheetView importDatasheetView = new VaadinCreateDatasheetView();
+        VaadinCreateDatasheetView importDatasheetView = new VaadinCreateDatasheetView(
+                navigationBar());
         importDatasheetView.setListener(
                 new CreateDatasheetPresenter(importDatasheetView, datasheetService));
         navigator.addView(VaadinCreateDatasheetView.VIEW_NAME, importDatasheetView);
@@ -100,8 +106,7 @@ public class MainUI extends UI {
         navigator.addView(VaadinReadDatasheetView.VIEW_NAME, vaadinReadDatasheetView);
     }
 
-    @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
-    @VaadinServletConfiguration(ui = MainUI.class, productionMode = false)
-    public static class MyUIServlet extends VaadinServlet {
+    private NavigationBar navigationBar() {
+        return new NavigationBar(navigator);
     }
 }

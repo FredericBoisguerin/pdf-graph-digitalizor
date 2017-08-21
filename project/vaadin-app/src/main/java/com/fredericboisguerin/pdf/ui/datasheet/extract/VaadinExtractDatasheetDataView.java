@@ -1,5 +1,6 @@
 package com.fredericboisguerin.pdf.ui.datasheet.extract;
 
+import com.fredericboisguerin.pdf.ui.NavigationBar;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FileDownloader;
@@ -11,7 +12,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
-public class VaadinExtractDatasheetDataView extends VerticalLayout
+public class VaadinExtractDatasheetDataView extends HorizontalLayout
         implements View, ExtractDatasheetDataView {
 
     private static final String INFO_LABEL_FORMAT = "Extraction of data from %s";
@@ -26,7 +27,7 @@ public class VaadinExtractDatasheetDataView extends VerticalLayout
 
     private ExtractDatasheetDataViewListener listener;
 
-    public VaadinExtractDatasheetDataView() {
+    public VaadinExtractDatasheetDataView(NavigationBar navigationBar) {
         title = new Label();
         title.addStyleName(ValoTheme.LABEL_HUGE);
 
@@ -41,8 +42,12 @@ public class VaadinExtractDatasheetDataView extends VerticalLayout
         axesLayout.setWidth(67, Unit.PERCENTAGE);
         seriesView.setWidth(67, Unit.PERCENTAGE);
 
-        setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
-        addComponents(title, seriesView, axesLayout, exportButton);
+        VerticalLayout content = new VerticalLayout();
+        content.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
+        content.addComponents(title, seriesView, axesLayout, exportButton);
+        addComponents(navigationBar, content);
+        setExpandRatio(content, 1f);
+        setSizeFull();
 
         xAxisView.getFocus();
     }

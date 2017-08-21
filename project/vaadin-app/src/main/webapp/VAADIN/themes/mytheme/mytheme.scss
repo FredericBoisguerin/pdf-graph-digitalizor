@@ -40,4 +40,13 @@
     border: 3px dashed grey;
   }
 
+  .navigation-bar {
+    box-shadow: 5px 0 10px #ddd;
+    border-right: 1px solid #ccc;
+
+    .v-button {
+      padding: 0;
+    }
+  }
+
 }

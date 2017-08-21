@@ -1,6 +1,7 @@
 package com.fredericboisguerin.pdf.ui.graph.create.vaadin;
 
 import com.fredericboisguerin.pdf.model.datasheet.pdf.PDFImage;
+import com.fredericboisguerin.pdf.ui.NavigationBar;
 import com.fredericboisguerin.pdf.ui.graph.create.CreateDatasheetGraphListener;
 import com.fredericboisguerin.pdf.ui.graph.create.CreateDatasheetGraphView;
 import com.fredericboisguerin.pdf.ui.graph.create.model.PageSelectionModel;
@@ -15,7 +16,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.themes.ValoTheme;
 
-public class VaadinCreateDatasheetGraphView extends VerticalLayout
+public class VaadinCreateDatasheetGraphView extends HorizontalLayout
         implements CreateDatasheetGraphView, View {
     public static final String VIEW_NAME = "create-datasheet-graph";
 
@@ -28,7 +29,7 @@ public class VaadinCreateDatasheetGraphView extends VerticalLayout
     private CreateDatasheetGraphListener listener;
     private Navigator navigator;
 
-    public VaadinCreateDatasheetGraphView() {
+    public VaadinCreateDatasheetGraphView(NavigationBar navigationBar) {
         title.addStyleName(ValoTheme.LABEL_HUGE);
 
         pdfDocumentEditor.setSizeFull();
@@ -44,7 +45,10 @@ public class VaadinCreateDatasheetGraphView extends VerticalLayout
         VerticalLayout updloadAndForm = new VerticalLayout(fileUpdater, form);
         mainLayout.addComponents(updloadAndForm, croppingArea);
 
-        addComponents(title, mainLayout);
+        VerticalLayout content = new VerticalLayout(title, mainLayout);
+        addComponents(navigationBar, content);
+        setExpandRatio(content, 1f);
+        setHeight("100%");
     }
 
     private void onValidateButtonClicked(ClickEvent clickEvent) {
