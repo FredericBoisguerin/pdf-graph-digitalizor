@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 import com.fredericboisguerin.pdf.ui.ButtonBuilder;
+import com.fredericboisguerin.pdf.ui.NavigationBar;
 import com.fredericboisguerin.pdf.ui.YesNoDialog;
 import com.fredericboisguerin.pdf.ui.datasheet.extract.VaadinExtractDatasheetDataView;
 import com.fredericboisguerin.pdf.ui.graph.create.vaadin.VaadinCreateDatasheetGraphView;
@@ -19,7 +20,7 @@ import com.vaadin.ui.*;
 
 import static com.vaadin.ui.themes.ValoTheme.*;
 
-public class VaadinReadDatasheetGraphView extends VerticalLayout
+public class VaadinReadDatasheetGraphView extends HorizontalLayout
         implements ReadDatasheetGraphView, View {
     public static final String VIEW_NAME = "read-datasheet-graphs";
 
@@ -28,15 +29,40 @@ public class VaadinReadDatasheetGraphView extends VerticalLayout
     private Navigator navigator;
     private final Label title = new Label();
 
-    public VaadinReadDatasheetGraphView() {
+    public VaadinReadDatasheetGraphView(NavigationBar navigationBar) {
         title.addStyleName(LABEL_HUGE);
 
-        Button createGraphButton = ButtonBuilder.button()
-                                                .withCaption("Add a graph")
-                                                .withIcon(VaadinIcons.FILE_ADD)
-                                                .withStyle(BUTTON_PRIMARY)
-                                                .withListener(this::notifyNewButtonClicked).build();
+        Button createGraphButton = graphCreationButton();
+        prepareGrid();
+        Button extractDataButton = extractDataButton();
+        Button removeButton = removeGraphButton();
+        HorizontalLayout actionsLayout = new HorizontalLayout(extractDataButton, removeButton);
 
+        VerticalLayout content = new VerticalLayout(title, createGraphButton, grid, actionsLayout);
+        addComponents(navigationBar, content);
+        setExpandRatio(content, 1f);
+        setSizeFull();
+    }
+
+    private Button removeGraphButton() {
+        return ButtonBuilder.button()
+                    .withCaption("Remove graph")
+                    .withStyle(BUTTON_DANGER)
+                    .withIcon(VaadinIcons.TRASH)
+                    .withListener(this::onRemoveGraphButtonClicked)
+                    .build();
+    }
+
+    private Button extractDataButton() {
+        return ButtonBuilder.button()
+                .withCaption("Extract data")
+                .withIcon(VaadinIcons.SPLINE_CHART)
+                .withStyle(BUTTON_FRIENDLY)
+                .withListener(this::notifyExtractButtonClicked)
+                .build();
+    }
+
+    private void prepareGrid() {
         grid.setSelectionMode(Grid.SelectionMode.SINGLE);
         grid.addColumn(DatasheetGraphViewModel::getyAxisName)
             .setId("Y")
@@ -48,22 +74,15 @@ public class VaadinReadDatasheetGraphView extends VerticalLayout
             .setId("Filename")
             .setCaption("Filename");
         grid.setSizeFull();
+    }
 
-        Button extractDataButton = ButtonBuilder.button()
-                                                .withCaption("Extract data")
-                                                .withIcon(VaadinIcons.SPLINE_CHART)
-                                                .withStyle(BUTTON_FRIENDLY)
-                                                .withListener(this::notifyExtractButtonClicked).build();
-
-        Button removeButton = ButtonBuilder.button()
-                                           .withCaption("Remove graph")
-                                           .withStyle(BUTTON_DANGER)
-                                           .withIcon(VaadinIcons.TRASH)
-                                           .withListener(this::onRemoveGraphButtonClicked)
-                                           .build();
-
-        HorizontalLayout actionsLayout = new HorizontalLayout(extractDataButton, removeButton);
-        addComponents(title, createGraphButton, grid, actionsLayout);
+    private Button graphCreationButton() {
+        return ButtonBuilder.button()
+                .withCaption("Add a graph")
+                .withIcon(VaadinIcons.FILE_ADD)
+                .withStyle(BUTTON_PRIMARY)
+                .withListener(this::notifyNewButtonClicked)
+                .build();
     }
 
     private void notifyNewButtonClicked(Button.ClickEvent clickEvent) {

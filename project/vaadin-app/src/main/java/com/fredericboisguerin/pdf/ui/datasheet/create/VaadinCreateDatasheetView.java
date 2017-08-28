@@ -1,5 +1,6 @@
 package com.fredericboisguerin.pdf.ui.datasheet.create;
 
+import com.fredericboisguerin.pdf.ui.NavigationBar;
 import com.fredericboisguerin.pdf.ui.Title;
 import com.fredericboisguerin.pdf.ui.datasheet.DatasheetMetaInfoForm;
 import com.fredericboisguerin.pdf.ui.datasheet.read.VaadinReadDatasheetView;
@@ -8,11 +9,12 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
 
-public class VaadinCreateDatasheetView extends VerticalLayout implements CreateDatasheetView, View {
+public class VaadinCreateDatasheetView extends HorizontalLayout implements CreateDatasheetView, View {
 
     public static final String VIEW_NAME = "create-datasheet";
 
@@ -20,13 +22,16 @@ public class VaadinCreateDatasheetView extends VerticalLayout implements CreateD
     private Navigator navigator;
     private final DatasheetMetaInfoForm datasheetMetaInfoForm = new DatasheetMetaInfoForm();
 
-    public VaadinCreateDatasheetView() {
+    public VaadinCreateDatasheetView(NavigationBar navigationBar) {
         Label title = new Title("Create a new datasheet");
 
         Button validateButton = new Button("Validate");
         validateButton.addClickListener(this::onValidateButtonClicked);
 
-        addComponents(title, datasheetMetaInfoForm, validateButton);
+        VerticalLayout content = new VerticalLayout(title, datasheetMetaInfoForm, validateButton);
+        addComponents(navigationBar, content);
+        setExpandRatio(content, 1f);
+        setHeight("100%");
     }
 
     private void onValidateButtonClicked(ClickEvent clickEvent) {
