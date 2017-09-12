@@ -15,9 +15,9 @@ public class CoordComparator implements Comparator<Float> {
     }
 
     private boolean areEqual(Float c1, Float c2) {
-        float dist = Math.abs(c2 - c1);
+        float dist = c2 - c1;
         float minAbs = Math.min(c1, c2);
-        float ratio = dist / minAbs;
+        float ratio = Math.abs(dist / minAbs);
         return Float.compare(ratio, RATIO_TOLERANCE) < 0;
     }
 
